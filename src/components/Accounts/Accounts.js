@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
 
-const Transactions = () => {
+const Accounts = () => {
     const defaultOutcomingData = {
         head: 'All'
     }
@@ -214,4 +214,4 @@ const Transactions = () => {
     );
 };
 
-export default Transactions;
+export default Accounts;
