@@ -12,9 +12,11 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       await axios.post("/accounts/filter", {
-        address: "0xC5594070o0o68d9c6597A0160c72CD6ceC2EDd5a",
-        account_type: "user_current",
-        fuck: "bla"
+        address: "0xC5594079DA268d9c6597A0160c72CD6ceC2EDd5a",
+        account_category: "user"
+      })
+      .then(res => {
+        console.log(res);
       });
     }
 
