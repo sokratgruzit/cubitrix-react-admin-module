@@ -3,6 +3,7 @@ import { useState } from "react";
 import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
 
 const Transactions = () => {
+
     const defaultOutcomingData = {
         head: 'All'
     }
