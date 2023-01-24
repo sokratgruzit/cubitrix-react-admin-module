@@ -8,7 +8,6 @@ const Transactions = () => {
         defaultOutcomingData, 
         tableFilterData, 
         th, 
-        mobile 
     } = useTableParameters('Transactions');
 
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
