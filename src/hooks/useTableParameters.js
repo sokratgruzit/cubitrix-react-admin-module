@@ -105,16 +105,16 @@ const th = {
 export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'transactions') {
         return { 
-            defaultOutcomingData: defaultOutcomingData.defaultOutcomingData, 
+            defaultOutcomingData: defaultOutcomingData.transactions, 
             tableFilterData: tableFilterData.transactions, 
-            th: th.transactions 
+            th: th.transactions,
         }
     }
     if (name.toLowerCase() === 'accounts') {
         return { 
-            defaultOutcomingData: defaultOutcomingData.defaultOutcomingData, 
+            defaultOutcomingData: defaultOutcomingData.transactions, 
             tableFilterData: tableFilterData.transactions, 
-            th: th.transactions 
+            th: th.transactions,
         }
     }
 }

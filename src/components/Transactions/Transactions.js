@@ -4,11 +4,11 @@ import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 
 const Transactions = () => {
+    let mobile = false;
     const {
         defaultOutcomingData,
         tableFilterData,
         th,
-        mobile
     } = useTableParameters('Transactions');
 
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
