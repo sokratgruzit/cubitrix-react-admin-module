@@ -1,104 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
+import { useTableParameters } from "../../hooks/useTableParameters";
 
 const Accounts = () => {
-    const defaultOutcomingData = {
-        head: 'All'
-    }
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData)
-    const tableFilterData = {
-        head: [
-            {
-                title: 'All',
-            }, {
-                title: 'Pending',
-            }, {
-                title: 'Cenceled',
-            }, {
-                title: 'Approved',
-            }, {
-                title: 'Bonuses',
-            }, {
-                title: 'Claimed',
-            },
-        ],
-        search: {
-            options: [{
-                name: 'Transaction'
-            }, {
-                name: 'Hash'
-            }]
-        },
-        selects: [
-            {
-                name: 'Tranx Type',
-                options: [{
-                    name: 'Transaction'
-                }, {
-                    name: 'Hash'
-                }]
-            },
-            {
-                name: 'Date Within',
-                options: [{
-                    name: 'Transaction'
-                }, {
-                    name: 'Hash'
-                }]
-            },
-        ]
-    }
-    let th = [
-        {
-            name: "Tranx ID",
-            width: 15,
-            mobileWidth: 25,
-            id: 0,
-        },
-        {
-            name: "From",
-            width: 15,
-            mobileWidth: 25,
-            id: 1,
-        },
-        {
-            name: "To",
-            width: 15,
-            mobileWidth: 25,
-            id: 2,
-        },
-        {
-            name: "Amount",
-            width: 15,
-            mobileSlide: true,
-            id: 3,
-        },
-        {
-            name: "Domination",
-            width: 10,
-            mobileSlide: true,
-            id: 4,
-        },
-        {
-            name: "Time",
-            width: 10,
-            mobileSlide: true,
-            id: 5,
-        },
-        {
-            name: "Tranx Type",
-            width: 10,
-            position: 'right',
-            mobileSlide: true,
-            id: 6,
-        },
-    ];
-    let mobile = false;
-    if(window.innerWidth <= 1300) {
-        mobile = true;
-    }
-    console.log(mobile)
+    const { 
+        defaultOutcomingData, 
+        tableFilterData, 
+        th, 
+        mobile 
+    } = useTableParameters('Accounts');
+
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
 
     let td = [
         {
@@ -111,7 +24,7 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-
+    
         },
         {
             id:121223323,
@@ -123,7 +36,7 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-
+    
         },
         {
             id:1212323,
@@ -135,9 +48,10 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-
+    
         },
     ];
+    
     let tableData;
     tableData = td.map((item) => {
         return(
