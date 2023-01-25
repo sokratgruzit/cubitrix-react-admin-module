@@ -50,7 +50,7 @@ const tableFilterData = {
                 {
                     name: 'Account Owner',
                     value: 'account_owner'
-                }, 
+                },
                 {
                     name: 'Account Type Id',
                     value: 'account_type_id'
@@ -113,47 +113,32 @@ const th = {
     ],
     accounts: [
         {
-            name: "Tranx ID",
+            name: "Type ID",
             width: 15,
-            mobileWidth: 25,
+            mobileWidth: 33,
             id: 0,
         },
         {
-            name: "From",
+            name: "Address",
             width: 15,
-            mobileWidth: 25,
+            mobileWidth: 33,
             id: 1,
         },
         {
-            name: "To",
+            name: "Owner",
             width: 15,
-            mobileWidth: 25,
+            mobileWidth: 33,
             id: 2,
         },
         {
-            name: "Amount",
+            name: "Balance",
             width: 15,
-            mobileSlide: true,
-            id: 3,
+            id: 2,
         },
         {
-            name: "Domination",
-            width: 10,
-            mobileSlide: true,
-            id: 4,
-        },
-        {
-            name: "Time",
-            width: 10,
-            mobileSlide: true,
-            id: 5,
-        },
-        {
-            name: "Tranx Type",
-            width: 10,
-            position: 'right',
-            mobileSlide: true,
-            id: 6,
+            name: "Date",
+            width: 15,
+            id: 2,
         },
     ],
 }
@@ -168,7 +153,7 @@ export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'accounts') {
         return {
             tableFilterData: tableFilterData.accounts,
-            th: th.transactions,
+            th: th.accounts,
         }
     }
 }

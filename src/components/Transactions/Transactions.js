@@ -1,56 +1,48 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
+import axios from "../../api/axios";
 
 const Transactions = () => {
-    let mobile = false;
-    
     const {
         tableFilterData,
-        th,
-    } = useTableParameters('Transactions');
+        th
+    } = useTableParameters('Accounts');
+    let mobile;
+    if(window.innerWidth <= 1300) {
+        mobile = true;
+    }
+    let defaultOutcomingData = [];
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    let [td, setTd] = useState([]);
+    const [mobileExpand, setMobileExpand] = useState(null);
 
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState([]);
-
-    let td = [
-        {
-            id:12123,
-            hash: "0xae0cf2498c23422340xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c0xae0cf2498c2342234",
-            to: "0xae0cf2498c0xae0cf2498c0xae0cf2498c2342234",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-        {
-            id:121223323,
-            hash: "0xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c",
-            to: "0xae0cf2498c0xae0cf2498c",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-        {
-            id:1212323,
-            hash: "0xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c",
-            to: "0xae0cf2498c0xae0cf2498c",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-    ];
+    let mobileExpandFunc = (id) => {
+        if(window.innerWidth <= 1300) {
+            if(id !== mobileExpand) {
+                setMobileExpand(id);
+            } else {
+                setMobileExpand(null);
+            }
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            await axios.post("/accounts/filter", {
+                type: "transactions",
+                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+                account_type_id: "user_current",
+                search: "user"*/
+                // status: "Approved"
+            })
+                .then(res => {
+                    console.log(res);
+                    setTd(res.data.success.data)
+                });
+        }
+        fetchData();
+    }, []);
 
     let tableData;
     tableData = td.map((item) => {
