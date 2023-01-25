@@ -6,12 +6,10 @@ import axios from "../../api/axios";
 
 const Accounts = () => {
     const {
-        defaultOutcomingData,
         tableFilterData,
-        th,
-        mobile
+        th
     } = useTableParameters('Accounts');
-
+    let mobile;
     useEffect(() => {
         console.log('niinaosjdn')
           async function fetchData() {
@@ -28,7 +26,7 @@ const Accounts = () => {
           }
           fetchData();
         }, []);
-
+    let defaultOutcomingData = [];
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
 
     let td = [

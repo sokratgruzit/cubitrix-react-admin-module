@@ -7,12 +7,11 @@ const Transactions = () => {
     let mobile = false;
     
     const {
-        defaultOutcomingData,
         tableFilterData,
         th,
     } = useTableParameters('Transactions');
 
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState([]);
 
     let td = [
         {
