@@ -1,17 +1,16 @@
 import React from "react";
 import { useState } from "react";
-import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
+import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 
 const Accounts = () => {
     const { 
-        defaultOutcomingData, 
         tableFilterData, 
         th, 
         mobile 
     } = useTableParameters('Accounts');
 
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState([]);
 
     let td = [
         {

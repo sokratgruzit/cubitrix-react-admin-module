@@ -1,12 +1,3 @@
-const defaultOutcomingData = {
-    transactions: {
-        head: 'All',
-        search: {
-            option: 'Transaction'
-        }
-    },
-}
-
 const tableFilterData = {
     transactions: {
         head: [
@@ -105,14 +96,12 @@ const th = {
 export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'transactions') {
         return { 
-            defaultOutcomingData: defaultOutcomingData.transactions, 
             tableFilterData: tableFilterData.transactions, 
             th: th.transactions,
         }
     }
     if (name.toLowerCase() === 'accounts') {
         return { 
-            defaultOutcomingData: defaultOutcomingData.transactions, 
             tableFilterData: tableFilterData.transactions, 
             th: th.transactions,
         }
