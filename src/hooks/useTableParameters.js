@@ -52,9 +52,39 @@ const tableFilterData = {
             },
         ]
     },
+    accounts: {
+        head: false,
+        search: {
+            options: [{
+                name: 'Transaction'
+            }, {
+                name: 'Hash'
+            }]
+        },
+        selects: [
+            {
+                name: 'Tranx Type',
+                defaultOption: 'Any Type',
+                options: [{
+                    name: 'Transaction'
+                }, {
+                    name: 'Hash'
+                }]
+            },
+            {
+                name: 'Date Within',
+                defaultOption: 'All Time',
+                options: [{
+                    name: 'Transaction'
+                }, {
+                    name: 'Hash'
+                }]
+            },
+        ]
+    },
 }
 
-const th = { 
+const th = {
     transactions: [
         {
             name: "Tranx ID",
@@ -104,16 +134,16 @@ const th = {
 
 export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'transactions') {
-        return { 
-            defaultOutcomingData: defaultOutcomingData.transactions, 
-            tableFilterData: tableFilterData.transactions, 
+        return {
+            defaultOutcomingData: defaultOutcomingData.transactions,
+            tableFilterData: tableFilterData.transactions,
             th: th.transactions,
         }
     }
     if (name.toLowerCase() === 'accounts') {
-        return { 
-            defaultOutcomingData: defaultOutcomingData.transactions, 
-            tableFilterData: tableFilterData.transactions, 
+        return {
+            defaultOutcomingData: defaultOutcomingData.transactions,
+            tableFilterData: tableFilterData.transactions,
             th: th.transactions,
         }
     }
