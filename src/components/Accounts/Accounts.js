@@ -1,14 +1,32 @@
 import React from "react";
-import { useState } from "react";
-import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
+import { useState, useEffect } from "react";
+import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
+import axios from "../../api/axios";
 
 const Accounts = () => {
-    const { 
-        tableFilterData, 
-        th, 
-        mobile 
+    const {
+        tableFilterData,
+        th,
+        mobile
     } = useTableParameters('Accounts');
+
+    useEffect(() => {
+        console.log('niinaosjdn')
+          async function fetchData() {
+            await axios.post("/accounts/filter", {
+              type: "account",
+              /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+              account_type_id: "user_current",
+              search: "user"*/
+              // status: "Approved"
+            })
+            .then(res => {
+              console.log(res);
+            });
+          }
+          fetchData();
+        }, []);
 
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState([]);
 
@@ -23,7 +41,7 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-    
+
         },
         {
             id:121223323,
@@ -35,7 +53,7 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-    
+
         },
         {
             id:1212323,
@@ -47,10 +65,10 @@ const Accounts = () => {
             date: "01.02.2023",
             time: '08:15 PM',
             type: 'All Deposit',
-    
+
         },
     ];
-    
+
     let tableData;
     tableData = td.map((item) => {
         return(

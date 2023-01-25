@@ -43,9 +43,29 @@ const tableFilterData = {
             },
         ]
     },
+    accounts: {
+        head: false,
+        search: {
+            options: [
+                {
+                    name: 'Account Owner',
+                    value: 'account_owner'
+                }, 
+                {
+                    name: 'Account Type Id',
+                    value: 'account_type_id'
+                },
+                {
+                    name: 'Address',
+                    value: 'address'
+                },
+        ]
+        },
+        selects: false,
+    },
 }
 
-const th = { 
+const th = {
     transactions: [
         {
             name: "Tranx ID",
@@ -95,14 +115,14 @@ const th = {
 
 export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'transactions') {
-        return { 
-            tableFilterData: tableFilterData.transactions, 
+        return {
+            tableFilterData: tableFilterData.transactions,
             th: th.transactions,
         }
     }
     if (name.toLowerCase() === 'accounts') {
-        return { 
-            tableFilterData: tableFilterData.transactions, 
+        return {
+            tableFilterData: tableFilterData.accounts,
             th: th.transactions,
         }
     }

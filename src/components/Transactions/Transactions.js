@@ -5,6 +5,7 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 
 const Transactions = () => {
     let mobile = false;
+    
     const {
         tableFilterData,
         th,
