@@ -5,8 +5,12 @@ import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
 const Transactions = () => {
 
     const defaultOutcomingData = {
-        head: 'All'
-    }
+        head: 'All',
+        search: {
+            option: 'Hash'
+        }
+    };
+    
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData)
     const tableFilterData = {
         head: [

@@ -12,8 +12,11 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       await axios.post("/accounts/filter", {
-        address: "0xC5594079DA268d9c6597A0160c72CD6ceC2EDd5a",
-        account_category: "user"
+        type: "transactions",
+        /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+        account_type_id: "user_current",
+        search: "user"*/
+        status: "Approved"
       })
       .then(res => {
         console.log(res);
