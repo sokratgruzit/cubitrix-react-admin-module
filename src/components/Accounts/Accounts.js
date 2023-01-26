@@ -10,93 +10,62 @@ const Accounts = () => {
         th
     } = useTableParameters('Accounts');
     let mobile;
-    useEffect(() => {
-        console.log('niinaosjdn')
-          async function fetchData() {
-            await axios.post("/accounts/filter", {
-              type: "account",
-              /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-              account_type_id: "user_current",
-              search: "user"*/
-              // status: "Approved"
-            })
-            .then(res => {
-              console.log(res);
-            });
-          }
-          fetchData();
-        }, []);
-        
+    if(window.innerWidth <= 1300) {
+        mobile = true;
+    }
     let defaultOutcomingData = [];
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    let [td, setTd] = useState([]);
+    const [mobileExpand, setMobileExpand] = useState(null);
 
-    let td = [
-        {
-            id:12123,
-            hash: "0xae0cf2498c23422340xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c0xae0cf2498c2342234",
-            to: "0xae0cf2498c0xae0cf2498c0xae0cf2498c2342234",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-        {
-            id:121223323,
-            hash: "0xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c",
-            to: "0xae0cf2498c0xae0cf2498c",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-        {
-            id:1212323,
-            hash: "0xae0cf2498c2342234",
-            from: "0xae0cf2498c0xae0cf2498c",
-            to: "0xae0cf2498c0xae0cf2498c",
-            amount: "$123, 241, 241, 423.8",
-            domination: "1,132,000.1",
-            date: "01.02.2023",
-            time: '08:15 PM',
-            type: 'All Deposit',
-
-        },
-    ];
+    let mobileExpandFunc = (id) => {
+        if(window.innerWidth <= 1300) {
+            if(id !== mobileExpand) {
+                setMobileExpand(id);
+            } else {
+                setMobileExpand(null);
+            }
+        }
+    }
+    useEffect(() => {
+        async function fetchData() {
+            await axios.post("/accounts/filter", {
+                type: "account",
+                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+                account_type_id: "user_current",
+                search: "user"*/
+                // status: "Approved"
+            })
+                .then(res => {
+                    console.log(res);
+                    setTd(res.data.success.data)
+                });
+        }
+        fetchData();
+    }, []);
 
     let tableData;
     tableData = td.map((item) => {
         return(
             <>
-                <div className="table-parent">
+                <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
+                    mobileExpandFunc(item.id)
+                }}>
                     <div className="table" key={item.id}>
-                        <div className={`td col ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
-                            <span>{item.id}</span>
-                            <span>{item.hash}</span>
+                        <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
+                            <span>{item.account_type_id}</span>
                         </div>
                         <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
-                            <span>{item.from}</span>
+                            <span>{item.address}</span>
                         </div>
-                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[3].width}%`}}>
-                            <span>{item.to}</span>
+                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
+                            <span>{item.account_owner}</span>
                         </div>
                         <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
-                            <span>{item.amount}</span>
+                            <span>{item.balance}</span>
                         </div>
                         <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
-                            <span>{item.domination}</span>
-                        </div>
-                        <div className={`td col ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
-                            <span>{item.date}</span>
-                            <span>{item.time}</span>
-                        </div>
-                        <div className={`td ${th[6].mobileWidth ? true : false }`} style={{width: `${mobile ? th[6].mobileWidth : th[6].width}%`}}>
-                            <span>{item.type}</span>
+                            <span>{item.createdAt}</span>
                         </div>
                     </div>
                     <div className="icon-place">
@@ -107,25 +76,12 @@ const Accounts = () => {
                     <div className="table-mobile">
                         <div className="table-mobile-content">
                             <div className="td">
-                                <div className="mobile-ttl">{th[2].name}</div>
-                                <span>{item.to}</span>
-                            </div>
-                            <div className="td">
                                 <div className="mobile-ttl">{th[3].name}</div>
-                                <span>{item.amount}</span>
+                                <span>{item.balance}</span>
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[4].name}</div>
-                                <span>{item.domination}</span>
-                            </div>
-                            <div className="td col">
-                                <div className="mobile-ttl">{th[5].name}</div>
-                                <span>{item.date}</span>
-                                <span>{item.time}</span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[6].name}</div>
-                                <span>{item.type}</span>
+                                <span>{item.createdAt}</span>
                             </div>
                         </div>
                     </div>
@@ -138,6 +94,7 @@ const Accounts = () => {
             tableData={tableData}
             tableHead={th}
             mobile={mobile}
+            header={false}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
