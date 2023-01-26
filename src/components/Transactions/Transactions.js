@@ -13,8 +13,13 @@ const Transactions = () => {
     if(window.innerWidth <= 1300) {
         mobile = true;
     }
-    let defaultOutcomingData = [];
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    let defaultOutcomingData = {
+        selects: {
+            ts_status: 'all'
+        }
+    };
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);    
+    console.log(tableFilterOutcomingData)
     let [td, setTd] = useState([]);
     const [mobileExpand, setMobileExpand] = useState(null);
 
