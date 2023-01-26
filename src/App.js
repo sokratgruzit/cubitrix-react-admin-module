@@ -1,10 +1,15 @@
+import { useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
 import Accounts from "./components/Accounts/Accounts";
 import UsersList from "./components/UsersList/UsersList";
 import '@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css';
-import {Button, AdminHeader} from "@cubitrix/cubitrix-react-ui-module";
+import {
+  Button, 
+  AdminHeader,
+} from "@cubitrix/cubitrix-react-ui-module";
+import Login from './components/Login/Login';
 
 function App() {
   // useEffect(() => {
@@ -159,35 +164,44 @@ function App() {
     }
   ];
 
+  const [user, setUser] = useState(false);
   return (
     <div className="App">
-      <AdminHeader
-          username={adminHeaderData.username}
-          headSvg={adminHeaderData.svg}
-          userImageUrl={adminHeaderData.userImageUrl}
-      />
-      <div className={`admin-container`}>
-        <div className={`admin-sidebar`}>
-          {sideBar.map((item) => {
-            return (
-              <Button
-                key={item.id}
-                label={item.name}
-                route={item.route}
-                element={'side-admin-button'}
-                svg={item.svg}
-                customStyles={{width: '100%'}}
-              />
-            )
-          })}
-        </div>
+      {user ? (
+        <>
+          <AdminHeader
+              username={adminHeaderData.username}
+              headSvg={adminHeaderData.svg}
+              userImageUrl={adminHeaderData.userImageUrl}
+          />
+          <div className={`admin-container`}>
+            <div className={`admin-sidebar`}>
+              {sideBar.map((item) => {
+                return (
+                  <Button
+                    key={item.id}
+                    label={item.name}
+                    route={item.route}
+                    element={'side-admin-button'}
+                    svg={item.svg}
+                    customStyles={{width: '100%'}}
+                  />
+                )
+              })}
+            </div>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/users-list" element={<UsersList />} />
+              <Route path="/accounts" element={<Accounts />} />
+            </Routes>
+          </div>
+        </>
+      ) : (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/transactions" element={<Transactions />} />
-          <Route path="/users-list" element={<UsersList />} />
-          <Route path="/accounts" element={<Accounts />} />
-        </Routes>
-      </div>
+          <Route path="*" element={<Login />} />
+       </Routes>
+      )}
     </div>
   );
 }
