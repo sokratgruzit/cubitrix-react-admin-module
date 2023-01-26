@@ -259,7 +259,7 @@ const th = {
     ],
     users: [
         {
-            name: "Type ID",
+            name: "Name",
             width: 15,
             mobileWidth: 33,
             id: 0,
@@ -271,20 +271,25 @@ const th = {
             id: 1,
         },
         {
-            name: "Owner",
+            name: "Email",
             width: 15,
             mobileWidth: 33,
             id: 2,
         },
         {
-            name: "Balance",
+            name: "Mobile",
             width: 15,
             id: 3,
         },
         {
-            name: "Date",
+            name: "Nationality",
             width: 15,
             id: 4,
+        },
+        {
+            name: "Date Of Birth",
+            width: 15,
+            id: 5,
         },
     ],
 }
