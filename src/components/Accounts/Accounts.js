@@ -83,23 +83,6 @@ const Accounts = () => {
                                 <div className="mobile-ttl">{th[4].name}</div>
                                 <span>{item.createdAt}</span>
                             </div>
-                            {/*<div className="td">*/}
-                            {/*    <div className="mobile-ttl">{th[3].name}</div>*/}
-                            {/*    <span>{item.amount}</span>*/}
-                            {/*</div>*/}
-                            {/*<div className="td">*/}
-                            {/*    <div className="mobile-ttl">{th[4].name}</div>*/}
-                            {/*    <span>{item.domination}</span>*/}
-                            {/*</div>*/}
-                            {/*<div className="td col">*/}
-                            {/*    <div className="mobile-ttl">{th[5].name}</div>*/}
-                            {/*    <span>{item.date}</span>*/}
-                            {/*    <span>{item.time}</span>*/}
-                            {/*</div>*/}
-                            {/*<div className="td">*/}
-                            {/*    <div className="mobile-ttl">{th[6].name}</div>*/}
-                            {/*    <span>{item.type}</span>*/}
-                            {/*</div>*/}
                         </div>
                     </div>
                 </div>

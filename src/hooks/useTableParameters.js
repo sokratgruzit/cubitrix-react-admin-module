@@ -63,52 +63,78 @@ const tableFilterData = {
         },
         selects: false,
     },
+    users: {
+        head: false,
+        search: {
+            options: [
+                {
+                    name: 'Account Owner',
+                    value: 'account_owner'
+                },
+                {
+                    name: 'Account Type Id',
+                    value: 'account_type_id'
+                },
+                {
+                    name: 'Address',
+                    value: 'address'
+                },
+            ]
+        },
+        selects: false,
+    },
 }
 
 const th = {
     transactions: [
         {
-            name: "Tranx ID",
-            width: 15,
+            name: "Tranx Hash",
+            width: 10,
             mobileWidth: 25,
             id: 0,
         },
         {
             name: "From",
-            width: 15,
+            width: 12,
             mobileWidth: 25,
             id: 1,
         },
         {
             name: "To",
-            width: 15,
+            width: 12,
             mobileWidth: 25,
             id: 2,
         },
         {
             name: "Amount",
-            width: 15,
-            mobileSlide: true,
+            width: 11,
+            mobileWidth: 25,
             id: 3,
+        },
+        {
+            name: "Tx Fee",
+            width: 11,
+            id: 4,
         },
         {
             name: "Domination",
             width: 10,
-            mobileSlide: true,
-            id: 4,
+            id: 5,
         },
         {
             name: "Time",
             width: 10,
-            mobileSlide: true,
-            id: 5,
+            id: 6,
+        },
+        {
+            name: "Tranx Status",
+            width: 10,
+            id: 7,
         },
         {
             name: "Tranx Type",
             width: 10,
-            position: 'right',
-            mobileSlide: true,
-            id: 6,
+            id: 8,
         },
     ],
     accounts: [
@@ -133,12 +159,42 @@ const th = {
         {
             name: "Balance",
             width: 15,
-            id: 2,
+            id: 3,
         },
         {
             name: "Date",
             width: 15,
+            id: 4,
+        },
+    ],
+    users: [
+        {
+            name: "Type ID",
+            width: 15,
+            mobileWidth: 33,
+            id: 0,
+        },
+        {
+            name: "Address",
+            width: 15,
+            mobileWidth: 33,
+            id: 1,
+        },
+        {
+            name: "Owner",
+            width: 15,
+            mobileWidth: 33,
             id: 2,
+        },
+        {
+            name: "Balance",
+            width: 15,
+            id: 3,
+        },
+        {
+            name: "Date",
+            width: 15,
+            id: 4,
         },
     ],
 }
@@ -154,6 +210,12 @@ export const useTableParameters = (name) => {
         return {
             tableFilterData: tableFilterData.accounts,
             th: th.accounts,
+        }
+    }
+    if (name.toLowerCase() === 'users') {
+        return {
+            tableFilterData: tableFilterData.users,
+            th: th.users,
         }
     }
 }
