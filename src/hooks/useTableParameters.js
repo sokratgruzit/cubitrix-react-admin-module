@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 const tableFilterData = {
     transactions: {
         search: {
@@ -294,23 +296,72 @@ const th = {
     ],
 }
 
+
+const getWidth = () => window.innerWidth 
+  || document.documentElement.clientWidth 
+  || document.body.clientWidth;
+
 export const useTableParameters = (name) => {
+    let [width, setWidth] = useState(getWidth());
+
+    const [mobileExpand, setMobileExpand] = useState(null);
+
+    useEffect(() => {
+        let timeoutId = null;
+        const resizeListener = () => {
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(() => setWidth(getWidth()), 150);
+        };
+
+        window.addEventListener('resize', resizeListener);
+
+        return () => {
+            window.removeEventListener('resize', resizeListener);
+        }
+    }, [])
+
+    let mobile = false;
+
+    if(width <= 1300) {
+        mobile = true;
+    }
+
+    let mobileExpandFunc = (id) => {
+        if(width <= 1300) {
+            if(id !== mobileExpand) {
+                setMobileExpand(id);
+            } else {
+                setMobileExpand(null);
+            }
+        }
+    }
+
     if (name.toLowerCase() === 'transactions') {
         return {
             tableFilterData: tableFilterData.transactions,
             th: th.transactions,
+            mobileExpandFunc,
+            mobileExpand,
+            mobile
         }
     }
     if (name.toLowerCase() === 'accounts') {
         return {
             tableFilterData: tableFilterData.accounts,
             th: th.accounts,
+            mobileExpandFunc,
+            mobileExpand,
+            mobile
         }
     }
     if (name.toLowerCase() === 'users') {
         return {
             tableFilterData: tableFilterData.users,
             th: th.users,
+            mobileExpandFunc,
+            mobileExpand,
+            mobile
         }
     }
 }

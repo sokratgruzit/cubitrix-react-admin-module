@@ -7,31 +7,23 @@ import axios from "../../api/axios";
 const Transactions = () => {
     const {
         tableFilterData,
-        th
+        th,
+        mobile,
+        mobileExpand,
+        mobileExpandFunc
     } = useTableParameters('Transactions');
-    let mobile;
-    if(window.innerWidth <= 1300) {
-        mobile = true;
-    }
+
     let defaultOutcomingData = {
         selects: {
             ts_status: 'all'
         }
     };
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);    
-    console.log(tableFilterOutcomingData)
-    let [td, setTd] = useState([]);
-    const [mobileExpand, setMobileExpand] = useState(null);
 
-    let mobileExpandFunc = (id) => {
-        if(window.innerWidth <= 1300) {
-            if(id !== mobileExpand) {
-                setMobileExpand(id);
-            } else {
-                setMobileExpand(null);
-            }
-        }
-    }
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);    
+    // console.log(tableFilterOutcomingData)
+    
+    let [td, setTd] = useState([]);
+
     useEffect(() => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
