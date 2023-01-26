@@ -168,7 +168,7 @@ export const useTableParameters = (name) => {
     if (name.toLowerCase() === 'accounts') {
         return {
             tableFilterData: tableFilterData.accounts,
-            th: th.transactions,
+            th: th.accounts,
         }
     }
 }
