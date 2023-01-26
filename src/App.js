@@ -6,7 +6,7 @@ import Accounts from "./components/Accounts/Accounts";
 import UsersList from "./components/UsersList/UsersList";
 import '@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css';
 import {
-  Button, 
+  Button,
   AdminHeader,
 } from "@cubitrix/cubitrix-react-ui-module";
 import Login from './components/Login/Login';
@@ -164,7 +164,7 @@ function App() {
     }
   ];
 
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(true);
   return (
     <div className="App">
       {user ? (
