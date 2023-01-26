@@ -19,9 +19,9 @@ const Transactions = () => {
         }
     };
 
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);    
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
     // console.log(tableFilterOutcomingData)
-    
+
     let [td, setTd] = useState([]);
 
     useEffect(() => {
@@ -118,6 +118,7 @@ const Transactions = () => {
     return (
         <AdminPanel
             tableData={tableData}
+            pageLabel={'Transactions'}
             tableHead={th}
             mobile={mobile}
             header={2}
