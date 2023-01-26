@@ -52,12 +52,24 @@ const UsersList = () => {
                     mobileExpandFunc(index)
                 }}>
                     <div className="table" key={item.id}>
-                        {/*<div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>*/}
-                        {/*    <span>{item.tx_hash}</span>*/}
-                        {/*</div>*/}
-                        {/*<div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>*/}
-                        {/*    <span>{item.from}</span>*/}
-                        {/*</div>*/}
+                        <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
+                            <span>{item.name}</span>
+                        </div>
+                        <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                            <span>{item.address}</span>
+                        </div>
+                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
+                            <span>{item.email}</span>
+                        </div>
+                        <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
+                            <span>{item.mobile}</span>
+                        </div>
+                        <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
+                            <span>{item.nationality}</span>
+                        </div>
+                        <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
+                            <span>{item.date_of_birth}</span>
+                        </div>
                     </div>
                     <div className="icon-place">
                         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,17 +78,18 @@ const UsersList = () => {
                     </div>
                     <div className="table-mobile">
                         <div className="table-mobile-content">
-                            {/*<div className="td">*/}
-                            {/*    <div className="mobile-ttl">{th[4].name}</div>*/}
-                            {/*    <div>*/}
-                            {/*        <span>{item.tx_fee}</span>*/}
-                            {/*        <span className={`table-currency`}>{item.tx_fee_currency}</span>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-                            {/*<div className="td">*/}
-                            {/*    <div className="mobile-ttl">{th[5].name}</div>*/}
-                            {/*    <span>{item.domination}</span>*/}
-                            {/*</div>*/}
+                            <div className="td">
+                                <div className="mobile-ttl">{th[3].name}</div>
+                                <span>{item.mobile}</span>
+                            </div>
+                            <div className="td">
+                                <div className="mobile-ttl">{th[4].name}</div>
+                                <span>{item.nationality}</span>
+                            </div>
+                            <div className="td">
+                                <div className="mobile-ttl">{th[5].name}</div>
+                                <span>{item.date_of_birth}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
