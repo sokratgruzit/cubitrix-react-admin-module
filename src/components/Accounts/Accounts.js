@@ -47,7 +47,7 @@ const Accounts = () => {
                 }}>
                     <div className="table" key={item.id}>
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
-                            <span>{item.account_type_id}</span>
+                            <span>{item.account_type_id.name}</span>
                         </div>
                         <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
                             <span>{item.address}</span>
