@@ -10,7 +10,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (currentUser) => {
-    dispatch({ type: "LOGIN_START" });
+    dispatch({ type: "SET_LOADING" });
 
     try {
       const { data } = await axios.post("/api/auth/login ", currentUser);    
