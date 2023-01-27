@@ -17,7 +17,7 @@ const Accounts = () => {
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
     let [td, setTd] = useState([]);
     let [pageNow, setPageNow] = useState(1);
-    let [pageAll, setPageAll] = useState(100);
+    let [pageAll, setPageAll] = useState(1);
 
     useEffect(() => {
         async function fetchData() {
@@ -32,6 +32,7 @@ const Accounts = () => {
             })
                 .then(res => {
                     console.log(res);
+                    setPageAll(res.data.success.pages);
                     setTd(res.data.success.data)
                 });
         }
