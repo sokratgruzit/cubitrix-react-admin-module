@@ -7,34 +7,24 @@ import axios from "../../api/axios";
 const Accounts = () => {
     const {
         tableFilterData,
-        th
+        th,
+        mobile,
+        mobileExpandFunc,
+        mobileExpand
     } = useTableParameters('Accounts');
-    let mobile;
-    if(window.innerWidth <= 1300) {
-        mobile = true;
-    }
-    let defaultOutcomingData = [];
+
+    let defaultOutcomingData = {};
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
     let [td, setTd] = useState([]);
-    let [currentPage, setCurrentPage] = useState(1);
+    let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(100);
-    const [mobileExpand, setMobileExpand] = useState(null);
 
-    let mobileExpandFunc = (id) => {
-        if(window.innerWidth <= 1300) {
-            if(id !== mobileExpand) {
-                setMobileExpand(id);
-            } else {
-                setMobileExpand(null);
-            }
-        }
-    }
     useEffect(() => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
                 type: "account",
                 filter: tableFilterOutcomingData,
-                page: currentPage
+                page: pageNow
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -46,7 +36,7 @@ const Accounts = () => {
                 });
         }
         fetchData();
-    }, [tableFilterOutcomingData,currentPage]);
+    }, [tableFilterOutcomingData, pageNow]);
 
     let tableData;
     tableData = td.map((item) => {
@@ -99,15 +89,11 @@ const Accounts = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Accounts'}
-            tableHeader={false}
             tableFilterData={tableFilterData}
-            tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
-            paginationCurrent={1}
-            paginationTotal={20}
-            paginationEvent={() => {
-                console.log('hi')
-            }}
+            paginationCurrent={pageNow}
+            paginationTotal={pageAll}
+            paginationEvent={page => setPageNow(page)}
         />
     );
 };

@@ -14,10 +14,9 @@ const Transactions = () => {
     } = useTableParameters('Transactions');
 
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
-    // console.log(tableFilterOutcomingData)
 
     let [td, setTd] = useState([]);
-    let [currentPage, setCurrentPage] = useState(1);
+    let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(100);
 
     useEffect(() => {
@@ -25,7 +24,7 @@ const Transactions = () => {
             await axios.post("/accounts/filter", {
                 type: "transactions",
                 filter: tableFilterOutcomingData,
-                page: currentPage
+                page: pageNow
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -37,7 +36,7 @@ const Transactions = () => {
                 });
         }
         fetchData();
-    }, [tableFilterOutcomingData,currentPage]);
+    }, [tableFilterOutcomingData,pageNow]);
     console.log(tableFilterOutcomingData)
     let tableData;
     tableData = td.map((item,index) => {
@@ -122,11 +121,9 @@ const Transactions = () => {
             tableHeader={1}
             tableFilterData={tableFilterData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
-            paginationCurrent={1}
-            paginationTotal={20}
-            paginationEvent={() => {
-                console.log('hi')
-            }}
+            paginationCurrent={pageNow}
+            paginationTotal={pageAll}
+            paginationEvent={page => setPageNow(page)}
         />
     );
 };

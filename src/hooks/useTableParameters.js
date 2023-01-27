@@ -42,10 +42,6 @@ const tableFilterData = {
                 value: 'ts_status',
                 options: [
                     {
-                        name: 'All',
-                        value: 'all'
-                    },
-                    {
                         name: 'Pending',
                         value: 'pending'
                     },
