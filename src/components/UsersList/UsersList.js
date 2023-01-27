@@ -106,6 +106,7 @@ const UsersList = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Users List'}
+            tableHeader={false}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}

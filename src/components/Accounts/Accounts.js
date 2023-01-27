@@ -99,7 +99,7 @@ const Accounts = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Accounts'}
-            header={false}
+            tableHeader={false}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}

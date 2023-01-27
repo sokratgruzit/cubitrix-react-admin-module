@@ -119,9 +119,8 @@ const Transactions = () => {
             pageLabel={'Transactions'}
             tableHead={th}
             mobile={mobile}
-            header={1}
+            tableHeader={1}
             tableFilterData={tableFilterData}
-            tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
             paginationCurrent={1}
             paginationTotal={20}
