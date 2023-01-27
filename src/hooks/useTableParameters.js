@@ -73,16 +73,22 @@ const tableFilterData = {
                     value: 'account_owner'
                 },
                 {
-                    name: 'Account Type Id',
-                    value: 'account_type_id'
-                },
-                {
                     name: 'Address',
                     value: 'address'
                 }
             ]
         },
         selects: [
+            {
+                name: 'Account Type Id',
+                value: 'account_type_id',
+                options: [
+                    {
+                        name: 'User',
+                        value: 'user'
+                    },
+                ]
+            },
         ]
     },
     users: {
