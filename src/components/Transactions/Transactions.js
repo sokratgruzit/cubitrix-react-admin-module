@@ -13,21 +13,19 @@ const Transactions = () => {
         mobileExpandFunc
     } = useTableParameters('Transactions');
 
-    let defaultOutcomingData = {
-        selects: {
-            ts_status: 'all'
-        }
-    };
-
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);    
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
     // console.log(tableFilterOutcomingData)
-    
+
     let [td, setTd] = useState([]);
+    let [currentPage, setCurrentPage] = useState(1);
+    let [pageAll, setPageAll] = useState(100);
 
     useEffect(() => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
                 type: "transactions",
+                filter: tableFilterOutcomingData,
+                page: currentPage
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -39,8 +37,8 @@ const Transactions = () => {
                 });
         }
         fetchData();
-    }, []);
-
+    }, [tableFilterOutcomingData,currentPage]);
+    console.log(tableFilterOutcomingData)
     let tableData;
     tableData = td.map((item,index) => {
         return(
@@ -118,12 +116,18 @@ const Transactions = () => {
     return (
         <AdminPanel
             tableData={tableData}
+            pageLabel={'Transactions'}
             tableHead={th}
             mobile={mobile}
-            header={2}
+            header={1}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
+            paginationCurrent={1}
+            paginationTotal={20}
+            paginationEvent={() => {
+                console.log('hi')
+            }}
         />
     );
 };

@@ -5,16 +5,16 @@ const tableFilterData = {
         search: {
             options: [
                 {
-                    name: 'Account Owner',
-                    value: 'account_owner'
-                }, 
-                {
-                    name: 'Account Type Id',
-                    value: 'account_type_id'
+                    name: 'Tranx Hash',
+                    value: 'tx_hash'
                 },
                 {
-                    name: 'Address',
-                    value: 'address'
+                    name: 'From',
+                    value: 'from'
+                },
+                {
+                    name: 'To',
+                    value: 'to'
                 }
             ]
         },
@@ -24,26 +24,16 @@ const tableFilterData = {
                 value: 'tx_type',
                 options: [
                     {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
+                        name: 'Deposit',
+                        value: 'deposit'
+                    },
                     {
-                        name: 'Hash',
-                        value: 'hash'
-                    }
-                ]
-            },
-            {
-                name: 'Date Within',
-                value: 'createdAt',
-                options: [
+                        name: 'Withdraw',
+                        value: 'withdraw'
+                    },
                     {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
-                    {
-                        name: 'Hash',
-                        value: 'hash'
+                        name: 'Transfer',
+                        value: 'transfer'
                     }
                 ]
             },
@@ -54,23 +44,23 @@ const tableFilterData = {
                     {
                         name: 'All',
                         value: 'all'
-                    }, 
+                    },
                     {
                         name: 'Pending',
                         value: 'pending'
-                    }, 
+                    },
                     {
                         name: 'Cenceled',
                         value: 'canceled'
-                    }, 
+                    },
                     {
                         name: 'Approved',
                         value: 'approved'
-                    }, 
+                    },
                     {
                         name: 'Bonuses',
                         value: 'bonuses'
-                    }, 
+                    },
                     {
                         name: 'Claimed',
                         value: 'claimed'
@@ -85,7 +75,7 @@ const tableFilterData = {
                 {
                     name: 'Account Owner',
                     value: 'account_owner'
-                }, 
+                },
                 {
                     name: 'Account Type Id',
                     value: 'account_type_id'
@@ -97,82 +87,52 @@ const tableFilterData = {
             ]
         },
         selects: [
-            {
-                name: 'Tranx Type',
-                value: 'tx_type',
-                options: [
-                    {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
-                    {
-                        name: 'Hash',
-                        value: 'hash'
-                    }
-                ]
-            },
-            {
-                name: 'Date Within',
-                value: 'createdAt',
-                options: [
-                    {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
-                    {
-                        name: 'Hash',
-                        value: 'hash'
-                    }
-                ]
-            },
         ]
     },
     users: {
         search: {
             options: [
                 {
-                    name: 'Account Owner',
-                    value: 'account_owner'
-                }, 
-                {
-                    name: 'Account Type Id',
-                    value: 'account_type_id'
+                    name: 'Name',
+                    value: 'name'
                 },
                 {
                     name: 'Address',
                     value: 'address'
+                },
+                {
+                    name: 'Email',
+                    value: 'email'
+                },
+                {
+                    name: 'Mobile',
+                    value: 'mobile'
                 }
             ]
         },
         selects: [
             {
-                name: 'Tranx Type',
-                value: 'tx_type',
+                name: 'Nationality',
+                value: 'nationality',
                 options: [
                     {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
+                        name: 'Armenia',
+                        value: 'armenia'
+                    },
                     {
-                        name: 'Hash',
-                        value: 'hash'
+                        name: 'Azer',
+                        value: 'azer'
+                    },
+                    {
+                        name: 'China',
+                        value: 'china'
+                    },
+                    {
+                        name: 'Chukcha',
+                        value: 'chukcha'
                     }
                 ]
-            },
-            {
-                name: 'Date Within',
-                value: 'createdAt',
-                options: [
-                    {
-                        name: 'Transaction',
-                        value: 'transaction'
-                    }, 
-                    {
-                        name: 'Hash',
-                        value: 'hash'
-                    }
-                ]
-            },
+            }
         ]
     },
 }
@@ -297,8 +257,8 @@ const th = {
 }
 
 
-const getWidth = () => window.innerWidth 
-  || document.documentElement.clientWidth 
+const getWidth = () => window.innerWidth
+  || document.documentElement.clientWidth
   || document.body.clientWidth;
 
 export const useTableParameters = (name) => {

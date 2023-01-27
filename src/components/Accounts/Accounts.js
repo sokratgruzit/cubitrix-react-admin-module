@@ -16,6 +16,8 @@ const Accounts = () => {
     let defaultOutcomingData = [];
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
     let [td, setTd] = useState([]);
+    let [currentPage, setCurrentPage] = useState(1);
+    let [pageAll, setPageAll] = useState(100);
     const [mobileExpand, setMobileExpand] = useState(null);
 
     let mobileExpandFunc = (id) => {
@@ -31,6 +33,8 @@ const Accounts = () => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
                 type: "account",
+                filter: tableFilterOutcomingData,
+                page: currentPage
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -42,7 +46,7 @@ const Accounts = () => {
                 });
         }
         fetchData();
-    }, []);
+    }, [tableFilterOutcomingData,currentPage]);
 
     let tableData;
     tableData = td.map((item) => {
@@ -94,10 +98,16 @@ const Accounts = () => {
             tableData={tableData}
             tableHead={th}
             mobile={mobile}
+            pageLabel={'Accounts'}
             header={false}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
+            paginationCurrent={1}
+            paginationTotal={20}
+            paginationEvent={() => {
+                console.log('hi')
+            }}
         />
     );
 };
