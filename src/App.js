@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "./api/axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
@@ -216,7 +216,7 @@ function App() {
     }
   ];
 
-  const [user, setUser] = useState(true);
+  const user = useSelector((state) => state.user.userId);
   
   return (
     <div className="App">
