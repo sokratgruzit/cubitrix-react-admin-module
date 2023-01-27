@@ -39,7 +39,7 @@ const tableFilterData = {
       },
       {
         name: "Transaction Status",
-        value: "ts_status",
+        value: "tx_status",
         options: [
           {
             name: "Pending",
