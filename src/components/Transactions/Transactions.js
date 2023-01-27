@@ -40,7 +40,7 @@ const Transactions = () => {
         }
         fetchData();
     }, []);
-
+    console.log(tableFilterOutcomingData)
     let tableData;
     tableData = td.map((item,index) => {
         return(
@@ -121,7 +121,7 @@ const Transactions = () => {
             pageLabel={'Transactions'}
             tableHead={th}
             mobile={mobile}
-            header={2}
+            header={1}
             tableFilterData={tableFilterData}
             tableFilterOutcomingData={tableFilterOutcomingData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
