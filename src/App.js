@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from "react-router-dom";
+import axios from "./api/axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
 import Accounts from "./components/Accounts/Accounts";
@@ -12,22 +13,22 @@ import {
 import Login from './components/Login/Login';
 
 function App() {
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     await axios.post("/accounts/filter", {
-  //       type: "account",
-  //       /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-  //       account_type_id: "user_current",
-  //       search: "user"*/
-  //       // status: "Approved"
-  //     })
-  //     .then(res => {
-  //       console.log(res);
-  //     });
-  //   }
-  //
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    async function fetchData() {
+      await axios.post("/accounts/filter", {
+        type: "account",
+        /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+        account_type_id: "user_current",
+        search: "user"*/
+        // status: "Approved"
+      })
+      .then(res => {
+        console.log(res);
+      });
+    }
+  
+    fetchData();
+  }, []);
   const adminHeaderData = {
     username: 'Michael',
     svg:   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -165,6 +166,7 @@ function App() {
   ];
 
   const [user, setUser] = useState(true);
+  
   return (
     <div className="App">
       {user ? (
@@ -203,7 +205,7 @@ function App() {
        </Routes>
       )}
     </div>
-  );
+  )
 }
 
 export default App;

@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import transactionsReducer from "./transactionsReducer";
+import userReducer from "./userReducer";
 
 const persistConfig = {
   key: "root",
@@ -12,7 +13,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  transactions: persistReducer(persistConfig, transactionsReducer)
+  transactions: persistReducer(persistConfig, transactionsReducer),
+  user: persistReducer(persistConfig, userReducer),
 });
 
 const store = configureStore({
