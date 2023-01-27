@@ -13,13 +13,7 @@ const Transactions = () => {
         mobileExpandFunc
     } = useTableParameters('Transactions');
 
-    let defaultOutcomingData = {
-        selects: {
-            ts_status: 'all'
-        }
-    };
-
-    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
+    const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
     // console.log(tableFilterOutcomingData)
 
     let [td, setTd] = useState([]);
@@ -28,6 +22,7 @@ const Transactions = () => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
                 type: "transactions",
+                filter: tableFilterOutcomingData
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -39,7 +34,7 @@ const Transactions = () => {
                 });
         }
         fetchData();
-    }, []);
+    }, [tableFilterOutcomingData]);
     console.log(tableFilterOutcomingData)
     let tableData;
     tableData = td.map((item,index) => {

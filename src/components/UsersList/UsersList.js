@@ -31,6 +31,7 @@ const UsersList = () => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
                 type: "users",
+                filter: tableFilterOutcomingData
                 /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
                 account_type_id: "user_current",
                 search: "user"*/
@@ -42,7 +43,7 @@ const UsersList = () => {
                 });
         }
         fetchData();
-    }, []);
+    }, [tableFilterOutcomingData]);
 
     let tableData;
     tableData = td.map((item,index) => {
