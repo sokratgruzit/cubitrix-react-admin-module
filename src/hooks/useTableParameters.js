@@ -270,26 +270,21 @@ const th = {
   ],
   adminManagement: [
     {
-      name: "User",
-      width: 15,
-      mobileWidth: 33,
-      id: 0,
-    },
-    {
       name: "Email",
-      width: 15,
+      width: 33,
       mobileWidth: 33,
       id: 1,
     },
     {
       name: "Last Login",
-      width: 15,
+      width: 33,
       mobileWidth: 33,
       id: 2,
     },
     {
       name: "Level",
-      width: 15,
+      width: 33,
+      mobileWidth: 33,
       id: 3,
     }
   ],

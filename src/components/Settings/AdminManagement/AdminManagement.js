@@ -17,23 +17,6 @@ const AdminManagement = () => {
     let [td, setTd] = useState([]);
     let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(1);
-
-    td = [
-        {
-            id: 'CL00001',
-            name: 'Harry Potter',
-            email: 'harrypotter@gmail.com',
-            lastLogin: '01.02.2023',
-            level: 'Super Admin'
-        },
-        {
-            id: 'CL00001',
-            name: 'Harry Potter',
-            email: 'harrypotter@gmail.com',
-            lastLogin: '01.02.2023',
-            level: 'Super Admin'
-        }
-    ]
     useEffect(() => {
         async function fetchData() {
             await axios.post("/accounts/filter", {
@@ -55,15 +38,21 @@ const AdminManagement = () => {
     }, [tableFilterOutcomingData, pageNow]);
 
     let tableData;
-    tableData = td.map((item) => {
+    tableData = td.map((item, index) => {
         return(
             <>
                 <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(item.id)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table" key={item.id + index}>
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
-                            <span>{item.id}</span>
+                            <span>{item.email}</span>
+                        </div>
+                        <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                            <span>-</span>
+                        </div>
+                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
+                            <span>{item.roles}</span>
                         </div>
                     </div>
                     <div className="icon-place">
