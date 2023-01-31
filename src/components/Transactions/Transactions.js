@@ -120,6 +120,7 @@ const Transactions = () => {
             tableHead={th}
             mobile={mobile}
             tableHeader={1}
+            tableFilter={true}
             tableFilterData={tableFilterData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
             paginationCurrent={pageNow}
