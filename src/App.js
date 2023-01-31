@@ -35,7 +35,7 @@ function App() {
   }, []);
 
   const handleLogout = async () => {
-    dispatch({ type: "SET_LOADING" });
+    dispatch({ type: "SET_LOADING", payload: { loading: true } });
 
     try {
       dispatch({
