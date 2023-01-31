@@ -24,7 +24,7 @@ const Login = () => {
     } catch (err) {
       dispatch({ type: "SET_LOADING", payload: { loading: false } });
       setLoginError(err.response.data.message);
-      setTimeout(() => setLoginError(''), 1500);
+      setTimeout(() => setLoginError(''), 5000);
     };
   };
 
