@@ -363,4 +363,12 @@ export const useTableParameters = (name) => {
       mobile,
     };
   }
+  if (name.toLowerCase() === "adminmanagement") {
+    return {
+      th: th.adminManagement,
+      mobileExpandFunc,
+      mobileExpand,
+      mobile,
+    };
+  }
 };

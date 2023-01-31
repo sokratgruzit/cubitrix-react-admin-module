@@ -90,6 +90,7 @@ const Accounts = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Accounts'}
+            tableFilter={true}
             tableFilterData={tableFilterData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
             paginationCurrent={pageNow}

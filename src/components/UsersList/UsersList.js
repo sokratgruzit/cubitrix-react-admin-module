@@ -97,6 +97,7 @@ const UsersList = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Users List'}
+            tableFilter={true}
             tableFilterData={tableFilterData}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
             paginationCurrent={pageNow}

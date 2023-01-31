@@ -6,12 +6,11 @@ import axios from "../../../api/axios";
 
 const AdminManagement = () => {
     const {
-        tableFilterData,
         th,
         mobile,
         mobileExpandFunc,
         mobileExpand
-    } = useTableParameters('Accounts');
+    } = useTableParameters('AdminManagement');
 
     let defaultOutcomingData = {};
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
@@ -35,25 +34,25 @@ const AdminManagement = () => {
             level: 'Super Admin'
         }
     ]
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         await axios.post("/accounts/filter", {
-    //             type: "account",
-    //             filter: tableFilterOutcomingData,
-    //             page: pageNow
-    //             /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-    //             account_type_id: "user_current",
-    //             search: "user"*/
-    //             // status: "Approved"
-    //         })
-    //             .then(res => {
-    //                 console.log(res);
-    //                 setPageAll(res.data.success.pages);
-    //                 setTd(res.data.success.data)
-    //             });
-    //     }
-    //     fetchData();
-    // }, [tableFilterOutcomingData, pageNow]);
+    useEffect(() => {
+        async function fetchData() {
+            await axios.post("/accounts/filter", {
+                type: "admins",
+                filter: tableFilterOutcomingData,
+                page: pageNow
+                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
+                account_type_id: "user_current",
+                search: "user"*/
+                // status: "Approved"
+            })
+                .then(res => {
+                    console.log(res);
+                    setPageAll(res.data.success.pages);
+                    setTd(res.data.success.data)
+                });
+        }
+        fetchData();
+    }, [tableFilterOutcomingData, pageNow]);
 
     let tableData;
     tableData = td.map((item) => {
@@ -90,7 +89,7 @@ const AdminManagement = () => {
             tableHead={th}
             mobile={mobile}
             pageLabel={'Accounts'}
-            tableFilterData={tableFilterData}
+            tableFilter={false}
             setTableFilterOutcomingData={setTableFilterOutcomingData}
             paginationCurrent={pageNow}
             paginationTotal={pageAll}
