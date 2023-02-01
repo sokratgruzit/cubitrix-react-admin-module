@@ -1,10 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
+import {
+    AdminPanel,
+    Popup,
+    Button
+} from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../../hooks/useTableParameters";
 import axios from "../../../api/axios";
 
 const AdminManagement = () => {
+    const [popUpActive, setPopUpActive] = useState(false);
+    const [addAdminError, setAddAdminError] = useState('');
+
     const {
         th,
         mobile,
@@ -44,7 +51,7 @@ const AdminManagement = () => {
                 <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(item.id)
                 }}>
-                    <div className="table" key={item.id + index}>
+                    <div className="table" key={item.id + index + item.email }>
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.email}</span>
                         </div>
@@ -72,18 +79,75 @@ const AdminManagement = () => {
             </>
         )
     })
+
+    const addAdminSelect = {
+        name: 'Role',
+        value: 'role',
+        options: [
+            {
+                name: 'Super Admin',
+                value: 'SUPER_ADMIN'
+            },
+            {
+                name: 'Admin',
+                value: 'ADMIN',
+            },
+            {
+                name: 'Moderator',
+                value: 'MODERATOR',
+            }
+        ]
+    };
+
+    const handleAddAdminBtnClick = async (addAdminData) => {
+        setAddAdminError('');
+        try {
+            await axios.post("/api/auth/register", addAdminData);
+            setPopUpActive(false);
+        } catch (err) {
+            setAddAdminError('Account already exists');
+        };
+    };
+
+    const handlePopUpClose = () => {
+        setPopUpActive(false);
+        setAddAdminError('');
+    };
+
     return (
-        <AdminPanel
-            tableData={tableData}
-            tableHead={th}
-            mobile={mobile}
-            pageLabel={'Accounts'}
-            tableFilter={false}
-            setTableFilterOutcomingData={setTableFilterOutcomingData}
-            paginationCurrent={pageNow}
-            paginationTotal={pageAll}
-            paginationEvent={page => setPageNow(page)}
-        />
+        <>
+            <AdminPanel
+                tableData={tableData}
+                tableHead={th}
+                mobile={mobile}
+                pageLabel={'Accounts'}
+                tableHeaderButtons={
+                    <Button
+                        label={'Registration'}
+                        size={'btn-lg'}
+                        type={'btn-primary'}
+                        arrow={'arrow-none'}
+                        element={'button'}
+                        onClick={() => setPopUpActive(true)}
+                    />
+                }
+                tableFilter={false}
+                setTableFilterOutcomingData={setTableFilterOutcomingData}
+                paginationCurrent={pageNow}
+                paginationTotal={pageAll}
+                paginationEvent={page => setPageNow(page)}
+            />
+            {popUpActive && (
+                <Popup
+                    type={'addAdmin'}
+                    label={'Add Admin'}
+                    addAdminSelect={addAdminSelect}
+                    handleAddAdminBtnClick={handleAddAdminBtnClick}
+                    addAdminError={addAdminError}
+                    handlePopUpClose={handlePopUpClose}
+                />
+            )}
+        </>
     );
 };
 

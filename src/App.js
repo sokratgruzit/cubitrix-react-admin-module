@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "./api/axios";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -16,6 +16,7 @@ import Login from './components/Login/Login';
 
 function App() {
   const dispatch = useDispatch();
+  const params = useParams();
 
   useEffect(() => {
     async function fetchData() {
@@ -230,6 +231,7 @@ function App() {
                     svg={item.svg}
                     customStyles={{width: '100%'}}
                     subMenu={item.subMenu}
+                    active={params[Object.keys(params)[0]] === item.name.toLowerCase()}
                   />
                 )
               })}
