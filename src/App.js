@@ -18,8 +18,6 @@ function App() {
   const dispatch = useDispatch();
   const params = useParams();
 
-  console.log(params[Object.keys(params)[0]]);
-
   useEffect(() => {
     async function fetchData() {
       await axios.post("/accounts/filter", {
