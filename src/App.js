@@ -18,6 +18,8 @@ function App() {
   const dispatch = useDispatch();
   const params = useParams();
 
+  console.log(params[Object.keys(params)[0]]);
+
   useEffect(() => {
     async function fetchData() {
       await axios.post("/accounts/filter", {
@@ -231,7 +233,7 @@ function App() {
                     svg={item.svg}
                     customStyles={{width: '100%'}}
                     subMenu={item.subMenu}
-                    active={params[Object.keys(params)[0]] === item.name.toLowerCase()}
+                    active={item.route.toLowerCase().includes(params[Object.keys(params)[0]])}
                   />
                 )
               })}
