@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {AdminPanel} from "@cubitrix/cubitrix-react-ui-module";
+import {
+    AdminPanel
+} from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import axios from "../../api/axios";
 
@@ -84,6 +86,7 @@ const Accounts = () => {
             </>
         )
     })
+
     return (
         <AdminPanel
             tableData={tableData}
