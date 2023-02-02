@@ -231,7 +231,7 @@ function App() {
                     svg={item.svg}
                     customStyles={{width: '100%'}}
                     subMenu={item.subMenu}
-                    active={params[Object.keys(params)[0]] === item.name.toLowerCase()}
+                    active={item.route.toLowerCase().includes(params[Object.keys(params)[0]])}
                   />
                 )
               })}
