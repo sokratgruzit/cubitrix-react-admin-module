@@ -84,10 +84,6 @@ const tableFilterData = {
         value: "account_type_id",
         options: [
           {
-            name: "Main",
-            value: "user_current",
-          },
-          {
             name: "Loan",
             value: "loan",
           },
