@@ -95,6 +95,7 @@ const UsersList = () => {
         <AdminPanel
             tableData={tableData}
             tableHead={th}
+            tableSearchSelect={false}
             mobile={mobile}
             pageLabel={'Users List'}
             tableFilter={true}
