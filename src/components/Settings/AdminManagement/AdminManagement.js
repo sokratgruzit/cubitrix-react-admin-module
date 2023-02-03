@@ -26,17 +26,12 @@ const AdminManagement = () => {
     let [pageAll, setPageAll] = useState(1);
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/accounts/filter", {
-                type: "account",
+            await axios.post("/admin_data/filter", {
+                type: "admins",
                 filter: tableFilterOutcomingData,
                 page: pageNow
-                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-                account_type_id: "user_current",
-                search: "user"*/
-                // status: "Approved"
             })
                 .then(res => {
-                    console.log(res);
                     setPageAll(res.data.success.pages);
                     setTd(res.data.success.data)
                 });
@@ -51,7 +46,7 @@ const AdminManagement = () => {
                 <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(item.id)
                 }}>
-                    <div className="table" key={item.id + index}>
+                    <div className="table" key={item.id + index + item.email }>
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.email}</span>
                         </div>
@@ -102,7 +97,7 @@ const AdminManagement = () => {
     const handleAddAdminBtnClick = async (addAdminData) => {
         setAddAdminError('');
         try {
-            await axios.post("/api/auth/register", addAdminData);    
+            await axios.post("/api/auth/register", addAdminData);
             setPopUpActive(false);
         } catch (err) {
             setAddAdminError('Account already exists');
@@ -122,7 +117,7 @@ const AdminManagement = () => {
                 mobile={mobile}
                 pageLabel={'Accounts'}
                 tableHeaderButtons={
-                    <Button 
+                    <Button
                         label={'Registration'}
                         size={'btn-lg'}
                         type={'btn-primary'}
@@ -138,7 +133,7 @@ const AdminManagement = () => {
                 paginationEvent={page => setPageNow(page)}
             />
             {popUpActive && (
-                <Popup 
+                <Popup
                     type={'addAdmin'}
                     label={'Add Admin'}
                     addAdminSelect={addAdminSelect}

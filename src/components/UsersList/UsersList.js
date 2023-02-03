@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import axios from "../../api/axios";
+import moment from "moment";
 
 const UsersList = () => {
     const {
@@ -21,7 +22,7 @@ const UsersList = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/accounts/filter", {
+            await axios.post("/admin_data/filter", {
                 type: "users",
                 filter: tableFilterOutcomingData,
                 page: pageNow
@@ -63,7 +64,7 @@ const UsersList = () => {
                             <span>{item.nationality}</span>
                         </div>
                         <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
-                            <span>{item.date_of_birth}</span>
+                            <span>{moment(item.date_of_birth).format('LL')}</span>
                         </div>
                     </div>
                     <div className="icon-place">
@@ -83,7 +84,7 @@ const UsersList = () => {
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[5].name}</div>
-                                <span>{item.date_of_birth}</span>
+                                <span>{moment(item.date_of_birth).format('LL')}</span>
                             </div>
                         </div>
                     </div>
