@@ -143,6 +143,24 @@ const tableFilterData = {
           },
         ],
       },
+      {
+        name: "Account Type Id",
+        value: "account_type_id",
+        options: [
+          {
+            name: "Loan",
+            value: "loan",
+          },
+          {
+            name: "Staking",
+            value: "staking",
+          },
+          {
+            name: "Trade",
+            value: "trade",
+          },
+        ],
+      },
     ],
   },
 };
@@ -282,7 +300,7 @@ const th = {
       width: 33,
       mobileWidth: 33,
       id: 3,
-    }
+    },
   ],
 };
 
