@@ -21,24 +21,18 @@ const Transactions = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/accounts/filter", {
+            await axios.post("/admin_data/filter", {
                 type: "transactions",
                 filter: tableFilterOutcomingData,
                 page: pageNow
-                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-                account_type_id: "user_current",
-                search: "user"*/
-                // status: "Approved"
             })
                 .then(res => {
-                    console.log(res);
                     setPageAll(res.data.success.pages);
                     setTd(res.data.success.data)
                 });
         }
         fetchData();
     }, [tableFilterOutcomingData,pageNow]);
-    console.log(tableFilterOutcomingData)
     let tableData;
     tableData = td.map((item,index) => {
         return(

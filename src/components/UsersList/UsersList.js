@@ -21,7 +21,7 @@ const UsersList = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/accounts/filter", {
+            await axios.post("/admin_data/filter", {
                 type: "users",
                 filter: tableFilterOutcomingData,
                 page: pageNow
