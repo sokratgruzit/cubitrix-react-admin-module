@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import axios from "../../api/axios";
+import moment from 'moment';
 
 const Transactions = () => {
     const {
@@ -62,13 +63,27 @@ const Transactions = () => {
                             <span>{item.domination}</span>
                         </div>
                         <div className={`td ${th[6].mobileWidth ? true : false }`} style={{width: `${mobile ? th[6].mobileWidth : th[6].width}%`}}>
-                            <span>{item.createdAt}</span>
+                            <span>{moment(item.createdAt).format('LL')}</span>
                         </div>
                         <div className={`td ${th[7].mobileWidth ? true : false }`} style={{width: `${mobile ? th[7].mobileWidth : th[7].width}%`}}>
-                            <span>{item.tx_status}</span>
+                            <span
+                                className={`alert-status-box 
+                                ${item.tx_status === 'active' && 'alert-status-blue'} 
+                                ${item.tx_status === 'active1' && 'alert-status-yellow'}
+                                ${item.tx_status === 'pending' && 'alert-status-green'}`}
+                            >
+                                {item.tx_status}
+                            </span>
                         </div>
                         <div className={`td ${th[8].mobileWidth ? true : false }`} style={{width: `${mobile ? th[8].mobileWidth : th[8].width}%`}}>
-                            <span>{item.tx_type}</span>
+                            <span
+                                className={`alert-status-box 
+                                ${item.tx_type === 'deposit' && 'alert-status-blue'} 
+                                ${item.tx_type === 'withdraw' && 'alert-status-yellow'}
+                                ${item.tx_type === 'transfer' && 'alert-status-green'}`}
+                            >
+                                {item.tx_type}
+                            </span>
                         </div>
                     </div>
                     <div className="icon-place">
@@ -91,15 +106,29 @@ const Transactions = () => {
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[6].name}</div>
-                                <span>{item.createdAt}</span>
+                                <span>{moment(item.createdAt).format('LL')}</span>
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[7].name}</div>
-                                <span>{item.tx_status}</span>
+                                <span
+                                    className={`alert-status-box 
+                                    ${item.tx_status === 'active' && 'alert-status-blue'} 
+                                    ${item.tx_status === 'active1' && 'alert-status-yellow'}
+                                    ${item.tx_status === 'pending' && 'alert-status-green'}`}
+                                >
+                                    {item.tx_status}
+                                </span>
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[8].name}</div>
-                                <span>{item.tx_type}</span>
+                                <span
+                                    className={`alert-status-box 
+                                    ${item.tx_type === 'deposit' && 'alert-status-blue'} 
+                                    ${item.tx_type === 'withdraw' && 'alert-status-yellow'}
+                                    ${item.tx_type === 'transfer' && 'alert-status-green'}`}
+                                >
+                                    {item.tx_type}
+                                </span>
                             </div>
                         </div>
                     </div>

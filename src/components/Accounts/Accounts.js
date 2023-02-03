@@ -5,6 +5,7 @@ import {
 } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import axios from "../../api/axios";
+import moment from 'moment';
 
 const Accounts = () => {
     const {
@@ -81,7 +82,7 @@ const Accounts = () => {
                             <span>{item.balance}</span>
                         </div>
                         <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
-                            <span>{item.createdAt}</span>
+                            <span>{moment(item.createdAt).format('LL')}</span>
                         </div>
                     </div>
                     <div className="icon-place">
@@ -97,7 +98,7 @@ const Accounts = () => {
                             </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[4].name}</div>
-                                <span>{item.createdAt}</span>
+                                <span>{moment(item.createdAt).format('LL')}</span>
                             </div>
                         </div>
                     </div>
