@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { Routes, Route, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "./api/axios";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
 import Accounts from "./components/Accounts/Accounts";
@@ -17,23 +15,6 @@ import Login from './components/Login/Login';
 function App() {
   const dispatch = useDispatch();
   const params = useParams();
-
-  useEffect(() => {
-    async function fetchData() {
-      await axios.post("/accounts/filter", {
-        type: "account",
-        /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-        account_type_id: "user_current",
-        search: "user"*/
-        // status: "Approved"
-      })
-      .then(res => {
-        console.log(res);
-      });
-    }
-
-    fetchData();
-  }, []);
 
   const handleLogout = async () => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
