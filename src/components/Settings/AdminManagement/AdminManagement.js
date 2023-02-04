@@ -118,7 +118,7 @@ const AdminManagement = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/admin_data/filter", {
+            await axios.post("/api/data/filter", {
                 type: "admins",
                 filter: tableFilterOutcomingData,
                 page: pageNow
