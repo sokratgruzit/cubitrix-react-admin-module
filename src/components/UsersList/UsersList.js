@@ -20,6 +20,7 @@ const UsersList = () => {
     let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(1);
     const [tableExpand, setTableExpand] = useState(null);
+    const [accountType, setAccountType] = useState(null);
 
     let tableExpandFunc = (id) => {
         if(id !== tableExpand) {
@@ -124,6 +125,15 @@ const UsersList = () => {
                 });
         }
         fetchData();
+
+        if(tableFilterOutcomingData.selects) {
+            if(tableFilterOutcomingData.selects.account_type_id !== 'all'){
+                setAccountType(tableFilterOutcomingData.selects.account_type_id);
+            }
+        }
+        else {
+            setAccountType(null);
+        }
     }, [tableFilterOutcomingData,pageNow]);
 
     let tableData;
@@ -137,7 +147,7 @@ const UsersList = () => {
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.name}</span>
                         </div>
-                        <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                        <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${accountType !== null || tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
                             <div>
                             <span>
                                 {item.address}
@@ -150,7 +160,7 @@ const UsersList = () => {
                             <div className={`td-expand`}>
                                 {item.inner_accounts.map((subItem) => {
                                     return (
-                                        <div><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                        accountType !== subItem.account_category && accountType !== null ? '' : <div><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                     )
                                 })}
                             </div>

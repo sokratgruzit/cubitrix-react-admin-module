@@ -146,10 +146,6 @@ const AdminManagement = () => {
         value: 'role',
         options: [
             {
-                name: 'Super Admin',
-                value: 'SUPER_ADMIN'
-            },
-            {
                 name: 'Admin',
                 value: 'ADMIN',
             },

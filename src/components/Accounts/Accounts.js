@@ -54,7 +54,6 @@ const Accounts = () => {
         else {
             setAccountType(null);
         }
-        console.log(tableFilterOutcomingData)
     }, [tableFilterOutcomingData, pageNow]);
     let dropdownData = [
         {
@@ -157,7 +156,7 @@ const Accounts = () => {
                             <div className={`td-expand`}>
                                 {item.inner_accounts.map((subItem) => {
                                     return (
-                                        <div className={`${accountType !== subItem.account_category && accountType !== null ? 'hide' : ''}`}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                        accountType !== subItem.account_category && accountType !== null ? '' : <div><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                     )
                                 })}
                             </div>
