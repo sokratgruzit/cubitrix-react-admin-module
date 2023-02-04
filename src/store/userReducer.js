@@ -9,7 +9,7 @@ const userReducer = (state = INIT_STATE, { type, payload }) => {
     }
 
     if (type === "LOGIN") {
-        return { ...state, userId: payload.userId, loading: false };
+        return { ...state, userId: payload.userId, loading: false, token: payload.token };
     }
     
     if (type === "LOGOUT") {

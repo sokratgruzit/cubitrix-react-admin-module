@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import axios from "../../api/axios";
+import useAxios from "../../hooks/useAxios";
 
 import { Signin } from "@cubitrix/cubitrix-react-ui-module";
 import { useState } from "react";
 
 const Login = () => {
+  const axios = useAxios();
   const [loginError, setLoginError] = useState('');
   const { loading } = useSelector((state) => state.user);
 
@@ -16,10 +17,10 @@ const Login = () => {
 
     try {
       const { data } = await axios.post("/api/auth/login ", currentUser);    
-      const { userId } = data;
+      const { userId, token } = data;
       dispatch({
         type: "LOGIN",
-        payload: { userId }
+        payload: { userId, token }
       });
     } catch (err) {
       dispatch({ type: "SET_LOADING", payload: { loading: false } });

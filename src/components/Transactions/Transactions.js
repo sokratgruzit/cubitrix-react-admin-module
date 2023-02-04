@@ -2,10 +2,11 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
-import axios from "../../api/axios";
+import useAxios from "../../hooks/useAxios";
 import moment from 'moment';
 
 const Transactions = () => {
+    const axios = useAxios();
     const {
         tableFilterData,
         th,
@@ -38,10 +39,10 @@ const Transactions = () => {
     tableData = td.map((item,index) => {
         return(
             <>
-                <div className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
+                <div key={item.id} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(index)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.tx_hash}</span>
                         </div>

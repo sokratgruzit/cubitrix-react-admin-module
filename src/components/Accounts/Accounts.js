@@ -5,10 +5,11 @@ import {
     MoreButton
 } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
-import axios from "../../api/axios";
+import useAxios from "../../hooks/useAxios";
 import moment from 'moment';
 
 const Accounts = () => {
+    const axios = useAxios();
     const {
         tableFilterData,
         th,
@@ -54,7 +55,6 @@ const Accounts = () => {
         else {
             setAccountType(null);
         }
-        console.log(tableFilterOutcomingData)
     }, [tableFilterOutcomingData, pageNow]);
     let dropdownData = [
         {
@@ -137,10 +137,10 @@ const Accounts = () => {
     tableData = td.map((item) => {
         return(
             <>
-                <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
+                <div key={item.id} className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(item.id)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.account_type_id.name}</span>
                         </div>
@@ -157,7 +157,7 @@ const Accounts = () => {
                             <div className={`td-expand`}>
                                 {item.inner_accounts.map((subItem) => {
                                     return (
-                                        <div className={`${accountType !== subItem.account_category && accountType !== null ? 'hide' : ''}`}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                        accountType !== subItem.account_category && accountType !== null ? '' : <div><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                     )
                                 })}
                             </div>
