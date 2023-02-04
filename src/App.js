@@ -1,4 +1,4 @@
-import { Routes, Route, useParams } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
@@ -14,7 +14,7 @@ import Login from './components/Login/Login';
 
 function App() {
   const dispatch = useDispatch();
-  const params = useParams();
+  const location = useLocation();
 
   const handleLogout = async () => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
@@ -212,7 +212,8 @@ function App() {
                     svg={item.svg}
                     customStyles={{width: '100%'}}
                     subMenu={item.subMenu}
-                    active={item.route.toLowerCase().includes(params[Object.keys(params)[0]])}
+                    active={location.pathname === item.route}
+                    subMenuActive={location.pathname.includes(item.subMenu?.route)}
                   />
                 )
               })}

@@ -226,19 +226,14 @@ const th = {
     },
     {
       name: "Address",
-      width: 25,
+      width: 35,
       mobileWidth: 33,
       id: 1,
     },
     {
-      name: "Owner",
-      width: 15,
-      mobileWidth: 33,
-      id: 2,
-    },
-    {
       name: "Balance",
       width: 15,
+      mobileWidth: 33,
       id: 3,
     },
     {
@@ -250,30 +245,29 @@ const th = {
   users: [
     {
       name: "Name",
-      width: 15,
+      width: 10,
       mobileWidth: 33,
       id: 0,
     },
     {
       name: "Address",
-      width: 15,
+      width: 35,
       mobileWidth: 33,
       id: 1,
     },
     {
       name: "Email",
       width: 15,
-      mobileWidth: 33,
       id: 2,
     },
     {
       name: "Mobile",
-      width: 15,
+      width: 10,
       id: 3,
     },
     {
       name: "Nationality",
-      width: 15,
+      width: 10,
       id: 4,
     },
     {
