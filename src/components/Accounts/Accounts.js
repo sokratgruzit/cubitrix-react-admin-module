@@ -136,10 +136,10 @@ const Accounts = () => {
     tableData = td.map((item) => {
         return(
             <>
-                <div className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
+                <div key={item.id} className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(item.id)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.account_type_id.name}</span>
                         </div>

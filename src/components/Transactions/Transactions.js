@@ -38,10 +38,10 @@ const Transactions = () => {
     tableData = td.map((item,index) => {
         return(
             <>
-                <div className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
+                <div key={item.id} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(index)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.tx_hash}</span>
                         </div>

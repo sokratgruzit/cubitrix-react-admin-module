@@ -140,10 +140,10 @@ const UsersList = () => {
     tableData = td.map((item,index) => {
         return(
             <>
-                <div className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
+                <div key={index + item.address} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
                     mobileExpandFunc(index)
                 }}>
-                    <div className="table" key={item.id}>
+                    <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.name}</span>
                         </div>
@@ -158,9 +158,9 @@ const UsersList = () => {
 
                             </div>
                             <div className={`td-expand`}>
-                                {item.inner_accounts.map((subItem) => {
+                                {item.inner_accounts.map((subItem,index) => {
                                     return (
-                                        accountType !== subItem.account_category && accountType !== null ? '' : <div><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                        accountType !== subItem.account_category && accountType !== null ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                     )
                                 })}
                             </div>
