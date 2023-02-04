@@ -14,6 +14,12 @@ const AdminManagement = () => {
     const userId = useSelector(state => state.user.userId);
     const [popUpActive, setPopUpActive] = useState(false);
     const [addAdminError, setAddAdminError] = useState('');
+    const [popUpData, setPopUpData] = useState({
+        role: '',
+        email: '',
+        password: ''
+    });
+    const [edit, setEdit] = useState(false);
 
     const {
         th,
@@ -28,7 +34,7 @@ const AdminManagement = () => {
     let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(1);
 
-    let dynamicDropDown = (email) => {
+    let dynamicDropDown = (email,password,role) => {
         const deleteUser = async (email) => {
             console.log(email)
             try {
@@ -40,24 +46,22 @@ const AdminManagement = () => {
             };
         };
 
-        const editUser = async (userData) => {
-            console.log(userData)
-            try {
-                await axios.post("/api/data/edit-user", {
-                    userData
-                });
-            } catch (err) {
-                console.log(err);
-            };
+        const editUser = async (email, password, role) => {
+            setPopUpData({
+                email,
+                password,
+                role
+            });
+            setPopUpActive(true);
+            setEdit(true);
         };
-
         let dropdownData = [
             {
                 id: 0,
                 list: [
                     {
                         title: "Edit",
-                        onClick: () => editUser("user data give me"),
+                        onClick: () => editUser(email, password, role),
                         svg: (
                             <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M10.0495 2.00002L3.2078 9.24168C2.94947 9.51668 2.69947 10.0584 2.64947 10.4334L2.34114 13.1333C2.2328 14.1083 2.9328 14.775 3.89947 14.6084L6.5828 14.15C6.9578 14.0834 7.4828 13.8084 7.74114 13.525L14.5828 6.28335C15.7661 5.03335 16.2995 3.60835 14.4578 1.86668C12.6245 0.141685 11.2328 0.750018 10.0495 2.00002Z" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
@@ -150,7 +154,7 @@ const AdminManagement = () => {
                         </div>
                     </div>
                     <div className="table-more">
-                        <MoreButton dropdownData={dynamicDropDown(item.email)} />
+                        <MoreButton dropdownData={dynamicDropDown(item.email, item.password, item.role)} />
                     </div>
                     <div className="icon-place">
                         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -188,7 +192,8 @@ const AdminManagement = () => {
     const handleAddAdminBtnClick = async (addAdminData) => {
         setAddAdminError('');
         try {
-            await axios.post("/api/auth/register", addAdminData);
+            await axios.post(`/api/auth/${!edit ? 'register' : 'edit'}`, addAdminData);
+            setEdit(false);
             setPopUpActive(false);
         } catch (err) {
             setAddAdminError('Account already exists');
@@ -231,6 +236,8 @@ const AdminManagement = () => {
                     handleAddAdminBtnClick={handleAddAdminBtnClick}
                     addAdminError={addAdminError}
                     handlePopUpClose={handlePopUpClose}
+                    popUpData={popUpData}
+                    setPopUpData={setPopUpData}
                 />
             )}
         </>
