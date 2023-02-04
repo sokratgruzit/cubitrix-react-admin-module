@@ -192,7 +192,10 @@ const AdminManagement = () => {
     const handleAddAdminBtnClick = async (addAdminData) => {
         setAddAdminError('');
         try {
-            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, addAdminData);
+            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, addAdminData)
+            .then(res => {
+                console.log(res)
+            });
             setEdit(false);
             setPopUpActive(false);
         } catch (err) {
