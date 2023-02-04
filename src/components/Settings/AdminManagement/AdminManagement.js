@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {
     AdminPanel,
@@ -16,7 +15,8 @@ const AdminManagement = () => {
     const [popUpData, setPopUpData] = useState({
         roles: '',
         email: '',
-        password: ''
+        password: '',
+        id: ''
     });
     const [edit, setEdit] = useState(false);
 
@@ -29,9 +29,10 @@ const AdminManagement = () => {
 
     let defaultOutcomingData = {};
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
-    let [td, setTd] = useState([]);
-    let [pageNow, setPageNow] = useState(1);
-    let [pageAll, setPageAll] = useState(1);
+    const [td, setTd] = useState([]);
+    const [pageNow, setPageNow] = useState(1);
+    const [pageAll, setPageAll] = useState(1);
+    const [message, setMessage] = useState('');
 
     let dynamicDropDown = (email,password,roles, id) => {
         const deleteUser = async (email) => {
@@ -133,7 +134,7 @@ const AdminManagement = () => {
             });
         }
         fetchData();
-    }, [tableFilterOutcomingData, pageNow]);
+    }, [tableFilterOutcomingData, pageNow, axios, message]);
 
     let tableData;
     tableData = td.map((item, index) => {
@@ -189,12 +190,13 @@ const AdminManagement = () => {
         ]
     };
 
-    const handleAddAdminBtnClick = async (addAdminData) => {
+    const handleAddAdminBtnClick = async () => {
         setAddAdminError('');
+        
         try {
-            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, addAdminData)
+            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, popUpData)
             .then(res => {
-                console.log(res)
+                setMessage(res.data)
             });
             setEdit(false);
             setPopUpActive(false);
@@ -207,8 +209,6 @@ const AdminManagement = () => {
         setPopUpActive(false);
         setAddAdminError('');
     };
-
-    console.log(popUpData)
 
     return (
         <>
