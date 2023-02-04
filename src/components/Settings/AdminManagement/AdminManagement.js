@@ -47,6 +47,7 @@ const AdminManagement = () => {
                 password,
                 role
             });
+            setPopUpActive(true);
             setEdit(true);
         };
         let dropdownData = [
