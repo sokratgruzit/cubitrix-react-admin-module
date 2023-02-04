@@ -11,7 +11,6 @@ import useAxios from "../../../hooks/useAxios";
 
 const AdminManagement = () => {
     const axios = useAxios();
-    const userId = useSelector(state => state.user.userId);
     const [popUpActive, setPopUpActive] = useState(false);
     const [addAdminError, setAddAdminError] = useState('');
     const [popUpData, setPopUpData] = useState({
@@ -36,7 +35,6 @@ const AdminManagement = () => {
 
     let dynamicDropDown = (email,password,role) => {
         const deleteUser = async (email) => {
-            console.log(email)
             try {
                 await axios.post("/api/data/delete-user", {
                     email: email
@@ -55,6 +53,7 @@ const AdminManagement = () => {
             setPopUpActive(true);
             setEdit(true);
         };
+
         let dropdownData = [
             {
                 id: 0,
@@ -127,10 +126,10 @@ const AdminManagement = () => {
                 filter: tableFilterOutcomingData,
                 page: pageNow
             })
-                .then(res => {
-                    setPageAll(res.data.success.pages);
-                    setTd(res.data.success.data)
-                });
+            .then(res => {
+                setPageAll(res.data.success.pages);
+                setTd(res.data.success.data)
+            });
         }
         fetchData();
     }, [tableFilterOutcomingData, pageNow]);
@@ -192,7 +191,7 @@ const AdminManagement = () => {
     const handleAddAdminBtnClick = async (addAdminData) => {
         setAddAdminError('');
         try {
-            await axios.post(`/api/auth/${!edit ? 'register' : 'edit'}`, addAdminData);
+            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, addAdminData);
             setEdit(false);
             setPopUpActive(false);
         } catch (err) {
