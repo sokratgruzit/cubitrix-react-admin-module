@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {
     AdminPanel,
@@ -9,6 +10,7 @@ import { useTableParameters } from "../../../hooks/useTableParameters";
 import axios from "../../../api/axios";
 
 const AdminManagement = () => {
+    const userId = useSelector(state => state.user.userId);
     const [popUpActive, setPopUpActive] = useState(false);
     const [addAdminError, setAddAdminError] = useState('');
 
@@ -24,6 +26,10 @@ const AdminManagement = () => {
     let [td, setTd] = useState([]);
     let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(1);
+
+    const handleDeleteUser = async (id) => {
+
+    };
 
     let dropdownData = [
         {
@@ -42,7 +48,7 @@ const AdminManagement = () => {
                 },
                 {
                     title: "Delete",
-                    onClick: () => console.log('delete all'),
+                    onClick: () => handleDeleteUser(userId),
                     svg: (
                         <svg
                             width="18"
@@ -163,6 +169,8 @@ const AdminManagement = () => {
     const handleAddAdminBtnClick = async (addAdminData) => {
         setAddAdminError('');
         try {
+            addAdminData.userId = userId;
+
             await axios.post("/api/auth/register", addAdminData);
             setPopUpActive(false);
         } catch (err) {
