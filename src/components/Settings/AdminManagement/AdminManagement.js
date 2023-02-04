@@ -32,7 +32,7 @@ const AdminManagement = () => {
         const deleteUser = async (email) => {
             console.log(email)
             try {
-                await axios.post("/api/delete-user", {
+                await axios.post("/api/data/delete-user", {
                     email: email
                 });
             } catch (err) {
@@ -43,7 +43,7 @@ const AdminManagement = () => {
         const editUser = async (userData) => {
             console.log(userData)
             try {
-                await axios.post("/users/edit-user", {
+                await axios.post("/api/data/edit-user", {
                     userData
                 });
             } catch (err) {
