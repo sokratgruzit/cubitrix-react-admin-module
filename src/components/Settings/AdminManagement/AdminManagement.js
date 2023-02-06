@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import {
     AdminPanel,
@@ -11,13 +10,13 @@ import useAxios from "../../../hooks/useAxios";
 
 const AdminManagement = () => {
     const axios = useAxios();
-    const userId = useSelector(state => state.user.userId);
     const [popUpActive, setPopUpActive] = useState(false);
     const [addAdminError, setAddAdminError] = useState('');
     const [popUpData, setPopUpData] = useState({
         roles: '',
         email: '',
-        password: ''
+        password: '',
+        id: ''
     });
     const [edit, setEdit] = useState(false);
 
@@ -30,13 +29,13 @@ const AdminManagement = () => {
 
     let defaultOutcomingData = {};
     const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState(defaultOutcomingData);
-    let [td, setTd] = useState([]);
-    let [pageNow, setPageNow] = useState(1);
-    let [pageAll, setPageAll] = useState(1);
+    const [td, setTd] = useState([]);
+    const [pageNow, setPageNow] = useState(1);
+    const [pageAll, setPageAll] = useState(1);
+    const [message, setMessage] = useState('');
 
     let dynamicDropDown = (email,password,roles, id) => {
         const deleteUser = async (email) => {
-            console.log(email)
             try {
                 await axios.post("/api/data/delete-user", {
                     email: email
@@ -56,6 +55,7 @@ const AdminManagement = () => {
             setPopUpActive(true);
             setEdit(true);
         };
+
         let dropdownData = [
             {
                 id: 0,
@@ -128,13 +128,13 @@ const AdminManagement = () => {
                 filter: tableFilterOutcomingData,
                 page: pageNow
             })
-                .then(res => {
-                    setPageAll(res.data.success.pages);
-                    setTd(res.data.success.data)
-                });
+            .then(res => {
+                setPageAll(res.data.success.pages);
+                setTd(res.data.success.data)
+            });
         }
         fetchData();
-    }, [tableFilterOutcomingData, pageNow]);
+    }, [tableFilterOutcomingData, pageNow, axios, message]);
 
     let tableData;
     tableData = td.map((item, index) => {
@@ -190,10 +190,14 @@ const AdminManagement = () => {
         ]
     };
 
-    const handleAddAdminBtnClick = async (addAdminData) => {
+    const handleAddAdminBtnClick = async () => {
         setAddAdminError('');
+        
         try {
-            await axios.post(`/api/auth/${!edit ? 'register' : 'edit'}`, addAdminData);
+            await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, popUpData)
+            .then(res => {
+                setMessage(res.data)
+            });
             setEdit(false);
             setPopUpActive(false);
         } catch (err) {
@@ -210,8 +214,6 @@ const AdminManagement = () => {
             password: ''
         });
     };
-
-    console.log(popUpData)
 
     return (
         <>
