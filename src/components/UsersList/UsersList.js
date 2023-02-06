@@ -114,10 +114,6 @@ const UsersList = () => {
                 type: "users",
                 filter: tableFilterOutcomingData,
                 page: pageNow
-                /*address: "0xDAFEA492D9c6733ae3d56b7Ed1ADB60692c98Bc5",
-                account_type_id: "user_current",
-                search: "user"*/
-                // status: "Approved"
             })
                 .then(res => {
                     console.log(res);
@@ -130,6 +126,9 @@ const UsersList = () => {
         if(tableFilterOutcomingData.selects) {
             if(tableFilterOutcomingData.selects.account_type_id !== 'all'){
                 setAccountType(tableFilterOutcomingData.selects.account_type_id);
+            }
+            else {
+                setAccountType(null);
             }
         }
         else {
@@ -148,7 +147,7 @@ const UsersList = () => {
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.name}</span>
                         </div>
-                        <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${accountType !== null || tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                        <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${ accountType !== null || tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
                             <div>
                             <span>
                                 {item.address}
@@ -161,7 +160,7 @@ const UsersList = () => {
                             <div className={`td-expand`}>
                                 {item.inner_accounts.map((subItem,index) => {
                                     return (
-                                        accountType !== subItem.account_category && accountType !== null ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                        accountType !== subItem.account_category && accountType !== null && accountType !== 'all' ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                     )
                                 })}
                             </div>
@@ -189,10 +188,6 @@ const UsersList = () => {
                     </div>
                     <div className="table-mobile">
                         <div className="table-mobile-content">
-                            <div className="td">
-                                <div className="mobile-ttl">{th[2].name}</div>
-                                <span>{item.email}</span>
-                            </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[3].name}</div>
                                 <span>{item.mobile}</span>

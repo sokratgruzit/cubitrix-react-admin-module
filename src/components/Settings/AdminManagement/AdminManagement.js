@@ -140,9 +140,7 @@ const AdminManagement = () => {
     tableData = td.map((item, index) => {
         return(
             <>
-                <div  key={item.id + index + item.email } className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
-                    mobileExpandFunc(item.id)
-                }}>
+                <div  key={item.id + index + item.email } className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`}>
                     <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
                             <span>{item.email}</span>
@@ -158,17 +156,6 @@ const AdminManagement = () => {
                         <MoreButton dropdownData={dynamicDropDown(item.email, item.password, item.roles, item._id)} />
                     </div>
                     <div className="icon-place">
-                        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </div>
-                    <div className="table-mobile">
-                        <div className="table-mobile-content">
-                            <div className="td">
-                                <div className="mobile-ttl">{th[0].name}</div>
-                                <span>{item.name}</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </>
@@ -192,7 +179,7 @@ const AdminManagement = () => {
 
     const handleAddAdminBtnClick = async () => {
         setAddAdminError('');
-        
+
         try {
             await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, popUpData)
             .then(res => {

@@ -246,18 +246,19 @@ const th = {
     {
       name: "Name",
       width: 10,
-      mobileWidth: 33,
+      mobileWidth: 23,
       id: 0,
     },
     {
       name: "Address",
       width: 35,
-      mobileWidth: 33,
+      mobileWidth: 43,
       id: 1,
     },
     {
       name: "Email",
       width: 15,
+      mobileWidth: 33,
       id: 2,
     },
     {

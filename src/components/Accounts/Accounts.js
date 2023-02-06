@@ -51,6 +51,9 @@ const Accounts = () => {
             if(tableFilterOutcomingData.selects.account_type_id !== 'all'){
                 setAccountType(tableFilterOutcomingData.selects.account_type_id);
             }
+            else {
+                setAccountType(null);
+            }
         }
         else {
             setAccountType(null);
@@ -137,8 +140,8 @@ const Accounts = () => {
     tableData = td.map((item) => {
         return(
             <>
-                <div key={item.id} className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`} onClick={() => {
-                    mobileExpandFunc(item.id)
+                <div key={item.id} className={`table-parent ${mobileExpand === item.address ? 'active' : ''}`} onClick={() => {
+                    mobileExpandFunc(item.address)
                 }}>
                     <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
@@ -180,10 +183,6 @@ const Accounts = () => {
                     </div>
                     <div className="table-mobile">
                         <div className="table-mobile-content">
-                            <div className="td">
-                                <div className="mobile-ttl">{th[2].name}</div>
-                                <span>{item.balance}</span>
-                            </div>
                             <div className="td">
                                 <div className="mobile-ttl">{th[3].name}</div>
                                 <span>{moment(item.createdAt).format('LL')}</span>
