@@ -208,7 +208,8 @@ const AdminManagement = () => {
         setPopUpData({
             roles: '',
             email: '',
-            password: ''
+            password: '',
+            id: ''
         });
     };
 
