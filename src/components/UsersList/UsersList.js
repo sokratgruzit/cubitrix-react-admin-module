@@ -139,71 +139,69 @@ const UsersList = () => {
     let tableData;
     tableData = td.map((item,index) => {
         return(
-            <>
-                <div key={index + item.address} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
-                    mobileExpandFunc(index)
-                }}>
-                    <div className="table">
-                        <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
-                            <span>{item.name}</span>
-                        </div>
-                        <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${ accountType !== null || tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
-                            <div>
-                            <span>
-                                {item.address}
-                            </span>
-                                {item.inner_accounts.length > 0 ? <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1.70095 5.6665L5.52859 1.83887C5.98063 1.38683 6.72032 1.38683 7.17236 1.83887L11 5.6665" stroke="#9C9DA3" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg> : ''}
+            <div key={index + item.address} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
+                mobileExpandFunc(index)
+            }}>
+                <div className="table">
+                    <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
+                        <span>{item.name}</span>
+                    </div>
+                    <div onClick={() => {tableExpandFunc(item.address)}} className={`td expand ${ accountType !== null || tableExpand === item.address && item.inner_accounts.length !== 0  ? 'active' : ''} ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                        <div>
+                        <span>
+                            {item.address}
+                        </span>
+                            {item.inner_accounts.length > 0 ? <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.70095 5.6665L5.52859 1.83887C5.98063 1.38683 6.72032 1.38683 7.17236 1.83887L11 5.6665" stroke="#9C9DA3" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg> : ''}
 
-                            </div>
-                            <div className={`td-expand`}>
-                                {item.inner_accounts.map((subItem,index) => {
-                                    return (
-                                        accountType !== subItem.account_category && accountType !== null && accountType !== 'all' ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
-                                    )
-                                })}
-                            </div>
                         </div>
-                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
-                            <span>{item.email}</span>
+                        <div className={`td-expand`}>
+                            {item.inner_accounts.map((subItem,index) => {
+                                return (
+                                    accountType !== subItem.account_category && accountType !== null && accountType !== 'all' ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
+                                )
+                            })}
                         </div>
-                        <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
+                    </div>
+                    <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
+                        <span>{item.email}</span>
+                    </div>
+                    <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
+                        <span>{item.mobile}</span>
+                    </div>
+                    <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
+                        <span>{item.nationality}</span>
+                    </div>
+                    <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
+                        <span>{moment(item.date_of_birth).format('LL')}</span>
+                    </div>
+                </div>
+                <div className="table-more">
+                    <MoreButton dropdownData={dropdownData} />
+                </div>
+                <div className="icon-place">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </div>
+                <div className="table-mobile">
+                    <div className="table-mobile-content">
+                        <div className="td">
+                            <div className="mobile-ttl">{th[3].name}</div>
                             <span>{item.mobile}</span>
                         </div>
-                        <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[4].name}</div>
                             <span>{item.nationality}</span>
                         </div>
-                        <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[5].name}</div>
                             <span>{moment(item.date_of_birth).format('LL')}</span>
                         </div>
                     </div>
-                    <div className="table-more">
-                        <MoreButton dropdownData={dropdownData} />
-                    </div>
-                    <div className="icon-place">
-                        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </div>
-                    <div className="table-mobile">
-                        <div className="table-mobile-content">
-                            <div className="td">
-                                <div className="mobile-ttl">{th[3].name}</div>
-                                <span>{item.mobile}</span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[4].name}</div>
-                                <span>{item.nationality}</span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[5].name}</div>
-                                <span>{moment(item.date_of_birth).format('LL')}</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </>
+            </div>
         )
     })
     return (

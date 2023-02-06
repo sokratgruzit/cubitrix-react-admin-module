@@ -128,10 +128,10 @@ const AdminManagement = () => {
                 filter: tableFilterOutcomingData,
                 page: pageNow
             })
-            .then(res => {
-                setPageAll(res.data.success.pages);
-                setTd(res.data.success.data)
-            });
+                .then(res => {
+                    setPageAll(res.data.success.pages);
+                    setTd(res.data.success.data)
+                });
         }
         fetchData();
     }, [tableFilterOutcomingData, pageNow, axios, message]);
@@ -139,7 +139,6 @@ const AdminManagement = () => {
     let tableData;
     tableData = td.map((item, index) => {
         return(
-            <>
                 <div  key={item.id + index + item.email } className={`table-parent ${mobileExpand === item.id ? 'active' : ''}`}>
                     <div className="table">
                         <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
@@ -158,7 +157,6 @@ const AdminManagement = () => {
                     <div className="icon-place">
                     </div>
                 </div>
-            </>
         )
     })
 
@@ -182,9 +180,9 @@ const AdminManagement = () => {
 
         try {
             await axios.post(`/api${!edit ? '/auth/register' : '/data/edit-user'}`, popUpData)
-            .then(res => {
-                setMessage(res.data)
-            });
+                .then(res => {
+                    setMessage(res.data)
+                });
             setEdit(false);
             setPopUpActive(false);
         } catch (err) {
