@@ -38,35 +38,78 @@ const Transactions = () => {
     let tableData;
     tableData = td.map((item,index) => {
         return(
-            <>
-                <div key={item.id} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
-                    mobileExpandFunc(index)
-                }}>
-                    <div className="table">
-                        <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
-                            <span>{item.tx_hash}</span>
+            <div key={index} className={`table-parent ${mobileExpand === index ? 'active' : ''}`} onClick={() => {
+                mobileExpandFunc(index)
+            }}>
+                <div className="table">
+                    <div className={`td ${th[0].mobileWidth ? true : false }`} style={{width: `${mobile ? th[0].mobileWidth : th[0].width}%`}}>
+                        <span>{item.tx_hash}</span>
+                    </div>
+                    <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
+                        <span>{item.from}</span>
+                    </div>
+                    <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
+                        <span>{item.to}</span>
+                    </div>
+                    <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
+                        <span>23</span>
+                        <span className={`table-currency`}>{item.tx_currency}</span>
+                    </div>
+                    <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
+                        <span>{item.tx_fee}</span>
+                        <span className={`table-currency`}>{item.tx_fee_currency}</span>
+                    </div>
+                    <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
+                        <span>{item.domination}</span>
+                    </div>
+                    <div className={`td ${th[6].mobileWidth ? true : false }`} style={{width: `${mobile ? th[6].mobileWidth : th[6].width}%`}}>
+                        <span>{moment(item.createdAt).format('LL')}</span>
+                    </div>
+                    <div className={`td ${th[7].mobileWidth ? true : false }`} style={{width: `${mobile ? th[7].mobileWidth : th[7].width}%`}}>
+                        <span
+                            className={`alert-status-box 
+                            ${item.tx_status === 'active' && 'alert-status-blue'} 
+                            ${item.tx_status === 'active1' && 'alert-status-yellow'}
+                            ${item.tx_status === 'pending' && 'alert-status-green'}`}
+                        >
+                            {item.tx_status}
+                        </span>
+                    </div>
+                    <div className={`td ${th[8].mobileWidth ? true : false }`} style={{width: `${mobile ? th[8].mobileWidth : th[8].width}%`}}>
+                        <span
+                            className={`alert-status-box 
+                            ${item.tx_type === 'deposit' && 'alert-status-blue'} 
+                            ${item.tx_type === 'withdraw' && 'alert-status-yellow'}
+                            ${item.tx_type === 'transfer' && 'alert-status-green'}`}
+                        >
+                            {item.tx_type}
+                        </span>
+                    </div>
+                </div>
+                <div className="icon-place">
+                    <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </div>
+                <div className="table-mobile">
+                    <div className="table-mobile-content">
+                        <div className="td">
+                            <div className="mobile-ttl">{th[4].name}</div>
+                            <div>
+                                <span>{item.tx_fee}</span>
+                                <span className={`table-currency`}>{item.tx_fee_currency}</span>
+                            </div>
                         </div>
-                        <div className={`td ${th[1].mobileWidth ? true : false }`} style={{width: `${mobile ? th[1].mobileWidth : th[1].width}%`}}>
-                            <span>{item.from}</span>
-                        </div>
-                        <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
-                            <span>{item.to}</span>
-                        </div>
-                        <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
-                            <span>23</span>
-                            <span className={`table-currency`}>{item.tx_currency}</span>
-                        </div>
-                        <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
-                            <span>{item.tx_fee}</span>
-                            <span className={`table-currency`}>{item.tx_fee_currency}</span>
-                        </div>
-                        <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[5].name}</div>
                             <span>{item.domination}</span>
                         </div>
-                        <div className={`td ${th[6].mobileWidth ? true : false }`} style={{width: `${mobile ? th[6].mobileWidth : th[6].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[6].name}</div>
                             <span>{moment(item.createdAt).format('LL')}</span>
                         </div>
-                        <div className={`td ${th[7].mobileWidth ? true : false }`} style={{width: `${mobile ? th[7].mobileWidth : th[7].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[7].name}</div>
                             <span
                                 className={`alert-status-box 
                                 ${item.tx_status === 'active' && 'alert-status-blue'} 
@@ -76,7 +119,8 @@ const Transactions = () => {
                                 {item.tx_status}
                             </span>
                         </div>
-                        <div className={`td ${th[8].mobileWidth ? true : false }`} style={{width: `${mobile ? th[8].mobileWidth : th[8].width}%`}}>
+                        <div className="td">
+                            <div className="mobile-ttl">{th[8].name}</div>
                             <span
                                 className={`alert-status-box 
                                 ${item.tx_type === 'deposit' && 'alert-status-blue'} 
@@ -87,54 +131,8 @@ const Transactions = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="icon-place">
-                        <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </div>
-                    <div className="table-mobile">
-                        <div className="table-mobile-content">
-                            <div className="td">
-                                <div className="mobile-ttl">{th[4].name}</div>
-                                <div>
-                                    <span>{item.tx_fee}</span>
-                                    <span className={`table-currency`}>{item.tx_fee_currency}</span>
-                                </div>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[5].name}</div>
-                                <span>{item.domination}</span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[6].name}</div>
-                                <span>{moment(item.createdAt).format('LL')}</span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[7].name}</div>
-                                <span
-                                    className={`alert-status-box 
-                                    ${item.tx_status === 'active' && 'alert-status-blue'} 
-                                    ${item.tx_status === 'active1' && 'alert-status-yellow'}
-                                    ${item.tx_status === 'pending' && 'alert-status-green'}`}
-                                >
-                                    {item.tx_status}
-                                </span>
-                            </div>
-                            <div className="td">
-                                <div className="mobile-ttl">{th[8].name}</div>
-                                <span
-                                    className={`alert-status-box 
-                                    ${item.tx_type === 'deposit' && 'alert-status-blue'} 
-                                    ${item.tx_type === 'withdraw' && 'alert-status-yellow'}
-                                    ${item.tx_type === 'transfer' && 'alert-status-green'}`}
-                                >
-                                    {item.tx_type}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </>
+            </div>
         )
     })
     return (
