@@ -23,7 +23,7 @@ const Transactions = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/admin_data/filter", {
+            await axios.post("/api/data/filter", {
                 type: "transactions",
                 filter: tableFilterOutcomingData,
                 page: pageNow

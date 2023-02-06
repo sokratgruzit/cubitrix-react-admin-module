@@ -36,7 +36,7 @@ const Accounts = () => {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post("/admin_data/filter", {
+            await axios.post("/api/data/filter", {
                 type: "account",
                 filter: tableFilterOutcomingData,
                 page: pageNow
