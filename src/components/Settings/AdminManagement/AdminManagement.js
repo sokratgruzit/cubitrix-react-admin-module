@@ -192,6 +192,12 @@ const AdminManagement = () => {
 
     const handlePopUpClose = () => {
         setPopUpActive(false);
+        setPopUpData({
+            roles: '',
+            email: '',
+            password: '',
+            id: ''
+        });
         setAddAdminError('');
     };
 
