@@ -204,8 +204,6 @@ const AdminManagement = () => {
         };
     };
 
-    console.log(edit)
-
     const handlePopUpClose = () => {
         setPopUpActive(false);
         setAddAdminError('');
