@@ -54,8 +54,8 @@ const AdminManagement = () => {
                 roles,
                 id
             });
-            setPopUpActive(true);
             setEdit(true);
+            setPopUpActive(true);
         };
 
         let dropdownData = [
@@ -204,9 +204,12 @@ const AdminManagement = () => {
         };
     };
 
+    console.log(edit)
+
     const handlePopUpClose = () => {
         setPopUpActive(false);
         setAddAdminError('');
+        setEdit(false);
         setPopUpData({
             roles: '',
             email: '',
