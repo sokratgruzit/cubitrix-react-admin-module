@@ -116,7 +116,6 @@ const UsersList = () => {
                 page: pageNow
             })
                 .then(res => {
-                    console.log(res);
                     setPageAll(res.data.success.pages);
                     setTd(res.data.success.data)
                 });

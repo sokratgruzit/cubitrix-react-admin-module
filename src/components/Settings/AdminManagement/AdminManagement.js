@@ -154,7 +154,7 @@ const AdminManagement = () => {
                         </div>
                     </div>
                     <div className="table-more">
-                        <MoreButton dropdownData={dynamicDropDown(item.email, item.password, item.roles, item._id)} />
+                        <MoreButton dropdownData={dynamicDropDown(item.email, item.roles, item._id)} />
                     </div>
                     <div className="icon-place">
                     </div>

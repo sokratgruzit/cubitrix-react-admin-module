@@ -139,7 +139,7 @@ const Accounts = () => {
     let tableData;
     tableData = td.map((item) => {
         return(
-            <div key={item.id} className={`table-parent ${mobileExpand === item.address ? 'active' : ''}`} onClick={() => {
+            <div key={item.id + item.address} className={`table-parent ${mobileExpand === item.address ? 'active' : ''}`} onClick={() => {
                 mobileExpandFunc(item.address)
             }}>
                 <div className="table">
