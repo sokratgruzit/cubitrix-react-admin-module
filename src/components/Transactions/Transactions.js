@@ -35,6 +35,7 @@ const Transactions = () => {
         }
         fetchData();
     }, [tableFilterOutcomingData,pageNow]);
+
     let tableData;
     tableData = td.map((item,index) => {
         return(
@@ -52,11 +53,11 @@ const Transactions = () => {
                         <span>{item.to}</span>
                     </div>
                     <div className={`td ${th[3].mobileWidth ? true : false }`} style={{width: `${mobile ? th[3].mobileWidth : th[3].width}%`}}>
-                        <span>23</span>
+                        <span>{item.amount}</span>
                         <span className={`table-currency`}>{item.tx_currency}</span>
                     </div>
                     <div className={`td ${th[4].mobileWidth ? true : false }`} style={{width: `${mobile ? th[4].mobileWidth : th[4].width}%`}}>
-                        <span>{item.tx_fee}</span>
+                        <span>{item?.tx_fee}</span>
                         <span className={`table-currency`}>{item.tx_fee_currency}</span>
                     </div>
                     <div className={`td ${th[5].mobileWidth ? true : false }`} style={{width: `${mobile ? th[5].mobileWidth : th[5].width}%`}}>

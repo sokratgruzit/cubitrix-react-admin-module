@@ -59,6 +59,7 @@ const Accounts = () => {
             setAccountType(null);
         }
     }, [tableFilterOutcomingData, pageNow]);
+
     let dropdownData = [
         {
             id: 0,
@@ -137,9 +138,9 @@ const Accounts = () => {
         },
     ];
     let tableData;
-    tableData = td.map((item) => {
+    tableData = td.map((item, index) => {
         return(
-            <div key={item.id} className={`table-parent ${mobileExpand === item.address ? 'active' : ''}`} onClick={() => {
+            <div key={index} className={`table-parent ${mobileExpand === item.address ? 'active' : ''}`} onClick={() => {
                 mobileExpandFunc(item.address)
             }}>
                 <div className="table">
@@ -162,6 +163,10 @@ const Accounts = () => {
                                     accountType !== subItem.account_category && accountType !== null ? '' : <div key={index}><i>{subItem.account_category}: </i>{subItem.address} <span>{subItem.balance}</span></div>
                                 )
                             })}
+                            <div><i>email: </i> {item.account_metas.email}</div>
+                            <div><i>mobile: </i> {item.account_metas.mobile}</div>
+                            <div><i>nationality: </i> {item.account_metas.nationality}</div>
+                            <div><i>date of birth: </i> {moment(item.account_metas.date_of_birth).format('LL')}</div>
                         </div>
                     </div>
                     <div className={`td ${th[2].mobileWidth ? true : false }`} style={{width: `${mobile ? th[2].mobileWidth : th[2].width}%`}}>
