@@ -25,19 +25,18 @@ const Transactions = () => {
     let [to, setTo] = useState('');
     let [amount, setAmount] = useState('');
     let [tx_currency, setTx_currency] = useState('ether');
-
+    async function fetchData() {
+        await axios.post("/api/data/filter", {
+            type: "transactions",
+            filter: tableFilterOutcomingData,
+            page: pageNow
+        })
+            .then(res => {
+                setPageAll(res.data.success.pages);
+                setTd(res.data.success.data)
+            });
+    }
     useEffect(() => {
-        async function fetchData() {
-            await axios.post("/api/data/filter", {
-                type: "transactions",
-                filter: tableFilterOutcomingData,
-                page: pageNow
-            })
-                .then(res => {
-                    setPageAll(res.data.success.pages);
-                    setTd(res.data.success.data)
-                });
-        }
         fetchData();
     }, [tableFilterOutcomingData,pageNow]);
     async function newTx() {
@@ -50,6 +49,7 @@ const Transactions = () => {
         })
             .then(res => {
                 console.log(res)
+                fetchData();
             });
     }
 
