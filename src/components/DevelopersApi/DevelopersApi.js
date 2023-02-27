@@ -8,6 +8,7 @@ const DevelopersApi = () => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
   const [responseActive, setResponseActive] = useState(false);
+  const [successResponse, setSuccessResponse] = useState({});
 
   async function makeRequest(method, url, data) {
     try {
@@ -18,8 +19,9 @@ const DevelopersApi = () => {
       if (data) {
         options.data = data;
       }
-      const response = await axios(options);
-      return response.data;
+      // const response = await axios(options);
+      setSuccessResponse(await axios(options))
+      // return response.data;
     } catch (error) {
       console.error(error);
       throw error;
@@ -51,6 +53,13 @@ const DevelopersApi = () => {
         },
         {
           id: 2,
+          description: 'User borrowed active loans',
+          route: 'api/loan/user-loans/borrowerAddress',
+          type: 'GET',
+          inputs: []
+        },
+        {
+          id: 3,
           description: 'Create new loan offer',
           route: 'api/loan/create-loan',
           type: 'POST',
@@ -69,59 +78,132 @@ const DevelopersApi = () => {
             },
           ]
         },
-        // {
-        //   id: 3,
-        //   description: 'Delete loan offer',
-        //   route: 'api/loan/delete-loan-offer',
-        //   type: 'POST',
-        //   inputs: [
-        //     {
-        //       title: 'Id',
-        //       name: 'id',
-        //       description: '',
-        //       value:'',
-        //       required: true,
-        //       validation: 'text',
-        //       onChange: (e) => {
-        //         changeDevObject(e.target.name,e.target.value)
-        //       }
-        //     },
-        //     {
-        //       title: 'Lender',
-        //       name: 'lender',
-        //       description: '',
-        //       value:'',
-        //       required: true,
-        //       validation: 'text',
-        //       onChange: (e) => {
-        //         changeDevObject(e.target.name,e.target.value)
-        //       }
-        //     },
-        //   ]
-        // },
+        {
+          id: 4,
+          description: 'Delete loan offer',
+          route: 'api/loan/delete-loan-offer',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Id',
+              name: 'id',
+              description: 'id here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+            {
+              title: 'Lender',
+              name: 'lender',
+              description: 'lender here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+          ]
+        },
+        {
+          id: 5,
+          description: 'Take loan',
+          route: 'api/loan/take-loan',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Id',
+              name: 'id',
+              description: 'id here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+            {
+              title: 'Borrower',
+              name: 'borrower',
+              description: 'borrower here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+          ]
+        },
+        {
+          id: 6,
+          description: 'Repay loan',
+          route: 'api/loan/repay-loan',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Id',
+              name: 'id',
+              description: 'id here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+            {
+              title: 'Borrower',
+              name: 'borrower',
+              description: 'borrower here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+          ]
+        },
+        {
+          id: 7,
+          description: 'Default loan',
+          route: 'api/loan/default-loan',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Id',
+              name: 'id',
+              description: 'id here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+            {
+              title: 'Borrower',
+              name: 'borrower',
+              description: 'borrower here',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => {
+                changeDevObject(e.target.name,e.target.value)
+              }
+            },
+          ]
+        },
       ]
     },
   ];
 
 
-  // <div
-  //     onClick={() =>
-  //         makeRequest("POST", "api/loan/take-loan", {
-  //           id: "id",
-  //           borrower: "0x456",
-  //           collateral: [],
-  //         })
-  //     }
-  // >
-  //   Take loan
-  // </div>
-  // <div
-  //     onClick={() =>
-  //         makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })
-  //     }
-  // >
-  //   Repay loan
-  // </div>
+
   // <div
   //     onClick={() =>
   //         makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
@@ -129,30 +211,6 @@ const DevelopersApi = () => {
   // >
   //   Default loan
   // </div>
-  const successResponse = {
-    message: 'OK',
-    result: [{
-      blockHash: '0x373d339e45a701447367d7b9c7cef84aab79c2b2714271b908cda0ab3ad0849b',
-      blockNumber: '65204',
-      confirmations: '',
-      contractAddress: '',
-      cumulativeGasUsed: '122207',
-      from: '0x3fb1cd2cd96c6d5c0b5eb3322d807b34482481d4',
-      gas: '122261',
-      gasPrice: '50000000000',
-      gasUsed: '122207',
-      hash: '0x98beb27135aa0a25650557005ad962919d6a278c4b3dde7f4f6a3a1e65aa746c',
-      input: '0xf00d4b5d000000000000000000000000036c8cecce8d8bbf0831d840d7f29c9e3ddefa63000000000000000000000000c5a96db085dda36ffbe390f455315d30d6d3dc52',
-      isError: '0',
-      nonce: '0',
-      timeStamp: '1439232889',
-      to: '0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae',
-      transactionIndex: '0',
-      txreceipt_status: '0',
-      value: '0'
-    }],
-    status: '1'
-  };
 
   const failResponse = {
     message: "No data was found",
@@ -160,10 +218,12 @@ const DevelopersApi = () => {
     status: 0
   };
 
-  const handleTryOutSubmit = (route) => {
+  const handleTryOutSubmit = (route, id, type) => {
     console.log('hihi');
     console.log(devAppObject);
     setResponseActive(route)
+    console.log(route)
+    console.log(type)
   };
 
   return (
