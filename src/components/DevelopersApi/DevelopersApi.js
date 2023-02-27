@@ -182,7 +182,15 @@ const DevelopersApi = () => {
         >
           Delete loan offer
         </div>
-        <div onClick={() => makeRequest("POST", "api/loan/take-loan", { id: "id" })}>
+        <div
+          onClick={() =>
+            makeRequest("POST", "api/loan/take-loan", {
+              id: "id",
+              borrower: "0x456",
+              collateral: [],
+            })
+          }
+        >
           Take loan
         </div>
         <div
