@@ -19,8 +19,9 @@ const DevelopersApi = () => {
       if (data) {
         options.data = data;
       }
-      // const response = await axios(options);
-      setSuccessResponse(await axios(options))
+      const response = await axios(options);
+      console.log(response)
+      setSuccessResponse(response.data.result)
       // return response.data;
     } catch (error) {
       console.error(error);
@@ -224,66 +225,67 @@ const DevelopersApi = () => {
     setResponseActive(route)
     console.log(route)
     console.log(type)
+    makeRequest(type, route, devAppObject)
   };
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>
-          Trade
-        </div>
-        <div onClick={() => makeRequest("GET", "/api/loan/loan-market-offers")}>
-          All public loan offers
-        </div>
-        <div
-          onClick={() => makeRequest("GET", "api/loan/user-created-loans/lenderAddress")}
-        >
-          User created loans
-        </div>
-        <div onClick={() => makeRequest("GET", "api/loan/user-loans/borrowerAddress")}>
-          User borrowed active loans
-        </div>
-        <div
-          onClick={() => makeRequest("POST", "api/loan/create-loan", { lender: "0x123" })}
-        >
-          Create new loan offer
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/delete-loan-offer", {
-              id: "id",
-              lender: "0x123",
-            })
-          }
-        >
-          Delete loan offer
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/take-loan", {
-              id: "id",
-              borrower: "0x456",
-              collateral: [],
-            })
-          }
-        >
-          Take loan
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })
-          }
-        >
-          Repay loan
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
-          }
-        >
-          Default loan
-        </div>
-      </div>
+      {/*<div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>*/}
+      {/*  <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>*/}
+      {/*    Trade*/}
+      {/*  </div>*/}
+      {/*  <div onClick={() => makeRequest("GET", "/api/loan/loan-market-offers")}>*/}
+      {/*    All public loan offers*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() => makeRequest("GET", "api/loan/user-created-loans/lenderAddress")}*/}
+      {/*  >*/}
+      {/*    User created loans*/}
+      {/*  </div>*/}
+      {/*  <div onClick={() => makeRequest("GET", "api/loan/user-loans/borrowerAddress")}>*/}
+      {/*    User borrowed active loans*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() => makeRequest("POST", "api/loan/create-loan", { lender: "0x123" })}*/}
+      {/*  >*/}
+      {/*    Create new loan offer*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/delete-loan-offer", {*/}
+      {/*        id: "id",*/}
+      {/*        lender: "0x123",*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Delete loan offer*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/take-loan", {*/}
+      {/*        id: "id",*/}
+      {/*        borrower: "0x456",*/}
+      {/*        collateral: [],*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Take loan*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Repay loan*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Default loan*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
       <AdminPanel
         adminPage={"developerApi"}
