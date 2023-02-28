@@ -20,21 +20,38 @@ const Transactions = () => {
     let [td, setTd] = useState([]);
     let [pageNow, setPageNow] = useState(1);
     let [pageAll, setPageAll] = useState(1);
-
+    let [tx_type, setTx_type] = useState('');
+    let [from, setFrom] = useState('');
+    let [to, setTo] = useState('');
+    let [amount, setAmount] = useState('');
+    let [tx_currency, setTx_currency] = useState('ether');
+    async function fetchData() {
+        await axios.post("/api/data/filter", {
+            type: "transactions",
+            filter: tableFilterOutcomingData,
+            page: pageNow
+        })
+            .then(res => {
+                setPageAll(res.data.success.pages);
+                setTd(res.data.success.data)
+            });
+    }
     useEffect(() => {
-        async function fetchData() {
-            await axios.post("/api/data/filter", {
-                type: "transactions",
-                filter: tableFilterOutcomingData,
-                page: pageNow
-            })
-                .then(res => {
-                    setPageAll(res.data.success.pages);
-                    setTd(res.data.success.data)
-                });
-        }
         fetchData();
     }, [tableFilterOutcomingData,pageNow]);
+    async function newTx() {
+        await axios.post("/api/transactions/make_transaction", {
+            tx_type:tx_type,
+            from: from,
+            to: to,
+            amount: amount,
+            tx_currency: tx_currency
+        })
+            .then(res => {
+                console.log(res)
+                fetchData();
+            });
+    }
 
     let tableData;
     tableData = td.map((item,index) => {
@@ -137,19 +154,39 @@ const Transactions = () => {
         )
     })
     return (
-        <AdminPanel
-            tableData={tableData}
-            pageLabel={'Transactions'}
-            tableHead={th}
-            mobile={mobile}
-            tableHeader={1}
-            tableFilter={true}
-            tableFilterData={tableFilterData}
-            setTableFilterOutcomingData={setTableFilterOutcomingData}
-            paginationCurrent={pageNow}
-            paginationTotal={pageAll}
-            paginationEvent={page => setPageNow(page)}
-        />
+      <div style={{width:'100%',display: 'flex', flexDirection: 'column'}}>
+          <div>
+              {tx_type}
+              <select name="tx_type"
+                      value={tx_type} // ...force the select's value to match the state variable...
+                      onChange={e => setTx_type(e.target.value)}
+                      style={{color: "#000"}}
+              >
+                  <option value="deposit">deposit</option>
+                  <option value="withdraw">withdraw</option>
+                  <option value="deposit">deposit</option>
+                  <option value="transfer">transfer</option>
+              </select>
+              <input type="text" placeholder="from"  onChange={e => setFrom(e.target.value)} style={{color: "#000"}}/>
+              <input type="text" placeholder="to" onChange={e => setTo(e.target.value)} style={{color: "#000"}}/>
+              <input type="text" placeholder="amount" onChange={e => setAmount(e.target.value)} style={{color: "#000"}}/>
+              <input type="text" placeholder="tx_currency" value={tx_currency} onChange={e => setTx_currency(e.target.value)} style={{color: "#000"}}/>
+              <div onClick={() => {newTx()}}>add</div>
+          </div>
+          <AdminPanel
+              tableData={tableData}
+              pageLabel={'Transactions'}
+              tableHead={th}
+              mobile={mobile}
+              tableHeader={1}
+              tableFilter={true}
+              tableFilterData={tableFilterData}
+              setTableFilterOutcomingData={setTableFilterOutcomingData}
+              paginationCurrent={pageNow}
+              paginationTotal={pageAll}
+              paginationEvent={page => setPageNow(page)}
+          />
+      </div>
     );
 };
 
