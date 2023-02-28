@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -8,8 +9,9 @@ import DevelopersApi from "./components/DevelopersApi/DevelopersApi";
 import AdminManagement from "./components/Settings/AdminManagement/AdminManagement";
 import "@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css";
 import { Button, AdminHeader } from "@cubitrix/cubitrix-react-ui-module";
-import { Web3ReactProvider } from "@web3-react/core";
-import Web3 from "web3";
+import { useConnect } from "@cubitrix/cubitrix-react-connect-module";
+
+import { injected } from "./connector";
 
 import Login from "./components/Login/Login";
 
@@ -17,9 +19,12 @@ function App() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  function getLibrary(provider) {
-    return new Web3(provider);
-  }
+  const { MetaMaskEagerlyConnect } = useConnect();
+
+  useEffect(() => {
+    MetaMaskEagerlyConnect(injected);
+    // eslint-disable-next-line
+  }, []);
 
   const handleLogout = async () => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
@@ -436,52 +441,50 @@ function App() {
   const user = useSelector((state) => state.user.userId);
 
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <div className="App">
-        {user ? (
-          <>
-            <AdminHeader
-              username={adminHeaderData.username}
-              headSvg={adminHeaderData.svg}
-              userImageUrl={adminHeaderData.userImageUrl}
-              authsDropdown={adminHeaderData.authsDropdown}
-            />
-            <div className={`admin-container`}>
-              <div className={`admin-sidebar`}>
-                {sideBar.map((item, index) => {
-                  return (
-                    <Button
-                      key={item.id}
-                      id={item.id}
-                      label={item.name}
-                      route={item.route}
-                      element={"side-admin-button"}
-                      svg={item.svg}
-                      customStyles={{ width: "100%" }}
-                      subMenu={item.subMenu}
-                      active={location.pathname === item.route}
-                      subMenuActive={location.pathname.includes(item.subMenu?.route)}
-                    />
-                  );
-                })}
-              </div>
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/transactions" element={<Transactions />} />
-                <Route path="/users-list" element={<UsersList />} />
-                <Route path="/accounts" element={<Accounts />} />
-                <Route path="/developers-api" element={<DevelopersApi />} />
-                <Route path="/settings/admin-management" element={<AdminManagement />} />
-              </Routes>
+    <div className="App">
+      {user ? (
+        <>
+          <AdminHeader
+            username={adminHeaderData.username}
+            headSvg={adminHeaderData.svg}
+            userImageUrl={adminHeaderData.userImageUrl}
+            authsDropdown={adminHeaderData.authsDropdown}
+          />
+          <div className={`admin-container`}>
+            <div className={`admin-sidebar`}>
+              {sideBar.map((item, index) => {
+                return (
+                  <Button
+                    key={item.id}
+                    id={item.id}
+                    label={item.name}
+                    route={item.route}
+                    element={"side-admin-button"}
+                    svg={item.svg}
+                    customStyles={{ width: "100%" }}
+                    subMenu={item.subMenu}
+                    active={location.pathname === item.route}
+                    subMenuActive={location.pathname.includes(item.subMenu?.route)}
+                  />
+                );
+              })}
             </div>
-          </>
-        ) : (
-          <Routes>
-            <Route path="*" element={<Login />} />
-          </Routes>
-        )}
-      </div>
-    </Web3ReactProvider>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/users-list" element={<UsersList />} />
+              <Route path="/accounts" element={<Accounts />} />
+              <Route path="/developers-api" element={<DevelopersApi />} />
+              <Route path="/settings/admin-management" element={<AdminManagement />} />
+            </Routes>
+          </div>
+        </>
+      ) : (
+        <Routes>
+          <Route path="*" element={<Login />} />
+        </Routes>
+      )}
+    </div>
   );
 }
 

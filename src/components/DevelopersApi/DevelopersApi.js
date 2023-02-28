@@ -15,14 +15,9 @@ const DevelopersApi = () => {
   const [devAppObject, setDevAppObject] = useState({});
   const [responseActive, setResponseActive] = useState(false);
   const [successResponse, setSuccessResponse] = useState({});
-  const { connect, disconnect, MetaMaskEagerlyConnect } = useConnect();
+  const { connect, disconnect } = useConnect();
 
   const account = useSelector((state) => state.connect.account);
-
-  useEffect(() => {
-    MetaMaskEagerlyConnect(injected);
-    // eslint-disable-next-line
-  }, []);
 
   async function makeRequest(method, url, data) {
     try {

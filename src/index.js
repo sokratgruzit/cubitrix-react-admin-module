@@ -7,18 +7,27 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Web3ReactProvider } from "@web3-react/core";
+
+import Web3 from "web3";
 
 import store, { persistor } from "./store/index";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+function getLibrary(provider) {
+  return new Web3(provider);
+}
+
 root.render(
   <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
+        <Web3ReactProvider getLibrary={getLibrary}>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
+        </Web3ReactProvider>
       </PersistGate>
     </Provider>
   </BrowserRouter>,
