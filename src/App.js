@@ -221,8 +221,7 @@ function App() {
           height="18"
           viewBox="0 0 18 18"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -261,8 +260,7 @@ function App() {
           height="16"
           viewBox="0 0 16 16"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             d="M15.0833 10.4915L10.9083 14.6748"
             stroke="#CDCED1"
@@ -309,8 +307,7 @@ function App() {
           height="20"
           viewBox="0 0 20 20"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7.63411 9.05817C7.55078 9.04984 7.45078 9.04984 7.35911 9.05817C5.37578 8.9915 3.80078 7.3665 3.80078 5.3665C3.80078 3.32484 5.45078 1.6665 7.50078 1.6665C9.54245 1.6665 11.2008 3.32484 11.2008 5.3665C11.1924 7.3665 9.61745 8.9915 7.63411 9.05817Z"
             stroke="#CDCED1"
@@ -353,8 +350,7 @@ function App() {
           height="18"
           viewBox="0 0 18 18"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -372,7 +368,7 @@ function App() {
       subMenu: [],
     },
     {
-      id: 4,
+      id: 5,
       name: "Developers Api",
       route: "/developers-api",
       svg: (
@@ -381,8 +377,7 @@ function App() {
           height="18"
           viewBox="0 0 18 18"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
             clipRule="evenodd"
@@ -409,8 +404,7 @@ function App() {
           height="18"
           viewBox="0 0 20 18"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             d="M10 11.5C10.663 11.5 11.2989 11.2366 11.7678 10.7678C12.2366 10.2989 12.5 9.66304 12.5 9C12.5 8.33696 12.2366 7.70107 11.7678 7.23223C11.2989 6.76339 10.663 6.5 10 6.5C9.33696 6.5 8.70107 6.76339 8.23223 7.23223C7.76339 7.70107 7.5 8.33696 7.5 9C7.5 9.66304 7.76339 10.2989 8.23223 10.7678C8.70107 11.2366 9.33696 11.5 10 11.5Z"
             stroke="#FFFFFF"
