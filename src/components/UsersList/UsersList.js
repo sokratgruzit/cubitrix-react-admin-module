@@ -135,6 +135,8 @@ const UsersList = () => {
         }
     }, [tableFilterOutcomingData,pageNow]);
 
+    console.log(td);
+
     let tableData;
     tableData = td.map((item,index) => {
         return(

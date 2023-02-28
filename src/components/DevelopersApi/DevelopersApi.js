@@ -38,8 +38,9 @@ const DevelopersApi = () => {
     }
   }
 
-  let changeDevObject = (key, name) => {
-    setDevAppObject((prev) => ({ ...prev, [key]: name }));
+  let changeDevObject = (e) => {
+    const { name, value } = e.target;
+    setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
 
   let developerApiArray = [
@@ -81,9 +82,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -100,9 +99,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Lender",
@@ -111,9 +108,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -130,9 +125,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Borrower",
@@ -141,9 +134,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -160,9 +151,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Borrower",
@@ -171,9 +160,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -190,9 +177,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Borrower",
@@ -201,9 +186,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -232,9 +215,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -251,9 +232,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -270,9 +249,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Referral",
@@ -281,9 +258,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -300,9 +275,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -319,9 +292,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Referral Uni Percentage",
@@ -330,9 +301,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Referral Binary Level 1 Percentage",
@@ -341,9 +310,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: "Referral Binary Level 2 Percentage",
@@ -352,9 +319,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -367,6 +332,37 @@ const DevelopersApi = () => {
         },
       ],
     },
+    {
+      title: "Stake",
+      items: [
+        {
+          id: 9,
+          description: "Stake",
+          route: "api/stake/dunno",
+          type: "METAMASK",
+          inputs: [
+            {
+              title: "Amount",
+              name: "depositAmount",
+              description: "Deposit Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Timeperiod",
+              name: "timeperiod",
+              description: "Time Period",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   const failResponse = {
@@ -375,7 +371,7 @@ const DevelopersApi = () => {
     status: 0,
   };
 
-  const handleTryOutSubmit = (route, id, type) => {
+  const handleTryOutSubmit = (route, type) => {
     setResponseActive(route);
     makeRequest(type, route, devAppObject);
   };
@@ -397,6 +393,7 @@ const DevelopersApi = () => {
         successResponse={successResponse}
         failResponse={failResponse}
         responseActive={responseActive}
+        setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
       />
     </>
