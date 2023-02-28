@@ -1,5 +1,9 @@
 import { configureStore, getDefaultMiddleware, combineReducers } from "@reduxjs/toolkit";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
+import {
+  connectReducer,
+  stakeReducer,
+} from "@cubitrix/cubitrix-react-connect-module";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -15,6 +19,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   transactions: persistReducer(persistConfig, transactionsReducer),
   user: persistReducer(persistConfig, userReducer),
+  connect: persistReducer(persistConfig, connectReducer),
+  stake: persistReducer(persistConfig, stakeReducer),
 });
 
 const store = configureStore({
