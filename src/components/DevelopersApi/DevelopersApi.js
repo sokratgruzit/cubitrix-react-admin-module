@@ -19,8 +19,9 @@ const DevelopersApi = () => {
       if (data) {
         options.data = data;
       }
-      // const response = await axios(options);
-      setSuccessResponse(await axios(options))
+      const response = await axios(options);
+      console.log(response)
+      setSuccessResponse(response.data)
       // return response.data;
     } catch (error) {
       console.error(error);
@@ -28,9 +29,9 @@ const DevelopersApi = () => {
     }
   }
 
-
-  let changeDevObject = (key, name) => {
-    setDevAppObject(prev => ({ ...prev, [key]: name }))
+  let changeDevObject = (e) => {
+    const { name, value } = e.target;
+    setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
 
   let developerApiArray = [
@@ -72,9 +73,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
           ]
         },
@@ -91,9 +90,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: 'Lender',
@@ -102,9 +99,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
           ]
         },
@@ -121,9 +116,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: 'Borrower',
@@ -132,9 +125,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
           ]
         },
@@ -151,9 +142,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: 'Borrower',
@@ -162,9 +151,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
           ]
         },
@@ -181,9 +168,7 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
             },
             {
               title: 'Borrower',
@@ -192,9 +177,180 @@ const DevelopersApi = () => {
               value:'',
               required: true,
               validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
-              }
+              onChange: (e) => changeDevObject(e),
+            },
+          ]
+        },
+      ]
+    },
+    {
+      title: 'Referral',
+      items: [
+        {
+          id: 8,
+          description: 'Generate referral codes',
+          route: 'api/referral/generate_referral_codes',
+          type: 'GET',
+          inputs: []
+        },
+        {
+          id: 9,
+          description: 'Bind Referral To User',
+          route: 'api/referral/bind_referral_to_user',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Address',
+              name: 'address',
+              description: 'Address',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+          ]
+        },
+        {
+          id: 10,
+          description: 'Bind Referral To User',
+          route: 'api/referral/get_referrals_by_address',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Address',
+              name: 'address',
+              description: 'Address',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+          ]
+        },
+        {
+          id: 11,
+          description: 'Bind Referral To Code',
+          route: 'api/referral/get_referrals_by_code',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Address',
+              name: 'address',
+              description: 'Address',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: 'Referral',
+              name: 'referral',
+              description: 'Referral code',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+          ]
+        },
+        {
+          id: 12,
+          description: 'Assign Refferal To User',
+          route: 'api/referral/assign_refferal_to_user',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Referral',
+              name: 'referral',
+              description: 'Referral code',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+          ]
+        },
+        {
+          id: 13,
+          description: 'Admin Setup',
+          route: 'api/referral/admin_setup',
+          type: 'POST',
+          inputs: [
+            {
+              title: 'Referral Activated',
+              name: 'referral_activated',
+              description: '("all"/"none"/"uni"/"binary")',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: 'Referral Uni Percentage',
+              name: 'referral_uni_percentage',
+              description: 'Percent',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+
+            },
+            {
+              title: 'Referral Binary Level 1 Percentage',
+              name: 'referral_binary_lvl1_percentage',
+              description: 'Percent',
+              value:'',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+
+            },
+            {
+              title: 'Referral Binary Level 2 Percentage',
+              name: 'referral_binary_lvl2_percentage',
+              description: 'Percent',
+              value: '',
+              required: true,
+              validation: 'text',
+              onChange: (e) => changeDevObject(e),
+            }
+          ]
+        },
+        {
+          id: 14,
+          description: 'Get Referral Options',
+          route: 'api/referral/get_referral_options',
+          type: 'GET',
+          inputs: []
+        },
+      ]
+    },
+    {
+      title: 'Stake',
+      items: [
+        {
+          id: 9,
+          description: 'Stake',
+          route: 'api/stake/dunno',
+          type: 'METAMASK',
+          inputs: [
+            {
+              title: 'Amount',
+              name: 'depositAmount',
+              description: 'Deposit Amount',
+              value:'',
+              required: true,
+              validation: 'number',
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: 'Timeperiod',
+              name: 'timeperiod',
+              description: 'Time Period',
+              value:'',
+              required: true,
+              validation: 'number',
+              onChange: (e) => changeDevObject(e),
             },
           ]
         },
@@ -203,89 +359,19 @@ const DevelopersApi = () => {
   ];
 
 
-
-  // <div
-  //     onClick={() =>
-  //         makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
-  //     }
-  // >
-  //   Default loan
-  // </div>
-
   const failResponse = {
     message: "No data was found",
     result: [],
     status: 0
   };
 
-  const handleTryOutSubmit = (route, id, type) => {
-    console.log('hihi');
-    console.log(devAppObject);
+  const handleTryOutSubmit = (route, type) => {
     setResponseActive(route)
-    console.log(route)
-    console.log(id);
-    console.log(type)
+    makeRequest(type, route, devAppObject);
   };
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>
-          Trade
-        </div>
-        <div onClick={() => makeRequest("GET", "/api/loan/loan-market-offers")}>
-          All public loan offers
-        </div>
-        <div
-          onClick={() => makeRequest("GET", "api/loan/user-created-loans/lenderAddress")}
-        >
-          User created loans
-        </div>
-        <div onClick={() => makeRequest("GET", "api/loan/user-loans/borrowerAddress")}>
-          User borrowed active loans
-        </div>
-        <div
-          onClick={() => makeRequest("POST", "api/loan/create-loan", { lender: "0x123" })}
-        >
-          Create new loan offer
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/delete-loan-offer", {
-              id: "id",
-              lender: "0x123",
-            })
-          }
-        >
-          Delete loan offer
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/take-loan", {
-              id: "id",
-              borrower: "0x456",
-              collateral: [],
-            })
-          }
-        >
-          Take loan
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })
-          }
-        >
-          Repay loan
-        </div>
-        <div
-          onClick={() =>
-            makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
-          }
-        >
-          Default loan
-        </div>
-      </div>
-
       <AdminPanel
         adminPage={"developerApi"}
         developersApi={developerApiArray}
@@ -294,6 +380,7 @@ const DevelopersApi = () => {
         successResponse={successResponse}
         failResponse={failResponse}
         responseActive={responseActive}
+        setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
       />
     </>
