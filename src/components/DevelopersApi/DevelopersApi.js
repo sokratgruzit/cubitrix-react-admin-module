@@ -20,8 +20,6 @@ const DevelopersApi = () => {
 
   const account = useSelector((state) => state.connect.account);
 
-  console.log(successResponse)
-
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
   const {
@@ -74,39 +72,16 @@ const DevelopersApi = () => {
         {
           id: 1,
           description: "User created loans",
-          route: "api/loan/user-created-loans",
+          route: "api/loan/user-created-loans/lenderAddress",
           type: "GET",
-          inputs: [
-            {
-              id: 0,
-              title: "Address",
-              name: "address",
-              description:
-                "Address of lender (E.g. 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
+          inputs: [],
         },
         {
           id: 2,
           description: "User borrowed active loans",
-          route: "api/loan/user-loans",
+          route: "api/loan/user-loans/borrowerAddress",
           type: "GET",
-          inputs: [
-            {
-              id: 0,
-              title: "Address",
-              name: "address",
-              description: "Address of borrower",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
+          inputs: [],
         },
         {
           id: 3,
@@ -116,45 +91,15 @@ const DevelopersApi = () => {
           inputs: [
             {
               id: 20,
-              title: "Address",
+              title: "Lender",
               name: "lender",
-              description: "Address of lender",
+              description: "Name of trade",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
-            },
-            {
-              id: 21,
-              title: "Amount",
-              name: "amount",
-              description: "Amount of trade",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 22,
-              title: "Interest",
-              name: "interest",
-              description: "Interest of trade",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 23,
-              title: "Duration",
-              name: "duration",
-              description: "Duration of trade",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
+              },
             },
           ],
         },
@@ -165,26 +110,26 @@ const DevelopersApi = () => {
           type: "POST",
           inputs: [
             {
-              title: 'Id',
-              name: 'id',
-              description: 'id here',
-              value:'',
+              title: "Id",
+              name: "id",
+              description: "id here",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
             {
-              title: 'Lender',
-              name: 'lender',
-              description: 'lender here',
-              value:'',
+              title: "Lender",
+              name: "lender",
+              description: "lender here",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
           ],
         },
@@ -197,32 +142,24 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "Loan Id",
+              description: "id here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
             {
-              title: "Address",
+              title: "Borrower",
               name: "borrower",
-              description: "Borrower address",
+              description: "borrower here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
-            },
-            {
-              title: "Collateral",
-              name: "collateral",
-              description: "collateral here",
-              value: "",
-              required: true,
-              onChange: (e) => changeDevObject(e),
+              },
             },
           ],
         },
@@ -235,33 +172,24 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "Loan Id",
+              description: "id here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
             {
-              title: "Address",
+              title: "Borrower",
               name: "borrower",
-              description: "Borrower address",
+              description: "borrower here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
-            },
-            {
-              title: "Amount",
-              name: "amount",
-              description: "amount here",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
+              },
             },
           ],
         },
@@ -277,21 +205,21 @@ const DevelopersApi = () => {
               description: "id here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
             {
-              title: "Address",
+              title: "Borrower",
               name: "borrower",
-              description: "Borrower address",
+              description: "borrower here",
               value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
           ],
         },
@@ -309,7 +237,7 @@ const DevelopersApi = () => {
         },
         {
           id: 9,
-          description: "Bind Referral To User",
+          description: "Bind Code To Referral",
           route: "api/referral/bind_referral_to_user",
           type: "POST",
           inputs: [
@@ -322,13 +250,13 @@ const DevelopersApi = () => {
               validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
           ],
         },
         {
           id: 10,
-          description: "Bind Referral To User",
+          description: "Get Referral Info By address",
           route: "api/referral/get_referrals_by_address",
           type: "POST",
           inputs: [
@@ -341,94 +269,42 @@ const DevelopersApi = () => {
               validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
           ],
         },
         {
           id: 11,
-          description: "Bind Referral To Code",
+          description: "Get Referral Info By Code",
           route: "api/referral/get_referrals_by_code",
           type: "POST",
           inputs: [
             {
-              title: "Address",
-              name: "address",
-              description: "Address",
+              title: "Referral",
+              name: "referral",
+              description: "Referral code",
               value: "",
               required: true,
               validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
+              },
             },
-            {
-              title: 'Referral',
-              name: 'referral',
-              description: 'Referral code',
-              value:'',
-              required: true,
-              validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e);
-              }
-            },
-          ]
+          ],
         },
         {
           id: 12,
-          description: 'Assign Refferal To User',
-          route: 'api/referral/assign_refferal_to_user',
-          type: 'POST',
+          description: "Assign Refferal To User",
+          route: "api/referral/assign_refferal_to_user",
+          type: "POST",
           inputs: [
             {
-              title: 'Referral',
-              name: 'referral',
-              description: 'Referral code',
-              value:'',
+              title: "Address",
+              name: "address",
+              description: "User Address",
+              value: "",
               required: true,
-              validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e);
-              }
-            },
-          ]
-        },
-        {
-          id: 13,
-          description: 'Admin Setup',
-          route: 'api/referral/admin_setup',
-          type: 'POST',
-          inputs: [
-            {
-              title: 'Referral Activated',
-              name: 'referral_activated',
-              description: '("all"/"none"/"uni"/"binary")',
-              value:'',
-              required: true,
-              validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e);
-              }
-            },
-            {
-              title: 'Referral Uni Percentage',
-              name: 'referral_uni_percentage',
-              description: 'Percent',
-              value:'',
-              required: true,
-              validation: 'text',
-              onChange: (e) => {
-                changeDevObject(e);
-              }
-            },
-            {
-              title: 'Referral Binary Level 1 Percentage',
-              name: 'referral_binary_lvl1_percentage',
-              description: 'Percent',
-              value:'',
-              required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -442,9 +318,281 @@ const DevelopersApi = () => {
               validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
-              }
-            }
-          ]
+              },
+            },
+          ],
+        },
+        {
+          id: 13,
+          description: "Admin Setup",
+          route: "api/referral/admin_setup",
+          type: "POST",
+          inputs: [
+            {
+              title: "Referral Activated",
+              name: "referral_activated",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Uni Percentage",
+              name: "referral_uni_percentage",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 1 Percentage",
+              name: "referral_binary_percentage_lvl_1",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 1 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_1",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 2 Percentage",
+              name: "referral_binary_percentage_lvl_2",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 2 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_2",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 3 Percentage",
+              name: "referral_binary_percentage_lvl_3",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 3 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_3",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 4 Percentage",
+              name: "referral_binary_percentage_lvl_4",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 4 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_4",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 5 Percentage",
+              name: "referral_binary_percentage_lvl_5",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 5 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_5",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 6 Percentage",
+              name: "referral_binary_percentage_lvl_6",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 6 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_6",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 7 Percentage",
+              name: "referral_binary_percentage_lvl_7",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 7 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_7",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 8 Percentage",
+              name: "referral_binary_percentage_lvl_8",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 8 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_8",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 9 Percentage",
+              name: "referral_binary_percentage_lvl_9",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 9 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_9",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 10 Percentage",
+              name: "referral_binary_percentage_lvl_10",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 10 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_10",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 11 Percentage",
+              name: "referral_binary_percentage_lvl_11",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 11 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_11",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+          ],
         },
         {
           id: 14,
@@ -452,90 +600,6 @@ const DevelopersApi = () => {
           route: "api/referral/get_referral_options",
           type: "GET",
           inputs: [],
-        },
-      ],
-    },
-    {
-      title: "Transaction",
-      items: [
-        {
-          id: 0,
-          description: "Create new transaction",
-          route: "api/transactions/make_transaction",
-          type: "POST",
-          inputs: [
-            {
-              title: "From",
-              name: "from",
-              description: "from here",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "To",
-              name: "to",
-              description: "to here",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Amount",
-              name: "amount",
-              description: "amount here",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Tx Type",
-              name: "txType",
-              description: "txType here",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Tx Currency",
-              name: "txCurrency",
-              description: "txCurrency here",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 1,
-          description: "Update transaction status",
-          route: "api/transactions/update_transaction_status",
-          type: "POST",
-          inputs: [
-            {
-              title: "Tx Hash",
-              name: "tx_hash",
-              description: "tx_hash here",
-              value: "",
-              required: true,
-              validation: "hash",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Status",
-              name: "status",
-              description: "status here",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
         },
       ],
     },
@@ -683,7 +747,7 @@ const DevelopersApi = () => {
       makeRequest(type, fullUrl);
     }
 
-    if (type === "POST") {
+    if (type === "POST" || type === "GET") {
       makeRequest(type, route, devAppObject);
     }
   };
