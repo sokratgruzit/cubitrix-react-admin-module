@@ -90,7 +90,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Address",
               name: "address",
-              description: "Address of lender",
+              description:
+                "Address of lender (E.g. 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -302,129 +303,288 @@ const DevelopersApi = () => {
         },
       ],
     },
-    // {
-    //   title: "Stake",
-    //   items: [
-    //     {
-    //       id: 0,
-    //       description: "Create new loan offer",
-    //       route: "api/loan/create-loan",
-    //       type: "METAMASK",
-    //       inputs: [
-    //         {
-    //           id: 0,
-    //           title: "Amount",
-    //           name: "depostAmount",
-    //           description: "Deposit Amount",
-    //           value: "",
-    //           required: true,
-    //           validation: "number",
-    //           onChange: (e) => {
-    //             handleDepositAmount(e.target.value);
-    //             changeDevObject(e);
-    //           },
-    //         },
-    //         {
-    //           id: 1,
-    //           title: "Timeperiod",
-    //           name: "timeperiod",
-    //           description: "Timeperiod",
-    //           value: "",
-    //           required: true,
-    //           validation: "number",
-    //           onChange: (e) => {
-    //             handleTimePeriod(e.target.value);
-    //             changeDevObject(e);
-    //           },
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Transaction",
-    //   items: [
-    //     {
-    //       id: 0,
-    //       description: "Create new transaction",
-    //       route: "api/transactions/make_transaction",
-    //       type: "POST",
-    //       inputs: [
-    //         {
-    //           title: "From",
-    //           name: "from",
-    //           description: "from here",
-    //           value: "",
-    //           required: true,
-    //           validation: "address",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //         {
-    //           title: "To",
-    //           name: "to",
-    //           description: "to here",
-    //           value: "",
-    //           required: true,
-    //           validation: "address",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //         {
-    //           title: "Amount",
-    //           name: "amount",
-    //           description: "amount here",
-    //           value: "",
-    //           required: true,
-    //           validation: "number",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //         {
-    //           title: "Tx Type",
-    //           name: "txType",
-    //           description: "txType here",
-    //           value: "",
-    //           required: true,
-    //           validation: "text",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //         {
-    //           title: "Tx Currency",
-    //           name: "txCurrency",
-    //           description: "txCurrency here",
-    //           value: "",
-    //           required: true,
-    //           validation: "text",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       id: 1,
-    //       description: "Update transaction status",
-    //       route: "api/transactions/update_transaction_status",
-    //       type: "POST",
-    //       inputs: [
-    //         {
-    //           title: "Tx Hash",
-    //           name: "tx_hash",
-    //           description: "tx_hash here",
-    //           value: "",
-    //           required: true,
-    //           validation: "hash",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //         {
-    //           title: "Status",
-    //           name: "status",
-    //           description: "status here",
-    //           value: "",
-    //           required: true,
-    //           validation: "text",
-    //           onChange: (e) => changeDevObject(e),
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      title: "Referral",
+      items: [
+        {
+          id: 8,
+          description: "Generate referral codes",
+          route: "api/referral/generate_referral_codes",
+          type: "GET",
+          inputs: [],
+        },
+        {
+          id: 9,
+          description: "Bind Referral To User",
+          route: "api/referral/bind_referral_to_user",
+          type: "POST",
+          inputs: [
+            {
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+          ],
+        },
+        {
+          id: 10,
+          description: "Bind Referral To User",
+          route: "api/referral/get_referrals_by_address",
+          type: "POST",
+          inputs: [
+            {
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+          ],
+        },
+        {
+          id: 11,
+          description: "Bind Referral To Code",
+          route: "api/referral/get_referrals_by_code",
+          type: "POST",
+          inputs: [
+            {
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+            {
+              title: "Referral",
+              name: "referral",
+              description: "Referral code",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+          ],
+        },
+        {
+          id: 12,
+          description: "Assign Refferal To User",
+          route: "api/referral/assign_refferal_to_user",
+          type: "POST",
+          inputs: [
+            {
+              title: "Referral",
+              name: "referral",
+              description: "Referral code",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+          ],
+        },
+        {
+          id: 13,
+          description: "Admin Setup",
+          route: "api/referral/admin_setup",
+          type: "POST",
+          inputs: [
+            {
+              title: "Referral Activated",
+              name: "referral_activated",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+            {
+              title: "Referral Uni Percentage",
+              name: "referral_uni_percentage",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+            {
+              title: "Referral Binary Level 1 Percentage",
+              name: "referral_binary_lvl1_percentage",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+            {
+              title: "Referral Binary Level 2 Percentage",
+              name: "referral_binary_lvl2_percentage",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e.target.name, e.target.value);
+              },
+            },
+          ],
+        },
+        {
+          id: 14,
+          description: "Get Referral Options",
+          route: "api/referral/get_referral_options",
+          type: "GET",
+          inputs: [],
+        },
+      ],
+    },
+
+    {
+      title: "Stake",
+      items: [
+        {
+          id: 0,
+          description: "Create new loan offer",
+          route: "api/loan/create-loan",
+          type: "METAMASK",
+          inputs: [
+            {
+              id: 0,
+              title: "Amount",
+              name: "depostAmount",
+              description: "Deposit Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 1,
+              title: "Timeperiod",
+              name: "timeperiod",
+              description: "Timeperiod",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                handleTimePeriod(e.target.value);
+                changeDevObject(e);
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: "Transaction",
+      items: [
+        {
+          id: 0,
+          description: "Create new transaction",
+          route: "api/transactions/make_transaction",
+          type: "POST",
+          inputs: [
+            {
+              title: "From",
+              name: "from",
+              description: "from here",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "To",
+              name: "to",
+              description: "to here",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Amount",
+              name: "amount",
+              description: "amount here",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Tx Type",
+              name: "txType",
+              description: "txType here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Tx Currency",
+              name: "txCurrency",
+              description: "txCurrency here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 1,
+          description: "Update transaction status",
+          route: "api/transactions/update_transaction_status",
+          type: "POST",
+          inputs: [
+            {
+              title: "Tx Hash",
+              name: "tx_hash",
+              description: "tx_hash here",
+              value: "",
+              required: true,
+              validation: "hash",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Status",
+              name: "status",
+              description: "status here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   // <div
