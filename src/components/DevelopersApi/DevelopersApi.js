@@ -83,7 +83,7 @@ const DevelopersApi = () => {
         {
           id: 1,
           description: "User created loans",
-          route: "api/loan/user-created-loans/lenderAddress",
+          route: "api/loan/user-created-loans/?address=lenderAddress",
           type: "GET",
           inputs: [],
         },
@@ -103,11 +103,51 @@ const DevelopersApi = () => {
             {
               id: 20,
               title: "Lender",
-              name: "name",
+              name: "lender",
               description: "Name of trade",
               value: "",
               required: true,
               validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 21,
+              title: "Amount",
+              name: "amount",
+              description: "Amount of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 22,
+              title: "Interest",
+              name: "interest",
+              description: "Interest of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 23,
+              title: "Duration",
+              name: "duration",
+              description: "Duration of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 24,
+              title: "Collateral",
+              name: "collateral",
+              description: "Collateral of trade",
+              value: "",
+              required: true,
+              validation: "number",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -175,8 +215,6 @@ const DevelopersApi = () => {
               name: "id",
               description: "id here",
               value: "",
-              required: true,
-              validation: "text",
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -186,6 +224,15 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Amount",
+              name: "amount",
+              description: "amount here",
+              value: "",
+              required: true,
+              validation: "number",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -379,12 +426,12 @@ const DevelopersApi = () => {
 
   return (
     <>
-      {account}
+      {/* {account}
       {account ? (
         <div onClick={() => disconnect()}>disconnect</div>
       ) : (
         <div onClick={() => connect("metaMask", injected)}>connect</div>
-      )}
+      )} */}
 
       <AdminPanel
         adminPage={"developerApi"}
