@@ -33,17 +33,17 @@ const DevelopersApi = () => {
   } = useStake({ Router, tokenAddress });
 
   const {
-    depositAmount,
+    // depositAmount,
     // balance,
-    // stakersInfo,
-    // stackContractInfo,
+    stakersInfo,
+    stackContractInfo,
     // timeperiod,
-    // stakersRecord,
+    stakersRecord,
     isAllowance,
     // loading,
     // timeperiodDate,
   } = useSelector((state) => state.stake);
-  // console.log(depositAmount);
+  // console.log(stakersRecord);
 
   async function makeRequest(method, url, data) {
     try {
@@ -54,13 +54,13 @@ const DevelopersApi = () => {
       if (data) {
         options.data = data;
       }
+
       const response = await axios(options);
       console.log(response);
       setSuccessResponse(response.data.result);
-      // return response.data;
+      return response.data;
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.log(error.response);
     }
   }
 
@@ -83,16 +83,38 @@ const DevelopersApi = () => {
         {
           id: 1,
           description: "User created loans",
-          route: "api/loan/user-created-loans/?address=lenderAddress",
+          route: "api/loan/user-created-loans",
           type: "GET",
-          inputs: [],
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description: "Address of lender",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 2,
           description: "User borrowed active loans",
-          route: "api/loan/user-loans/borrowerAddress",
+          route: "api/loan/user-loans",
           type: "GET",
-          inputs: [],
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description: "Address of borrower",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 3,
@@ -102,12 +124,12 @@ const DevelopersApi = () => {
           inputs: [
             {
               id: 20,
-              title: "Lender",
+              title: "Address",
               name: "lender",
-              description: "Name of trade",
+              description: "Address of lender",
               value: "",
               required: true,
-              validation: "text",
+              validation: "address",
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -140,16 +162,6 @@ const DevelopersApi = () => {
               validation: "number",
               onChange: (e) => changeDevObject(e),
             },
-            {
-              id: 24,
-              title: "Collateral",
-              name: "collateral",
-              description: "Collateral of trade",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
-            },
           ],
         },
         {
@@ -161,19 +173,16 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id",
               value: "",
-              required: true,
-              validation: "text",
               onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Lender",
+              title: "Address",
               name: "lender",
-              description: "lender here",
+              description: "Lender address",
               value: "",
-              required: true,
-              validation: "text",
+              validation: "address",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -187,19 +196,26 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id",
               value: "",
               required: true,
-              validation: "text",
               onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description: "Borrower address",
               value: "",
               required: true,
-              validation: "text",
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Collateral",
+              name: "collateral",
+              description: "collateral here",
+              value: "",
+              required: true,
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -213,17 +229,18 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id",
               value: "",
+              required: true,
               onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description: "Borrower address",
               value: "",
               required: true,
-              validation: "text",
+              validation: "address",
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -249,21 +266,39 @@ const DevelopersApi = () => {
               description: "id here",
               value: "",
               required: true,
-              validation: "text",
               onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description: "Borrower address",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
             },
           ],
+        },
+        {
+          id: 1,
+          description: "Get stack contract info",
+          route: "api/stack-contract-info",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 2,
+          description: "Get account summary data",
+          route: "api/account-summary",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 3,
+          description: "Get stakers record",
+          route: "api/stakers-record",
+          type: "METAMASK_GET",
+          inputs: [],
         },
       ],
     },
@@ -407,11 +442,7 @@ const DevelopersApi = () => {
   };
 
   const handleTryOutSubmit = (route, type) => {
-    console.log("hihi");
-    console.log(devAppObject);
     setResponseActive(route);
-    console.log(route);
-    console.log(type);
     if (type === "METAMASK") {
       if (account && isAllowance) {
         approve();
@@ -419,19 +450,76 @@ const DevelopersApi = () => {
       if (account && !isAllowance) {
         stake();
       }
-    } else {
+    }
+    if (type === "METAMASK_GET") {
+      if (route === "api/stack-contract-info") {
+        setSuccessResponse(stackContractInfo);
+      }
+      if (route === "api/account-summary") {
+        setSuccessResponse({
+          totalStakedTokenUser: stakersInfo.totalStakedTokenUser,
+          totalUnstakedTokenUser: stakersInfo.totalUnstakedTokenUser,
+          totalClaimedRewardTokenUser: stakersInfo.totalClaimedRewardTokenUser,
+          stakeCount: stakersInfo.stakeCount,
+          alreadyExists: stakersInfo.alreadyExists,
+          currentStaked: stakersInfo.currentStaked,
+          realtimeReward: stakersInfo.realtimeReward,
+        });
+      }
+      if (route === "api/stakers-record") {
+        setSuccessResponse({
+          unstaketime: stakersRecord[0].unstaketime,
+          staketime: stakersRecord[0].staketime,
+          amount: stakersRecord[0].amount,
+          reward: stakersRecord[0].reward,
+          lastharvesttime: stakersRecord[0].lastharvesttime,
+          remainingreward: stakersRecord[0].remainingreward,
+          harvestreward: stakersRecord[0].harvestreward,
+          persecondreward: stakersRecord[0].persecondreward,
+          withdrawan: stakersRecord[0].withdrawan,
+          unstaked: stakersRecord[0].unstaked,
+          realtimeRewardPerBlock: stakersRecord[0].realtimeRewardPerBlock,
+        });
+      }
+    }
+
+    if (type === "GET") {
+      const queryString = buildQueryString(devAppObject);
+      const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
+
+      makeRequest(type, fullUrl);
+    }
+
+    if (type === "POST") {
       makeRequest(type, route, devAppObject);
     }
   };
 
+  function buildQueryString(params) {
+    let queryString = "";
+    let first = true;
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        if (first) {
+          first = false;
+        } else {
+          queryString += "&";
+        }
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+      }
+    }
+
+    return queryString;
+  }
+
   return (
     <>
-      {/* {account}
       {account ? (
         <div onClick={() => disconnect()}>disconnect</div>
       ) : (
         <div onClick={() => connect("metaMask", injected)}>connect</div>
-      )} */}
+      )}
 
       <AdminPanel
         adminPage={"developerApi"}
