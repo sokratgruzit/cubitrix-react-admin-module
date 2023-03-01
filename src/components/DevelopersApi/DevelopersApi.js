@@ -16,34 +16,18 @@ const DevelopersApi = () => {
   const [responseActive, setResponseActive] = useState(false);
   const [successResponse, setSuccessResponse] = useState({});
   const { connect, disconnect } = useConnect();
+  const [developerApiActive, setDeveloperApiActive] = useState(false);
 
   const account = useSelector((state) => state.connect.account);
 
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
-  const {
-    approve,
-    stake,
-    // unstake,
-    // harvest,
-    // setMaxWithdrawal,
-    // handleTimeperiodDate,
-    handleDepositAmount,
-    handleTimePeriod,
-  } = useStake({ Router, tokenAddress });
+  const { approve, stake, unstake, harvest, handleDepositAmount, handleTimePeriod } =
+    useStake({ Router, tokenAddress });
 
-  const {
-    // depositAmount,
-    // balance,
-    stakersInfo,
-    stackContractInfo,
-    // timeperiod,
-    stakersRecord,
-    isAllowance,
-    // loading,
-    // timeperiodDate,
-  } = useSelector((state) => state.stake);
-  // console.log(stakersRecord);
+  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } = useSelector(
+    (state) => state.stake,
+  );
 
   async function makeRequest(method, url, data) {
     try {
@@ -332,9 +316,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -351,9 +333,7 @@ const DevelopersApi = () => {
               value: "",
               required: true,
               validation: "text",
-              onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
-              },
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -371,7 +351,7 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
             {
@@ -382,7 +362,7 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
           ],
@@ -401,7 +381,7 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
           ],
@@ -420,7 +400,7 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
             {
@@ -431,7 +411,7 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
             {
@@ -442,18 +422,18 @@ const DevelopersApi = () => {
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
             {
-              title: "Referral Binary Level 2 Percentage",
-              name: "referral_binary_lvl2_percentage",
-              description: "Percent",
+              title: "Referral",
+              name: "referral",
+              description: "Referral code",
               value: "",
               required: true,
               validation: "text",
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value);
+                changeDevObject(e);
               },
             },
           ],
@@ -469,12 +449,12 @@ const DevelopersApi = () => {
     },
 
     {
-      title: "Stake",
+      title: "Staking",
       items: [
         {
           id: 0,
-          description: "Create new loan offer",
-          route: "api/loan/create-loan",
+          description: "Stake your CML",
+          route: "stake",
           type: "METAMASK",
           inputs: [
             {
@@ -565,26 +545,57 @@ const DevelopersApi = () => {
         },
         {
           id: 1,
-          description: "Update transaction status",
-          route: "api/transactions/update_transaction_status",
-          type: "POST",
+          description: "Get stack contract info",
+          route: "getStackerInfo_stackContract",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 2,
+          description: "Get account summary data",
+          route: "getStackerInfo_accountSummary",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 3,
+          description: "Get stakers record",
+          route: "getStackerInfo_stakersRecord",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 3,
+          description: "Unstake your record",
+          route: "unstake",
+          type: "METAMASK",
           inputs: [
             {
-              title: "Tx Hash",
-              name: "tx_hash",
-              description: "tx_hash here",
+              id: 0,
+              title: "Index",
+              name: "index",
+              description: "Stakers record index",
               value: "",
               required: true,
-              validation: "hash",
+              validation: "number",
               onChange: (e) => changeDevObject(e),
             },
+          ],
+        },
+        {
+          id: 3,
+          description: "Harvest your record",
+          route: "harvest",
+          type: "METAMASK",
+          inputs: [
             {
-              title: "Status",
-              name: "status",
-              description: "status here",
+              id: 0,
+              title: "Index",
+              name: "index",
+              description: "Stakers record index",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -593,14 +604,6 @@ const DevelopersApi = () => {
     },
   ];
 
-  // <div
-  //     onClick={() =>
-  //         makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
-  //     }
-  // >
-  //   Default loan
-  // </div>
-
   const failResponse = {
     message: "No data was found",
     result: [],
@@ -608,44 +611,36 @@ const DevelopersApi = () => {
   };
 
   const handleTryOutSubmit = (route, type) => {
+    // console.log("hihi");
+    // console.log(devAppObject);
     setResponseActive(route);
+    // console.log(route);
+    // console.log(type);
     if (type === "METAMASK") {
-      if (account && isAllowance) {
-        approve();
+      if (route === "stake") {
+        if (account && isAllowance) {
+          approve();
+        }
+        if (account && !isAllowance) {
+          stake();
+        }
       }
-      if (account && !isAllowance) {
-        stake();
+      if (route === "unstake") {
+        unstake(devAppObject.index);
+      }
+      if (route === "harvest") {
+        harvest(devAppObject.index);
       }
     }
     if (type === "METAMASK_GET") {
-      if (route === "api/stack-contract-info") {
+      if (route === "getStackerInfo_stackContract") {
         setSuccessResponse(stackContractInfo);
       }
-      if (route === "api/account-summary") {
-        setSuccessResponse({
-          totalStakedTokenUser: stakersInfo.totalStakedTokenUser,
-          totalUnstakedTokenUser: stakersInfo.totalUnstakedTokenUser,
-          totalClaimedRewardTokenUser: stakersInfo.totalClaimedRewardTokenUser,
-          stakeCount: stakersInfo.stakeCount,
-          alreadyExists: stakersInfo.alreadyExists,
-          currentStaked: stakersInfo.currentStaked,
-          realtimeReward: stakersInfo.realtimeReward,
-        });
+      if (route === "getStackerInfo_accountSummary") {
+        setSuccessResponse(stakersInfo);
       }
-      if (route === "api/stakers-record") {
-        setSuccessResponse({
-          unstaketime: stakersRecord[0].unstaketime,
-          staketime: stakersRecord[0].staketime,
-          amount: stakersRecord[0].amount,
-          reward: stakersRecord[0].reward,
-          lastharvesttime: stakersRecord[0].lastharvesttime,
-          remainingreward: stakersRecord[0].remainingreward,
-          harvestreward: stakersRecord[0].harvestreward,
-          persecondreward: stakersRecord[0].persecondreward,
-          withdrawan: stakersRecord[0].withdrawan,
-          unstaked: stakersRecord[0].unstaked,
-          realtimeRewardPerBlock: stakersRecord[0].realtimeRewardPerBlock,
-        });
+      if (route === "getStackerInfo_stakersRecord") {
+        setSuccessResponse(stakersRecord);
       }
     }
 
@@ -693,10 +688,13 @@ const DevelopersApi = () => {
         developersApiValues={devAppObject}
         setDeveloperApiValues={setDevAppObject}
         successResponse={successResponse}
+        setSuccessResponse={setSuccessResponse}
         failResponse={failResponse}
         responseActive={responseActive}
         setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
+        developerApiActive={developerApiActive}
+        setDeveloperApiActive={setDeveloperApiActive}
       />
     </>
   );
