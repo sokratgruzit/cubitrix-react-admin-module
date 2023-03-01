@@ -15,9 +15,12 @@ const DevelopersApi = () => {
   const [devAppObject, setDevAppObject] = useState({});
   const [responseActive, setResponseActive] = useState(false);
   const [successResponse, setSuccessResponse] = useState({});
+  const [developerApiActive, setDeveloperApiActive] = useState(false);
   const { connect, disconnect } = useConnect();
 
   const account = useSelector((state) => state.connect.account);
+
+  console.log(successResponse)
 
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
@@ -42,13 +45,13 @@ const DevelopersApi = () => {
       if (data) {
         options.data = data;
       }
+
       const response = await axios(options);
       console.log(response);
       setSuccessResponse(response.data.result);
-      // return response.data;
+      return response.data;
     } catch (error) {
-      console.error(error);
-      throw error;
+      console.log(error.response);
     }
   }
 
@@ -59,54 +62,107 @@ const DevelopersApi = () => {
 
   let developerApiArray = [
     {
-      title: 'Loan',
+      title: "Loan",
       items: [
         {
           id: 0,
-          description: 'All public loan offers',
-          route: '/api/loan/loan-market-offers',
-          type: 'GET',
-          inputs: []
+          description: "All public loan offers",
+          route: "/api/loan/loan-market-offers",
+          type: "GET",
+          inputs: [],
         },
         {
           id: 1,
-          description: 'User created loans',
-          route: 'api/loan/user-created-loans/lenderAddress',
-          type: 'GET',
-          inputs: []
+          description: "User created loans",
+          route: "api/loan/user-created-loans",
+          type: "GET",
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description:
+                "Address of lender (E.g. 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 2,
-          description: 'User borrowed active loans',
-          route: 'api/loan/user-loans/borrowerAddress',
-          type: 'GET',
-          inputs: []
+          description: "User borrowed active loans",
+          route: "api/loan/user-loans",
+          type: "GET",
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description: "Address of borrower",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 3,
-          description: 'Create new loan offer',
-          route: 'api/loan/create-loan',
-          type: 'POST',
+          description: "Create new loan offer",
+          route: "api/loan/create-loan",
+          type: "POST",
           inputs: [
             {
               id: 20,
-              title: 'Lender',
-              name: 'lender',
-              description: 'Name of trade',
-              value:'',
+              title: "Address",
+              name: "lender",
+              description: "Address of lender",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+            {
+              id: 21,
+              title: "Amount",
+              name: "amount",
+              description: "Amount of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 22,
+              title: "Interest",
+              name: "interest",
+              description: "Interest of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 23,
+              title: "Duration",
+              name: "duration",
+              description: "Duration of trade",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 4,
-          description: 'Delete loan offer',
-          route: 'api/loan/delete-loan-offer',
-          type: 'POST',
+          description: "Delete loan offer",
+          route: "api/loan/delete-loan-offer",
+          type: "POST",
           inputs: [
             {
               title: 'Id',
@@ -130,19 +186,19 @@ const DevelopersApi = () => {
                 changeDevObject(e);
               }
             },
-          ]
+          ],
         },
         {
           id: 5,
-          description: 'Take loan',
-          route: 'api/loan/take-loan',
-          type: 'POST',
+          description: "Take loan",
+          route: "api/loan/take-loan",
+          type: "POST",
           inputs: [
             {
-              title: 'Id',
-              name: 'id',
-              description: 'id here',
-              value:'',
+              title: "Id",
+              name: "id",
+              description: "Loan Id",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
@@ -150,29 +206,37 @@ const DevelopersApi = () => {
               }
             },
             {
-              title: 'Borrower',
-              name: 'borrower',
-              description: 'borrower here',
-              value:'',
+              title: "Address",
+              name: "borrower",
+              description: "Borrower address",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+            {
+              title: "Collateral",
+              name: "collateral",
+              description: "collateral here",
+              value: "",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 6,
-          description: 'Repay loan',
-          route: 'api/loan/repay-loan',
-          type: 'POST',
+          description: "Repay loan",
+          route: "api/loan/repay-loan",
+          type: "POST",
           inputs: [
             {
-              title: 'Id',
-              name: 'id',
-              description: 'id here',
-              value:'',
+              title: "Id",
+              name: "id",
+              description: "Loan Id",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
@@ -180,29 +244,38 @@ const DevelopersApi = () => {
               }
             },
             {
-              title: 'Borrower',
-              name: 'borrower',
-              description: 'borrower here',
-              value:'',
+              title: "Address",
+              name: "borrower",
+              description: "Borrower address",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+            {
+              title: "Amount",
+              name: "amount",
+              description: "amount here",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 7,
-          description: 'Default loan',
-          route: 'api/loan/default-loan',
-          type: 'POST',
+          description: "Default loan",
+          route: "api/loan/default-loan",
+          type: "POST",
           inputs: [
             {
-              title: 'Id',
-              name: 'id',
-              description: 'id here',
-              value:'',
+              title: "Id",
+              name: "id",
+              description: "id here",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
@@ -210,81 +283,81 @@ const DevelopersApi = () => {
               }
             },
             {
-              title: 'Borrower',
-              name: 'borrower',
-              description: 'borrower here',
-              value:'',
+              title: "Address",
+              name: "borrower",
+              description: "Borrower address",
+              value: "",
               required: true,
               validation: 'text',
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+          ],
         },
-      ]
+      ],
     },
     {
-      title: 'Referral',
+      title: "Referral",
       items: [
         {
           id: 8,
-          description: 'Generate referral codes',
-          route: 'api/referral/generate_referral_codes',
-          type: 'GET',
-          inputs: []
+          description: "Generate referral codes",
+          route: "api/referral/generate_referral_codes",
+          type: "GET",
+          inputs: [],
         },
         {
           id: 9,
-          description: 'Bind Referral To User',
-          route: 'api/referral/bind_referral_to_user',
-          type: 'POST',
+          description: "Bind Referral To User",
+          route: "api/referral/bind_referral_to_user",
+          type: "POST",
           inputs: [
             {
-              title: 'Address',
-              name: 'address',
-              description: 'Address',
-              value:'',
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+          ],
         },
         {
           id: 10,
-          description: 'Bind Referral To User',
-          route: 'api/referral/get_referrals_by_address',
-          type: 'POST',
+          description: "Bind Referral To User",
+          route: "api/referral/get_referrals_by_address",
+          type: "POST",
           inputs: [
             {
-              title: 'Address',
-              name: 'address',
-              description: 'Address',
-              value:'',
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
               }
             },
-          ]
+          ],
         },
         {
           id: 11,
-          description: 'Bind Referral To Code',
-          route: 'api/referral/get_referrals_by_code',
-          type: 'POST',
+          description: "Bind Referral To Code",
+          route: "api/referral/get_referrals_by_code",
+          type: "POST",
           inputs: [
             {
-              title: 'Address',
-              name: 'address',
-              description: 'Address',
-              value:'',
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
               }
@@ -361,12 +434,12 @@ const DevelopersApi = () => {
               },
             },
             {
-              title: 'Referral Binary Level 2 Percentage',
-              name: 'referral_binary_lvl2_percentage',
-              description: 'Percent',
-              value: '',
+              title: "Referral",
+              name: "referral",
+              description: "Referral code",
+              value: "",
               required: true,
-              validation: 'text',
+              validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
               }
@@ -375,12 +448,96 @@ const DevelopersApi = () => {
         },
         {
           id: 14,
-          description: 'Get Referral Options',
-          route: 'api/referral/get_referral_options',
-          type: 'GET',
-          inputs: []
+          description: "Get Referral Options",
+          route: "api/referral/get_referral_options",
+          type: "GET",
+          inputs: [],
         },
-      ]
+      ],
+    },
+    {
+      title: "Transaction",
+      items: [
+        {
+          id: 0,
+          description: "Create new transaction",
+          route: "api/transactions/make_transaction",
+          type: "POST",
+          inputs: [
+            {
+              title: "From",
+              name: "from",
+              description: "from here",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "To",
+              name: "to",
+              description: "to here",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Amount",
+              name: "amount",
+              description: "amount here",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Tx Type",
+              name: "txType",
+              description: "txType here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Tx Currency",
+              name: "txCurrency",
+              description: "txCurrency here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 1,
+          description: "Update transaction status",
+          route: "api/transactions/update_transaction_status",
+          type: "POST",
+          inputs: [
+            {
+              title: "Tx Hash",
+              name: "tx_hash",
+              description: "tx_hash here",
+              value: "",
+              required: true,
+              validation: "hash",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Status",
+              name: "status",
+              description: "status here",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
     },
     {
       title: "Staking",
@@ -423,21 +580,21 @@ const DevelopersApi = () => {
           id: 1,
           description: "Get stack contract info",
           route: "getStackerInfo_stackContract",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
           id: 2,
           description: "Get account summary data",
           route: "getStackerInfo_accountSummary",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
           id: 3,
           description: "Get stakers record",
           route: "getStackerInfo_stakersRecord",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
@@ -490,6 +647,7 @@ const DevelopersApi = () => {
     // console.log("hihi");
     // console.log(devAppObject);
     setResponseActive(route);
+    setDeveloperApiActive(route);
     // console.log(route);
     // console.log(type);
     if (type === "METAMASK") {
@@ -508,16 +666,21 @@ const DevelopersApi = () => {
         harvest(devAppObject.index);
       }
     }
-    if (type === "METAMASK_GET") {
+
+    if (type === "GET") {
       if (route === "getStackerInfo_stackContract") {
-        setSuccessResponse(stackContractInfo);
+        return console.log(stackContractInfo);
       }
       if (route === "getStackerInfo_accountSummary") {
-        setSuccessResponse(stakersInfo);
+        return setSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        setSuccessResponse(stakersRecord);
+        return setSuccessResponse(stakersRecord);
       }
+      const queryString = buildQueryString(devAppObject);
+      const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
+
+      makeRequest(type, fullUrl);
     }
 
     if (type === "POST") {
@@ -525,71 +688,33 @@ const DevelopersApi = () => {
     }
   };
 
+  function buildQueryString(params) {
+    let queryString = "";
+    let first = true;
+
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        if (first) {
+          first = false;
+        } else {
+          queryString += "&";
+        }
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+      }
+    }
+
+    return queryString;
+  }
+
+  console.log(successResponse)
+
   return (
     <>
-      {/* {account} */}
       {account ? (
         <div onClick={() => disconnect()}>disconnect</div>
       ) : (
         <div onClick={() => connect("metaMask", injected)}>connect</div>
       )}
-
-      {/* <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}> */}
-      {/*  <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>*/}
-      {/*    Trade*/}
-      {/*  </div>*/}
-      {/*  <div onClick={() => makeRequest("GET", "/api/loan/loan-market-offers")}>*/}
-      {/*    All public loan offers*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() => makeRequest("GET", "api/loan/user-created-loans/lenderAddress")}*/}
-      {/*  >*/}
-      {/*    User created loans*/}
-      {/*  </div>*/}
-      {/*  <div onClick={() => makeRequest("GET", "api/loan/user-loans/borrowerAddress")}>*/}
-      {/*    User borrowed active loans*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() => makeRequest("POST", "api/loan/create-loan", { lender: "0x123" })}*/}
-      {/*  >*/}
-      {/*    Create new loan offer*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() =>*/}
-      {/*      makeRequest("POST", "api/loan/delete-loan-offer", {*/}
-      {/*        id: "id",*/}
-      {/*        lender: "0x123",*/}
-      {/*      })*/}
-      {/*    }*/}
-      {/*  >*/}
-      {/*    Delete loan offer*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() =>*/}
-      {/*      makeRequest("POST", "api/loan/take-loan", {*/}
-      {/*        id: "id",*/}
-      {/*        borrower: "0x456",*/}
-      {/*        collateral: [],*/}
-      {/*      })*/}
-      {/*    }*/}
-      {/*  >*/}
-      {/*    Take loan*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() =>*/}
-      {/*      makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })*/}
-      {/*    }*/}
-      {/*  >*/}
-      {/*    Repay loan*/}
-      {/*  </div>*/}
-      {/*  <div*/}
-      {/*    onClick={() =>*/}
-      {/*      makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })*/}
-      {/*    }*/}
-      {/*  >*/}
-      {/*    Default loan*/}
-      {/*  </div>*/}
-      {/* </div> */}
 
       <AdminPanel
         adminPage={"developerApi"}
@@ -599,6 +724,8 @@ const DevelopersApi = () => {
         successResponse={successResponse}
         setSuccessResponse={setSuccessResponse}
         failResponse={failResponse}
+        developerApiActive={developerApiActive}
+        setDeveloperApiActive={setDeveloperApiActive}
         responseActive={responseActive}
         setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
