@@ -516,7 +516,7 @@ const DevelopersApi = () => {
       }
     }
 
-    if (type === "POST") {
+    if (type === "POST" || type === "GET") {
       makeRequest(type, route, devAppObject);
     }
   };
