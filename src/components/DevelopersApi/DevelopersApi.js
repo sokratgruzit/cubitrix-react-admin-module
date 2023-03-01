@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
+import { AdminPanel, Button } from "@cubitrix/cubitrix-react-ui-module";
 import { useConnect, useStake } from "@cubitrix/cubitrix-react-connect-module";
 import { injected } from "../../connector";
 
@@ -605,6 +605,7 @@ const DevelopersApi = () => {
     },
     {
       title: "Staking",
+      connectWallet: true,
       items: [
         {
           id: 0,
@@ -774,11 +775,6 @@ const DevelopersApi = () => {
 
   return (
     <>
-      {account ? (
-        <div onClick={() => disconnect()}>disconnect</div>
-      ) : (
-        <div onClick={() => connect("metaMask", injected)}>connect</div>
-      )}
 
       <AdminPanel
         adminPage={"developerApi"}
@@ -793,6 +789,30 @@ const DevelopersApi = () => {
         responseActive={responseActive}
         setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
+        developersApiConnectButton={
+          account ? (
+              <Button
+                  label={"Disconnect Wallet"}
+                  size={"btn-sm"}
+                  type={"btn-primary"}
+                  arrow={"arrow-none"}
+                  element={"button"}
+                  onClick={() => disconnect()}
+                  customStyles={{ margin: "0" }}
+              />
+            ) : (
+              <Button
+                  label={"Connect Wallet"}
+                  size={"btn-sm"}
+                  type={"btn-primary"}
+                  arrow={"arrow-none"}
+                  element={"button"}
+                  onClick={() => connect("metaMask", injected)}
+                  customStyles={{ margin: "0" }}
+              />
+            )
+        }
+        walletConnect={account ? true : false}
       />
     </>
   );
