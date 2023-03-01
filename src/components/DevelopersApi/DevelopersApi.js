@@ -72,16 +72,40 @@ const DevelopersApi = () => {
         {
           id: 1,
           description: "User created loans",
-          route: "api/loan/user-created-loans/lenderAddress",
+          route: "api/loan/user-created-loans",
           type: "GET",
-          inputs: [],
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description:
+                "Address of lender (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 2,
           description: "User borrowed active loans",
-          route: "api/loan/user-loans/borrowerAddress",
+          route: "api/loan/user-loans",
           type: "GET",
-          inputs: [],
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description:
+                "Address of borrower (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+              value: "",
+              required: true,
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
         {
           id: 3,
@@ -91,15 +115,44 @@ const DevelopersApi = () => {
           inputs: [
             {
               id: 20,
-              title: "Lender",
+              title: "Address",
               name: "lender",
-              description: "Name of trade",
+              description:
+                "Address of lender (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 21,
+              title: "Amount",
+              name: "amount",
+              description: "Amount of trade (E.g., 100)",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 22,
+              title: "Interest",
+              name: "interest",
+              description: "Interest of trade (E.g., 10)",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 23,
+              title: "Duration",
+              name: "duration",
+              description: "Duration of trade (E.g., 10)",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -112,24 +165,18 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Lender",
+              title: "Address",
               name: "lender",
-              description: "lender here",
+              description:
+                "Lender address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -142,24 +189,28 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Collateral",
+              name: "collateral",
+              description: "collateral here (E.g., 100)",
+              value: "",
+              required: true,
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -172,24 +223,29 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "Amount",
+              name: "amount",
+              description: "amount here (E.g., 100)",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -202,24 +258,20 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "id here (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              onChange: (e) => changeDevObject(e),
             },
             {
-              title: "Borrower",
+              title: "Address",
               name: "borrower",
-              description: "borrower here",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
-              validation: "text",
-              onChange: (e) => {
-                changeDevObject(e);
-              },
+              validation: "address",
+              onChange: (e) => changeDevObject(e),
             },
           ],
         },
@@ -708,12 +760,8 @@ const DevelopersApi = () => {
   };
 
   const handleTryOutSubmit = (route, type) => {
-    // console.log("hihi");
-    // console.log(devAppObject);
     setResponseActive(route);
-    setDeveloperApiActive(route);
-    // console.log(route);
-    // console.log(type);
+
     if (type === "METAMASK") {
       if (route === "stake") {
         if (account && isAllowance) {
@@ -747,7 +795,7 @@ const DevelopersApi = () => {
       makeRequest(type, fullUrl);
     }
 
-    if (type === "POST" || type === "GET") {
+    if (type === "POST") {
       makeRequest(type, route, devAppObject);
     }
   };
@@ -763,7 +811,9 @@ const DevelopersApi = () => {
         } else {
           queryString += "&";
         }
-        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(
+          params[key]
+        )}`;
       }
     }
 
