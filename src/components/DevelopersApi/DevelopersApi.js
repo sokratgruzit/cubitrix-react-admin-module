@@ -46,8 +46,10 @@ const DevelopersApi = () => {
 
       const response = await axios(options);
       console.log(response);
-      setSuccessResponse(response.data.result);
-      return response.data;
+      if (response.data.result) {
+        return setSuccessResponse(response.data.result);
+      }
+      setSuccessResponse(response.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -781,7 +783,7 @@ const DevelopersApi = () => {
 
     if (type === "GET") {
       if (route === "getStackerInfo_stackContract") {
-        return console.log(stackContractInfo);
+        return setSuccessResponse(stackContractInfo);
       }
       if (route === "getStackerInfo_accountSummary") {
         return setSuccessResponse(stakersInfo);
@@ -819,8 +821,6 @@ const DevelopersApi = () => {
 
     return queryString;
   }
-
-  console.log(successResponse)
 
   return (
     <>
