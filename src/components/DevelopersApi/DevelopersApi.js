@@ -15,6 +15,7 @@ const DevelopersApi = () => {
   const [devAppObject, setDevAppObject] = useState({});
   const [responseActive, setResponseActive] = useState(false);
   const [successResponse, setSuccessResponse] = useState({});
+  const [developerApiActive, setDeveloperApiActive] = useState(false);
   const { connect, disconnect } = useConnect();
   const [developerApiActive, setDeveloperApiActive] = useState(false);
 
@@ -41,8 +42,10 @@ const DevelopersApi = () => {
 
       const response = await axios(options);
       console.log(response);
-      setSuccessResponse(response.data.result);
-      return response.data;
+      if (response.data.result) {
+        return setSuccessResponse(response.data.result);
+      }
+      setSuccessResponse(response.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -755,11 +758,8 @@ const DevelopersApi = () => {
   };
 
   const handleTryOutSubmit = (route, type) => {
-    // console.log("hihi");
-    // console.log(devAppObject);
     setResponseActive(route);
-    // console.log(route);
-    // console.log(type);
+
     if (type === "METAMASK") {
       if (route === "stake") {
         if (account && isAllowance) {
@@ -776,19 +776,17 @@ const DevelopersApi = () => {
         harvest(devAppObject.index);
       }
     }
-    if (type === "METAMASK_GET") {
-      if (route === "getStackerInfo_stackContract") {
-        setSuccessResponse(stackContractInfo);
-      }
-      if (route === "getStackerInfo_accountSummary") {
-        setSuccessResponse(stakersInfo);
-      }
-      if (route === "getStackerInfo_stakersRecord") {
-        setSuccessResponse(stakersRecord);
-      }
-    }
 
     if (type === "GET") {
+      if (route === "getStackerInfo_stackContract") {
+        return setSuccessResponse(stackContractInfo);
+      }
+      if (route === "getStackerInfo_accountSummary") {
+        return setSuccessResponse(stakersInfo);
+      }
+      if (route === "getStackerInfo_stakersRecord") {
+        return setSuccessResponse(stakersRecord);
+      }
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
 
@@ -834,6 +832,8 @@ const DevelopersApi = () => {
         successResponse={successResponse}
         setSuccessResponse={setSuccessResponse}
         failResponse={failResponse}
+        developerApiActive={developerApiActive}
+        setDeveloperApiActive={setDeveloperApiActive}
         responseActive={responseActive}
         setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
