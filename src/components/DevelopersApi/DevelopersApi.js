@@ -270,27 +270,6 @@ const DevelopersApi = () => {
             },
           ],
         },
-        {
-          id: 1,
-          description: "Get stack contract info",
-          route: "api/stack-contract-info",
-          type: "METAMASK_GET",
-          inputs: [],
-        },
-        {
-          id: 2,
-          description: "Get account summary data",
-          route: "api/account-summary",
-          type: "METAMASK_GET",
-          inputs: [],
-        },
-        {
-          id: 3,
-          description: "Get stakers record",
-          route: "api/stakers-record",
-          type: "METAMASK_GET",
-          inputs: [],
-        },
       ],
     },
     {
@@ -305,42 +284,8 @@ const DevelopersApi = () => {
         },
         {
           id: 9,
-          description: "Bind Referral To User",
+          description: "Bind Code To Referral",
           route: "api/referral/bind_referral_to_user",
-          type: "POST",
-          inputs: [
-            {
-              title: "Address",
-              name: "address",
-              description: "Address",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 10,
-          description: "Bind Referral To User",
-          route: "api/referral/get_referrals_by_address",
-          type: "POST",
-          inputs: [
-            {
-              title: "Address",
-              name: "address",
-              description: "Address",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 11,
-          description: "Bind Referral To Code",
-          route: "api/referral/get_referrals_by_code",
           type: "POST",
           inputs: [
             {
@@ -354,6 +299,33 @@ const DevelopersApi = () => {
                 changeDevObject(e);
               },
             },
+          ],
+        },
+        {
+          id: 10,
+          description: "Get Referral Info By address",
+          route: "api/referral/get_referrals_by_address",
+          type: "POST",
+          inputs: [
+            {
+              title: "Address",
+              name: "address",
+              description: "Address",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+          ],
+        },
+        {
+          id: 11,
+          description: "Get Referral Info By Code",
+          route: "api/referral/get_referrals_by_code",
+          type: "POST",
+          inputs: [
             {
               title: "Referral",
               name: "referral",
@@ -373,6 +345,17 @@ const DevelopersApi = () => {
           route: "api/referral/assign_refferal_to_user",
           type: "POST",
           inputs: [
+            {
+              title: "Address",
+              name: "address",
+              description: "User Address",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
             {
               title: "Referral",
               name: "referral",
@@ -667,7 +650,6 @@ const DevelopersApi = () => {
         },
       ],
     },
-
     {
       title: "Staking",
       items: [
@@ -705,83 +687,25 @@ const DevelopersApi = () => {
             },
           ],
         },
-      ],
-    },
-    {
-      title: "Transaction",
-      items: [
-        {
-          id: 0,
-          description: "Create new transaction",
-          route: "api/transactions/make_transaction",
-          type: "POST",
-          inputs: [
-            {
-              title: "From",
-              name: "from",
-              description: "from here",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "To",
-              name: "to",
-              description: "to here",
-              value: "",
-              required: true,
-              validation: "address",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Amount",
-              name: "amount",
-              description: "amount here",
-              value: "",
-              required: true,
-              validation: "number",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Tx Type",
-              name: "txType",
-              description: "txType here",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              title: "Tx Currency",
-              name: "txCurrency",
-              description: "txCurrency here",
-              value: "",
-              required: true,
-              validation: "text",
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
         {
           id: 1,
           description: "Get stack contract info",
           route: "getStackerInfo_stackContract",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
           id: 2,
           description: "Get account summary data",
           route: "getStackerInfo_accountSummary",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
           id: 3,
           description: "Get stakers record",
           route: "getStackerInfo_stakersRecord",
-          type: "METAMASK_GET",
+          type: "GET",
           inputs: [],
         },
         {
