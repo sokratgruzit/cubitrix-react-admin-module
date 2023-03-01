@@ -68,7 +68,7 @@ const DevelopersApi = () => {
             {
               id: 20,
               title: 'Lender',
-              name: 'name',
+              name: 'lender',
               description: 'Name of trade',
               value:'',
               required: true,
