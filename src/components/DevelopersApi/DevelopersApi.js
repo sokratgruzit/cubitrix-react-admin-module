@@ -33,17 +33,17 @@ const DevelopersApi = () => {
   } = useStake({ Router, tokenAddress });
 
   const {
-    depositAmount,
+    // depositAmount,
     // balance,
-    // stakersInfo,
-    // stackContractInfo,
+    stakersInfo,
+    stackContractInfo,
     // timeperiod,
-    // stakersRecord,
+    stakersRecord,
     isAllowance,
     // loading,
     // timeperiodDate,
   } = useSelector((state) => state.stake);
-  // console.log(depositAmount);
+  // console.log(stakersRecord);
 
   async function makeRequest(method, url, data) {
     try {
@@ -257,6 +257,27 @@ const DevelopersApi = () => {
             },
           ],
         },
+        {
+          id: 1,
+          description: "Get stack contract info",
+          route: "api/stack-contract-info",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 2,
+          description: "Get account summary data",
+          route: "api/account-summary",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 3,
+          description: "Get stakers record",
+          route: "api/stakers-record",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
       ],
     },
   ];
@@ -288,21 +309,54 @@ const DevelopersApi = () => {
       if (account && !isAllowance) {
         stake();
       }
-    } else {
+    }
+    if (type === "METAMASK_GET") {
+      if (route === "api/stack-contract-info") {
+        setSuccessResponse(stackContractInfo);
+      }
+      if (route === "api/account-summary") {
+        setSuccessResponse({
+          totalStakedTokenUser: stakersInfo.totalStakedTokenUser,
+          totalUnstakedTokenUser: stakersInfo.totalUnstakedTokenUser,
+          totalClaimedRewardTokenUser: stakersInfo.totalClaimedRewardTokenUser,
+          stakeCount: stakersInfo.stakeCount,
+          alreadyExists: stakersInfo.alreadyExists,
+          currentStaked: stakersInfo.currentStaked,
+          realtimeReward: stakersInfo.realtimeReward,
+        });
+      }
+      if (route === "api/stakers-record") {
+        setSuccessResponse({
+          unstaketime: stakersRecord[0].unstaketime,
+          staketime: stakersRecord[0].staketime,
+          amount: stakersRecord[0].amount,
+          reward: stakersRecord[0].reward,
+          lastharvesttime: stakersRecord[0].lastharvesttime,
+          remainingreward: stakersRecord[0].remainingreward,
+          harvestreward: stakersRecord[0].harvestreward,
+          persecondreward: stakersRecord[0].persecondreward,
+          withdrawan: stakersRecord[0].withdrawan,
+          unstaked: stakersRecord[0].unstaked,
+          realtimeRewardPerBlock: stakersRecord[0].realtimeRewardPerBlock,
+        });
+      }
+    }
+
+    if (type === "POST") {
       makeRequest(type, route, devAppObject);
     }
   };
 
   return (
     <>
-      {account}
+      {/* {account} */}
       {account ? (
         <div onClick={() => disconnect()}>disconnect</div>
       ) : (
         <div onClick={() => connect("metaMask", injected)}>connect</div>
       )}
 
-      {/*<div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>*/}
+      {/* <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}> */}
       {/*  <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>*/}
       {/*    Trade*/}
       {/*  </div>*/}
@@ -357,7 +411,7 @@ const DevelopersApi = () => {
       {/*  >*/}
       {/*    Default loan*/}
       {/*  </div>*/}
-      {/*</div>*/}
+      {/* </div> */}
 
       <AdminPanel
         adminPage={"developerApi"}
