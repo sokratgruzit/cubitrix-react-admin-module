@@ -46,8 +46,8 @@ const DevelopersApi = () => {
 
       const response = await axios(options);
       console.log(response);
-      setSuccessResponse(response.data.result);
-      return response.data;
+      setSuccessResponse(response.data);
+      console.log(successResponse)
     } catch (error) {
       console.log(error.response);
     }
