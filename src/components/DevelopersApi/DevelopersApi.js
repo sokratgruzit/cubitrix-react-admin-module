@@ -416,7 +416,7 @@ const DevelopersApi = () => {
             },
             {
               title: "Referral Binary Level 1 Percentage",
-              name: "referral_binary_lvl1_percentage",
+              name: "referral_binary_percentage_lvl_1",
               description: "Percent",
               value: "",
               required: true,
@@ -426,12 +426,232 @@ const DevelopersApi = () => {
               },
             },
             {
-              title: "Referral",
-              name: "referral",
-              description: "Referral code",
+              title: "Referral Binary Level 1 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_1",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 2 Percentage",
+              name: "referral_binary_percentage_lvl_2",
+              description: "Percent",
               value: "",
               required: true,
               validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 2 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_2",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 3 Percentage",
+              name: "referral_binary_percentage_lvl_3",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 3 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_3",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 4 Percentage",
+              name: "referral_binary_percentage_lvl_4",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 4 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_4",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 5 Percentage",
+              name: "referral_binary_percentage_lvl_5",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 5 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_5",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 6 Percentage",
+              name: "referral_binary_percentage_lvl_6",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 6 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_6",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 7 Percentage",
+              name: "referral_binary_percentage_lvl_7",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 7 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_7",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 8 Percentage",
+              name: "referral_binary_percentage_lvl_8",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 8 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_8",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 9 Percentage",
+              name: "referral_binary_percentage_lvl_9",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 9 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_9",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 10 Percentage",
+              name: "referral_binary_percentage_lvl_10",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 10 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_10",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 11 Percentage",
+              name: "referral_binary_percentage_lvl_11",
+              description: "Percent",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              },
+            },
+            {
+              title: "Referral Binary Level 11 Max Bonus Amount",
+              name: "referral_binary_max_amount_lvl_11",
+              description: "Amount",
+              value: "",
+              required: true,
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
