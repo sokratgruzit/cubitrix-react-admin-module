@@ -1,14 +1,49 @@
-import React from "react";
-import { useState } from "react";
-import styles from "./DevelopersApi.module.css";
+import React, { useState, useEffect } from "react";
+
 import { AdminPanel } from "@cubitrix/cubitrix-react-ui-module";
+import { useConnect, useStake } from "@cubitrix/cubitrix-react-connect-module";
+import { injected } from "../../connector";
+
+import { useSelector } from "react-redux";
+
 import useAxios from "../../hooks/useAxios";
+
+import styles from "./DevelopersApi.module.css";
 
 const DevelopersApi = () => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
   const [responseActive, setResponseActive] = useState(false);
   const [successResponse, setSuccessResponse] = useState({});
+  const { connect, disconnect } = useConnect();
+
+  const account = useSelector((state) => state.connect.account);
+
+  var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
+  var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
+  const {
+    approve,
+    stake,
+    // unstake,
+    // harvest,
+    // setMaxWithdrawal,
+    // handleTimeperiodDate,
+    handleDepositAmount,
+    handleTimePeriod,
+  } = useStake({ Router, tokenAddress });
+
+  const {
+    // depositAmount,
+    // balance,
+    stakersInfo,
+    stackContractInfo,
+    // timeperiod,
+    stakersRecord,
+    isAllowance,
+    // loading,
+    // timeperiodDate,
+  } = useSelector((state) => state.stake);
+  // console.log(stakersRecord);
 
   async function makeRequest(method, url, data) {
     try {
@@ -20,8 +55,8 @@ const DevelopersApi = () => {
         options.data = data;
       }
       const response = await axios(options);
-      console.log(response)
-      setSuccessResponse(response.data)
+      console.log(response);
+      setSuccessResponse(response.data.result);
       // return response.data;
     } catch (error) {
       console.error(error);
@@ -29,9 +64,9 @@ const DevelopersApi = () => {
     }
   }
 
-
-  let changeDevObject = (key, name) => {
-    setDevAppObject(prev => ({ ...prev, [key]: name }))
+  let changeDevObject = (e) => {
+    const { name, value } = e.target;
+    setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
 
   let developerApiArray = [
@@ -358,23 +393,200 @@ const DevelopersApi = () => {
           inputs: []
         },
       ]
-    }
+    },
+    {
+      title: "Stake",
+      items: [
+        {
+          id: 0,
+          description: "Create new loan offer",
+          route: "api/loan/create-loan",
+          type: "METAMASK",
+          inputs: [
+            {
+              id: 0,
+              title: "Amount",
+              name: "depostAmount",
+              description: "Deposit Amount",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 1,
+              title: "Timeperiod",
+              name: "timeperiod",
+              description: "Timeperiod",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                handleTimePeriod(e.target.value);
+                changeDevObject(e);
+              },
+            },
+          ],
+        },
+        {
+          id: 1,
+          description: "Get stack contract info",
+          route: "api/stack-contract-info",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 2,
+          description: "Get account summary data",
+          route: "api/account-summary",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+        {
+          id: 3,
+          description: "Get stakers record",
+          route: "api/stakers-record",
+          type: "METAMASK_GET",
+          inputs: [],
+        },
+      ],
+    },
   ];
 
+  // <div
+  //     onClick={() =>
+  //         makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
+  //     }
+  // >
+  //   Default loan
+  // </div>
 
   const failResponse = {
     message: "No data was found",
     result: [],
-    status: 0
+    status: 0,
   };
 
-  const handleTryOutSubmit = (route, id, type) => {
-    setResponseActive(route)
-    makeRequest(type, route, devAppObject)
+  const handleTryOutSubmit = (route, type) => {
+    console.log("hihi");
+    console.log(devAppObject);
+    setResponseActive(route);
+    console.log(route);
+    console.log(type);
+    if (type === "METAMASK") {
+      if (account && isAllowance) {
+        approve();
+      }
+      if (account && !isAllowance) {
+        stake();
+      }
+    }
+    if (type === "METAMASK_GET") {
+      if (route === "api/stack-contract-info") {
+        setSuccessResponse(stackContractInfo);
+      }
+      if (route === "api/account-summary") {
+        setSuccessResponse({
+          totalStakedTokenUser: stakersInfo.totalStakedTokenUser,
+          totalUnstakedTokenUser: stakersInfo.totalUnstakedTokenUser,
+          totalClaimedRewardTokenUser: stakersInfo.totalClaimedRewardTokenUser,
+          stakeCount: stakersInfo.stakeCount,
+          alreadyExists: stakersInfo.alreadyExists,
+          currentStaked: stakersInfo.currentStaked,
+          realtimeReward: stakersInfo.realtimeReward,
+        });
+      }
+      if (route === "api/stakers-record") {
+        setSuccessResponse({
+          unstaketime: stakersRecord[0].unstaketime,
+          staketime: stakersRecord[0].staketime,
+          amount: stakersRecord[0].amount,
+          reward: stakersRecord[0].reward,
+          lastharvesttime: stakersRecord[0].lastharvesttime,
+          remainingreward: stakersRecord[0].remainingreward,
+          harvestreward: stakersRecord[0].harvestreward,
+          persecondreward: stakersRecord[0].persecondreward,
+          withdrawan: stakersRecord[0].withdrawan,
+          unstaked: stakersRecord[0].unstaked,
+          realtimeRewardPerBlock: stakersRecord[0].realtimeRewardPerBlock,
+        });
+      }
+    }
+
+    if (type === "POST") {
+      makeRequest(type, route, devAppObject);
+    }
   };
 
   return (
     <>
+      {/* {account} */}
+      {account ? (
+        <div onClick={() => disconnect()}>disconnect</div>
+      ) : (
+        <div onClick={() => connect("metaMask", injected)}>connect</div>
+      )}
+
+      {/* <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}> */}
+      {/*  <div onClick={() => makeRequest("POST", "/api/data/filter", { name: "hii" })}>*/}
+      {/*    Trade*/}
+      {/*  </div>*/}
+      {/*  <div onClick={() => makeRequest("GET", "/api/loan/loan-market-offers")}>*/}
+      {/*    All public loan offers*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() => makeRequest("GET", "api/loan/user-created-loans/lenderAddress")}*/}
+      {/*  >*/}
+      {/*    User created loans*/}
+      {/*  </div>*/}
+      {/*  <div onClick={() => makeRequest("GET", "api/loan/user-loans/borrowerAddress")}>*/}
+      {/*    User borrowed active loans*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() => makeRequest("POST", "api/loan/create-loan", { lender: "0x123" })}*/}
+      {/*  >*/}
+      {/*    Create new loan offer*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/delete-loan-offer", {*/}
+      {/*        id: "id",*/}
+      {/*        lender: "0x123",*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Delete loan offer*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/take-loan", {*/}
+      {/*        id: "id",*/}
+      {/*        borrower: "0x456",*/}
+      {/*        collateral: [],*/}
+      {/*      })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Take loan*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/repay-loan", { id: "id", borrower: "0x567" })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Repay loan*/}
+      {/*  </div>*/}
+      {/*  <div*/}
+      {/*    onClick={() =>*/}
+      {/*      makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })*/}
+      {/*    }*/}
+      {/*  >*/}
+      {/*    Default loan*/}
+      {/*  </div>*/}
+      {/* </div> */}
+
       <AdminPanel
         adminPage={"developerApi"}
         developersApi={developerApiArray}
@@ -383,6 +595,7 @@ const DevelopersApi = () => {
         successResponse={successResponse}
         failResponse={failResponse}
         responseActive={responseActive}
+        setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
       />
     </>
