@@ -24,26 +24,14 @@ const DevelopersApi = () => {
   const {
     approve,
     stake,
-    // unstake,
-    // harvest,
-    // setMaxWithdrawal,
-    // handleTimeperiodDate,
+    unstake,
+    harvest,
     handleDepositAmount,
     handleTimePeriod,
   } = useStake({ Router, tokenAddress });
 
-  const {
-    // depositAmount,
-    // balance,
-    stakersInfo,
-    stackContractInfo,
-    // timeperiod,
-    stakersRecord,
-    isAllowance,
-    // loading,
-    // timeperiodDate,
-  } = useSelector((state) => state.stake);
-  // console.log(stakersRecord);
+  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } =
+    useSelector((state) => state.stake);
 
   async function makeRequest(method, url, data) {
     try {
@@ -109,7 +97,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -128,7 +116,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -139,7 +127,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -158,7 +146,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -169,7 +157,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -188,7 +176,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -199,7 +187,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -218,7 +206,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -229,7 +217,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -260,7 +248,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -279,7 +267,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -298,7 +286,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -309,7 +297,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -328,7 +316,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -347,7 +335,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -358,7 +346,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -369,7 +357,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               },
             },
             {
@@ -380,7 +368,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value)
+                changeDevObject(e);
               }
             }
           ]
@@ -395,12 +383,12 @@ const DevelopersApi = () => {
       ]
     },
     {
-      title: "Stake",
+      title: "Staking",
       items: [
         {
           id: 0,
-          description: "Create new loan offer",
-          route: "api/loan/create-loan",
+          description: "Stake your CML",
+          route: "stake",
           type: "METAMASK",
           inputs: [
             {
@@ -434,35 +422,63 @@ const DevelopersApi = () => {
         {
           id: 1,
           description: "Get stack contract info",
-          route: "api/stack-contract-info",
+          route: "getStackerInfo_stackContract",
           type: "METAMASK_GET",
           inputs: [],
         },
         {
           id: 2,
           description: "Get account summary data",
-          route: "api/account-summary",
+          route: "getStackerInfo_accountSummary",
           type: "METAMASK_GET",
           inputs: [],
         },
         {
           id: 3,
           description: "Get stakers record",
-          route: "api/stakers-record",
+          route: "getStackerInfo_stakersRecord",
           type: "METAMASK_GET",
           inputs: [],
+        },
+        {
+          id: 3,
+          description: "Unstake your record",
+          route: "unstake",
+          type: "METAMASK",
+          inputs: [
+            {
+              id: 0,
+              title: "Index",
+              name: "index",
+              description: "Stakers record index",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 3,
+          description: "Harvest your record",
+          route: "harvest",
+          type: "METAMASK",
+          inputs: [
+            {
+              id: 0,
+              title: "Index",
+              name: "index",
+              description: "Stakers record index",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
         },
       ],
     },
   ];
-
-  // <div
-  //     onClick={() =>
-  //         makeRequest("POST", "api/loan/default-loan", { id: "id", borrower: "0x567" })
-  //     }
-  // >
-  //   Default loan
-  // </div>
 
   const failResponse = {
     message: "No data was found",
@@ -471,48 +487,36 @@ const DevelopersApi = () => {
   };
 
   const handleTryOutSubmit = (route, type) => {
-    console.log("hihi");
-    console.log(devAppObject);
+    // console.log("hihi");
+    // console.log(devAppObject);
     setResponseActive(route);
-    console.log(route);
-    console.log(type);
+    // console.log(route);
+    // console.log(type);
     if (type === "METAMASK") {
-      if (account && isAllowance) {
-        approve();
+      if (route === "stake") {
+        if (account && isAllowance) {
+          approve();
+        }
+        if (account && !isAllowance) {
+          stake();
+        }
       }
-      if (account && !isAllowance) {
-        stake();
+      if (route === "unstake") {
+        unstake(devAppObject.index);
+      }
+      if (route === "harvest") {
+        harvest(devAppObject.index);
       }
     }
     if (type === "METAMASK_GET") {
-      if (route === "api/stack-contract-info") {
+      if (route === "getStackerInfo_stackContract") {
         setSuccessResponse(stackContractInfo);
       }
-      if (route === "api/account-summary") {
-        setSuccessResponse({
-          totalStakedTokenUser: stakersInfo.totalStakedTokenUser,
-          totalUnstakedTokenUser: stakersInfo.totalUnstakedTokenUser,
-          totalClaimedRewardTokenUser: stakersInfo.totalClaimedRewardTokenUser,
-          stakeCount: stakersInfo.stakeCount,
-          alreadyExists: stakersInfo.alreadyExists,
-          currentStaked: stakersInfo.currentStaked,
-          realtimeReward: stakersInfo.realtimeReward,
-        });
+      if (route === "getStackerInfo_accountSummary") {
+        setSuccessResponse(stakersInfo);
       }
-      if (route === "api/stakers-record") {
-        setSuccessResponse({
-          unstaketime: stakersRecord[0].unstaketime,
-          staketime: stakersRecord[0].staketime,
-          amount: stakersRecord[0].amount,
-          reward: stakersRecord[0].reward,
-          lastharvesttime: stakersRecord[0].lastharvesttime,
-          remainingreward: stakersRecord[0].remainingreward,
-          harvestreward: stakersRecord[0].harvestreward,
-          persecondreward: stakersRecord[0].persecondreward,
-          withdrawan: stakersRecord[0].withdrawan,
-          unstaked: stakersRecord[0].unstaked,
-          realtimeRewardPerBlock: stakersRecord[0].realtimeRewardPerBlock,
-        });
+      if (route === "getStackerInfo_stakersRecord") {
+        setSuccessResponse(stakersRecord);
       }
     }
 
@@ -593,6 +597,7 @@ const DevelopersApi = () => {
         developersApiValues={devAppObject}
         setDeveloperApiValues={setDevAppObject}
         successResponse={successResponse}
+        setSuccessResponse={setSuccessResponse}
         failResponse={failResponse}
         responseActive={responseActive}
         setResponseActive={setResponseActive}
