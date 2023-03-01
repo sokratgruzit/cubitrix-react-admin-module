@@ -91,7 +91,7 @@ const DevelopersApi = () => {
               title: "Address",
               name: "address",
               description:
-                "Address of lender (E.g. 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+                "Address of lender (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -109,7 +109,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Address",
               name: "address",
-              description: "Address of borrower",
+              description:
+                "Address of borrower (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -127,7 +128,8 @@ const DevelopersApi = () => {
               id: 20,
               title: "Address",
               name: "lender",
-              description: "Address of lender",
+              description:
+                "Address of lender (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -137,7 +139,7 @@ const DevelopersApi = () => {
               id: 21,
               title: "Amount",
               name: "amount",
-              description: "Amount of trade",
+              description: "Amount of trade (E.g., 100)",
               value: "",
               required: true,
               validation: "number",
@@ -147,7 +149,7 @@ const DevelopersApi = () => {
               id: 22,
               title: "Interest",
               name: "interest",
-              description: "Interest of trade",
+              description: "Interest of trade (E.g., 10)",
               value: "",
               required: true,
               validation: "number",
@@ -157,7 +159,7 @@ const DevelopersApi = () => {
               id: 23,
               title: "Duration",
               name: "duration",
-              description: "Duration of trade",
+              description: "Duration of trade (E.g., 10)",
               value: "",
               required: true,
               validation: "number",
@@ -174,14 +176,15 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "Loan Id",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               onChange: (e) => changeDevObject(e),
             },
             {
               title: "Address",
               name: "lender",
-              description: "Lender address",
+              description:
+                "Lender address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               validation: "address",
               onChange: (e) => changeDevObject(e),
@@ -197,7 +200,7 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "Loan Id",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -205,7 +208,8 @@ const DevelopersApi = () => {
             {
               title: "Address",
               name: "borrower",
-              description: "Borrower address",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -214,7 +218,7 @@ const DevelopersApi = () => {
             {
               title: "Collateral",
               name: "collateral",
-              description: "collateral here",
+              description: "collateral here (E.g., 100)",
               value: "",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -230,7 +234,7 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "Loan Id",
+              description: "Loan Id (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -238,7 +242,8 @@ const DevelopersApi = () => {
             {
               title: "Address",
               name: "borrower",
-              description: "Borrower address",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
@@ -247,7 +252,7 @@ const DevelopersApi = () => {
             {
               title: "Amount",
               name: "amount",
-              description: "amount here",
+              description: "amount here (E.g., 100)",
               value: "",
               required: true,
               validation: "number",
@@ -264,7 +269,7 @@ const DevelopersApi = () => {
             {
               title: "Id",
               name: "id",
-              description: "id here",
+              description: "id here (E.g., 63ff0ffa2098cf36968b6659)",
               value: "",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -272,7 +277,8 @@ const DevelopersApi = () => {
             {
               title: "Address",
               name: "borrower",
-              description: "Borrower address",
+              description:
+                "Borrower address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               value: "",
               required: true,
               validation: "address",
