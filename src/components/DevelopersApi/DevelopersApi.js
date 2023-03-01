@@ -97,7 +97,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -116,7 +116,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -127,7 +127,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -146,7 +146,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -157,7 +157,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -176,7 +176,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -187,7 +187,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -206,7 +206,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -217,7 +217,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -248,7 +248,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -267,7 +267,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -286,7 +286,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -297,7 +297,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -316,7 +316,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
           ]
@@ -335,7 +335,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -346,7 +346,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               }
             },
             {
@@ -357,7 +357,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name,e.target.value)
+                changeDevObject(e);
               },
             },
             {
@@ -368,7 +368,7 @@ const DevelopersApi = () => {
               required: true,
               validation: 'text',
               onChange: (e) => {
-                changeDevObject(e.target.name, e.target.value)
+                changeDevObject(e);
               }
             }
           ]
