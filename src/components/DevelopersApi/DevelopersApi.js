@@ -17,7 +17,6 @@ const DevelopersApi = () => {
   const [successResponse, setSuccessResponse] = useState({});
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const { connect, disconnect } = useConnect();
-  const [developerApiActive, setDeveloperApiActive] = useState(false);
 
   const account = useSelector((state) => state.connect.account);
 
@@ -837,8 +836,6 @@ const DevelopersApi = () => {
         responseActive={responseActive}
         setResponseActive={setResponseActive}
         handleTryOutSubmit={handleTryOutSubmit}
-        developerApiActive={developerApiActive}
-        setDeveloperApiActive={setDeveloperApiActive}
       />
     </>
   );
