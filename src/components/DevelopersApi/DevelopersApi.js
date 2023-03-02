@@ -401,7 +401,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -412,7 +412,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -434,7 +434,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -456,7 +456,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -478,7 +478,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -500,7 +500,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -522,7 +522,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -544,7 +544,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -566,7 +566,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -588,7 +588,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -610,7 +610,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -632,7 +632,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
