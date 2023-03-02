@@ -200,6 +200,7 @@ const Accounts = () => {
     return (
         <AdminPanel
             tableData={tableData}
+            adminPage={'table'}
             tableHead={th}
             mobile={mobile}
             pageLabel={'Accounts'}

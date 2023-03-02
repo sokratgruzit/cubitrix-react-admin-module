@@ -209,6 +209,7 @@ const AdminManagement = () => {
     return (
         <>
             <AdminPanel
+                adminPage={'table'}
                 tableData={tableData}
                 tableHead={th}
                 mobile={mobile}

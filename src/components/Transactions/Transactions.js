@@ -154,39 +154,20 @@ const Transactions = () => {
         )
     })
     return (
-      <div style={{width:'100%',display: 'flex', flexDirection: 'column'}}>
-          <div>
-              {tx_type}
-              <select name="tx_type"
-                      value={tx_type} // ...force the select's value to match the state variable...
-                      onChange={e => setTx_type(e.target.value)}
-                      style={{color: "#000"}}
-              >
-                  <option value="deposit">deposit</option>
-                  <option value="withdraw">withdraw</option>
-                  <option value="deposit">deposit</option>
-                  <option value="transfer">transfer</option>
-              </select>
-              <input type="text" placeholder="from"  onChange={e => setFrom(e.target.value)} style={{color: "#000"}}/>
-              <input type="text" placeholder="to" onChange={e => setTo(e.target.value)} style={{color: "#000"}}/>
-              <input type="text" placeholder="amount" onChange={e => setAmount(e.target.value)} style={{color: "#000"}}/>
-              <input type="text" placeholder="tx_currency" value={tx_currency} onChange={e => setTx_currency(e.target.value)} style={{color: "#000"}}/>
-              <div onClick={() => {newTx()}}>add</div>
-          </div>
-          <AdminPanel
-              tableData={tableData}
-              pageLabel={'Transactions'}
-              tableHead={th}
-              mobile={mobile}
-              tableHeader={1}
-              tableFilter={true}
-              tableFilterData={tableFilterData}
-              setTableFilterOutcomingData={setTableFilterOutcomingData}
-              paginationCurrent={pageNow}
-              paginationTotal={pageAll}
-              paginationEvent={page => setPageNow(page)}
-          />
-      </div>
+        <AdminPanel
+            adminPage={'table'}
+            tableData={tableData}
+            pageLabel={'Transactions'}
+            tableHead={th}
+            mobile={mobile}
+            tableHeader={1}
+            tableFilter={true}
+            tableFilterData={tableFilterData}
+            setTableFilterOutcomingData={setTableFilterOutcomingData}
+            paginationCurrent={pageNow}
+            paginationTotal={pageAll}
+            paginationEvent={page => setPageNow(page)}
+        />
     );
 };
 

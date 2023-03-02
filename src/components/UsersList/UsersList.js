@@ -207,6 +207,7 @@ const UsersList = () => {
     })
     return (
         <AdminPanel
+            adminPage={'table'}
             tableData={tableData}
             tableHead={th}
             tableSearchSelect={false}

@@ -758,6 +758,118 @@ const DevelopersApi = () => {
         },
       ],
     },
+    {
+      title: "Transactions",
+      items: [
+        {
+          id: 0,
+          description: "Update Transaction Status",
+          route: "api/transactions/update_transaction_status",
+          type: "POST",
+          inputs: [
+            {
+              id: 0,
+              title: "Tx Hash",
+              name: "tx_hash",
+              description: "Write transaction hash here, example (0xacslxthl8l7c9wsgrf3scioxy4xbaz28yz6tdwhfkjt9ghsmbpirheqyluqiwaek5d)",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 1,
+              title: "Status",
+              name: "status",
+              description: "Write transaction status here. Example (approve)",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleTimePeriod(e.target.value);
+                changeDevObject(e);
+              },
+            },
+          ],
+        },
+        {
+          id: 1,
+          description: "Make New Transaction",
+          route: "api/transactions/make_transaction",
+          type: "POST",
+          inputs: [
+            {
+              id: 20,
+              title: "Tx Type",
+              name: "tx_type",
+              description: "Write transaction type here, example ('deposit','transfer')",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 21,
+              title: "From",
+              name: "from",
+              description: "Write account name",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 22,
+              title: "To",
+              name: "to",
+              description: "Write account name",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 23,
+              title: "Amount",
+              name: "amount",
+              description: "Amount of transaction",
+              value: "",
+              required: true,
+              validation: "number",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+            {
+              id: 24,
+              title: "Tx Currency",
+              name: "tx_currency",
+              description: "Name of transaction currency. Example(ETH)",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                handleDepositAmount(e.target.value);
+                changeDevObject(e);
+              },
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   const developerApiFailResponse = {
