@@ -47,7 +47,7 @@ const DevelopersApi = () => {
       const response = await axios(options);
       console.log(response);
       setSuccessResponse(response.data);
-      console.log(successResponse)
+      console.log(successResponse);
     } catch (error) {
       console.log(error.response);
     }
@@ -345,7 +345,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -356,7 +356,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -378,7 +378,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -400,7 +400,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -422,7 +422,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -444,7 +444,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -466,7 +466,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -488,7 +488,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -510,7 +510,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -532,7 +532,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -554,7 +554,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -576,7 +576,7 @@ const DevelopersApi = () => {
               description: "Percent",
               value: "",
               required: true,
-              validation: "text",
+              validation: "number",
               onChange: (e) => {
                 changeDevObject(e);
               },
@@ -763,14 +763,16 @@ const DevelopersApi = () => {
         } else {
           queryString += "&";
         }
-        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(
+          params[key]
+        )}`;
       }
     }
 
     return queryString;
   }
 
-  console.log(successResponse)
+  console.log(successResponse);
 
   return (
     <>
