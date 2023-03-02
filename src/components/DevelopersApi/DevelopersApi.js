@@ -13,8 +13,8 @@ import styles from "./DevelopersApi.module.css";
 const DevelopersApi = () => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
-  const [responseActive, setResponseActive] = useState(false);
-  const [successResponse, setSuccessResponse] = useState({});
+  const [developerApiResponseActive, setDeveloperApiResponseActive] = useState(false);
+  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] = useState({});
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const { connect, disconnect } = useConnect();
 
@@ -42,13 +42,15 @@ const DevelopersApi = () => {
       const response = await axios(options);
       console.log(response);
       if (response.data.result) {
-        return setSuccessResponse(response.data.result);
+        return setDeveloperApiSuccessResponse(response.data.result);
       }
-      setSuccessResponse(response.data);
+      setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
       console.log(error.response);
     }
   }
+
+  console.log(devAppObject);
 
   let changeDevObject = (e) => {
     const { name, value } = e.target;
@@ -204,7 +206,7 @@ const DevelopersApi = () => {
             {
               title: "Collateral",
               name: "collateral",
-              description: "collateral here (E.g., 100)",
+              description: "collateral here (E.g., ['Bored-Ape-NFT'])",
               value: "",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -665,7 +667,7 @@ const DevelopersApi = () => {
               id: 0,
               title: "Amount",
               name: "depostAmount",
-              description: "Deposit Amount",
+              description: "Deposit Amount (Any Number)",
               value: "",
               required: true,
               validation: "number",
@@ -678,7 +680,7 @@ const DevelopersApi = () => {
               id: 1,
               title: "Timeperiod",
               name: "timeperiod",
-              description: "Timeperiod",
+              description: "Timeperiod (Only these numbers, 0, 1, 2, 3, 4)",
               value: "",
               required: true,
               validation: "number",
@@ -720,7 +722,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Index",
               name: "index",
-              description: "Stakers record index",
+              description:
+                "Stakers record index (E.g., 0, 1 which is the index of the record)",
               value: "",
               required: true,
               validation: "number",
@@ -738,7 +741,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Index",
               name: "index",
-              description: "Stakers record index",
+              description:
+                "Stakers record index (E.g., 0, 1... which is the index of the record)",
               value: "",
               required: true,
               validation: "number",
@@ -748,16 +752,60 @@ const DevelopersApi = () => {
         },
       ],
     },
+    {
+      title: "Accounts",
+      items: [
+        {
+          id: 0,
+          description: "Get account info",
+          route: "api/accounts/get_account",
+          type: "POST",
+          inputs: [
+            {
+              title: "address",
+              name: "address",
+              description: "Address",
+              value: "",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 1,
+          description: "Create different accounts",
+          route: "api/accounts/create_different_accounts",
+          type: "POST",
+          inputs: [
+            {
+              title: "address",
+              name: "address",
+              description: "Address",
+              value: "",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              title: "type",
+              name: "type",
+              description: "Type",
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
+    },
   ];
 
-  const failResponse = {
+  const developerApiFailResponse = {
     message: "No data was found",
     result: [],
     status: 0,
   };
 
-  const handleTryOutSubmit = (route, type) => {
-    setResponseActive(route);
+  const handleDeveloperApiTryOut = (route, type) => {
+    setDeveloperApiResponseActive(route);
 
     if (type === "METAMASK") {
       if (route === "stake") {
@@ -778,13 +826,13 @@ const DevelopersApi = () => {
 
     if (type === "GET") {
       if (route === "getStackerInfo_stackContract") {
-        return setSuccessResponse(stackContractInfo);
+        return setDeveloperApiSuccessResponse(stackContractInfo);
       }
       if (route === "getStackerInfo_accountSummary") {
-        return setSuccessResponse(stakersInfo);
+        return setDeveloperApiSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        return setSuccessResponse(stakersRecord);
+        return setDeveloperApiSuccessResponse(stakersRecord[0]);
       }
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
@@ -828,14 +876,14 @@ const DevelopersApi = () => {
         developersApi={developerApiArray}
         developersApiValues={devAppObject}
         setDeveloperApiValues={setDevAppObject}
-        successResponse={successResponse}
-        setSuccessResponse={setSuccessResponse}
-        failResponse={failResponse}
+        developerApiSuccessResponse={developerApiSuccessResponse}
+        setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
+        developerApiFailResponse={developerApiFailResponse}
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
-        responseActive={responseActive}
-        setResponseActive={setResponseActive}
-        handleTryOutSubmit={handleTryOutSubmit}
+        developerApiResponseActive={developerApiResponseActive}
+        setDeveloperApiResponseActive={setDeveloperApiResponseActive}
+        handleDeveloperApiTryOut={handleDeveloperApiTryOut}
       />
     </>
   );
