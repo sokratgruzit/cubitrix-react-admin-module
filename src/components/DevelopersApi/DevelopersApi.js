@@ -670,7 +670,7 @@ const DevelopersApi = () => {
               id: 0,
               title: "Amount",
               name: "depostAmount",
-              description: "Deposit Amount",
+              description: "Deposit Amount (Any Number)",
               value: "",
               required: true,
               validation: "number",
@@ -683,7 +683,7 @@ const DevelopersApi = () => {
               id: 1,
               title: "Timeperiod",
               name: "timeperiod",
-              description: "Timeperiod",
+              description: "Timeperiod (Only these numbers, 0, 1, 2, 3, 4)",
               value: "",
               required: true,
               validation: "number",
@@ -725,7 +725,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Index",
               name: "index",
-              description: "Stakers record index",
+              description:
+                "Stakers record index (E.g., 0, 1 which is the index of the record)",
               value: "",
               required: true,
               validation: "number",
@@ -743,7 +744,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Index",
               name: "index",
-              description: "Stakers record index",
+              description:
+                "Stakers record index (E.g., 0, 1... which is the index of the record)",
               value: "",
               required: true,
               validation: "number",
@@ -789,7 +791,7 @@ const DevelopersApi = () => {
         return setSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        return setSuccessResponse(stakersRecord);
+        return setSuccessResponse(stakersRecord[0]);
       }
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
