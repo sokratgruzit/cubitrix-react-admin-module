@@ -793,7 +793,7 @@ const DevelopersApi = () => {
         return setDeveloperApiSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        return setDeveloperApiSuccessResponse(stakersRecord[0]);
+        return setDeveloperApiSuccessResponse(stakersRecord);
       }
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
