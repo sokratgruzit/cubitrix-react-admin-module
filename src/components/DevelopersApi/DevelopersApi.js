@@ -701,21 +701,21 @@ const DevelopersApi = () => {
           id: 1,
           description: "Get stack contract info",
           route: "getStackerInfo_stackContract",
-          type: "GET",
+          type: "METAMASK_RES",
           inputs: [],
         },
         {
           id: 2,
           description: "Get account summary data",
           route: "getStackerInfo_accountSummary",
-          type: "GET",
+          type: "METAMASK_RES",
           inputs: [],
         },
         {
           id: 3,
           description: "Get stakers record",
           route: "getStackerInfo_stakersRecord",
-          type: "GET",
+          type: "METAMASK_RES",
           inputs: [],
         },
         {
@@ -771,7 +771,8 @@ const DevelopersApi = () => {
               id: 0,
               title: "Tx Hash",
               name: "tx_hash",
-              description: "Write transaction hash here, example (0xacslxthl8l7c9wsgrf3scioxy4xbaz28yz6tdwhfkjt9ghsmbpirheqyluqiwaek5d)",
+              description:
+                "Write transaction hash here, example (0xacslxthl8l7c9wsgrf3scioxy4xbaz28yz6tdwhfkjt9ghsmbpirheqyluqiwaek5d)",
               value: "",
               required: true,
               validation: "text",
@@ -805,7 +806,8 @@ const DevelopersApi = () => {
               id: 20,
               title: "Tx Type",
               name: "tx_type",
-              description: "Write transaction type here, example ('deposit','transfer')",
+              description:
+                "Write transaction type here, example ('deposit','transfer')",
               value: "",
               required: true,
               validation: "text",
@@ -898,16 +900,19 @@ const DevelopersApi = () => {
       }
     }
 
-    if (type === "GET") {
+    if (type === "METAMASK_RES") {
       if (route === "getStackerInfo_stackContract") {
-        return setDeveloperApiSuccessResponse(stackContractInfo);
+        setDeveloperApiSuccessResponse(stackContractInfo);
       }
       if (route === "getStackerInfo_accountSummary") {
-        return setDeveloperApiSuccessResponse(stakersInfo);
+        setDeveloperApiSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        return setDeveloperApiSuccessResponse(stakersRecord);
+        setDeveloperApiSuccessResponse(stakersRecord);
       }
+    }
+
+    if (type === "GET") {
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
 
