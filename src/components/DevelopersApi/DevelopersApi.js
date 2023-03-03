@@ -674,7 +674,6 @@ const DevelopersApi = (props) => {
               title: "Amount",
               name: "depostAmount",
               description: "Deposit Amount (Any Number)",
-              value: "",
               required: true,
               validation: "number",
               onChange: (e) => {
@@ -686,10 +685,31 @@ const DevelopersApi = (props) => {
               id: 1,
               title: "Timeperiod",
               name: "timeperiod",
-              description: "Timeperiod (Only these numbers, 0, 1, 2, 3, 4)",
-              value: "",
+              description: "Timeperiod (each option represents value 0-4)",
               required: true,
-              validation: "number",
+              type: "select",
+              options: [
+                {
+                  name: "30 D",
+                  value: 0,
+                },
+                {
+                  name: "60 D",
+                  value: 1,
+                },
+                {
+                  name: "90 D",
+                  value: 2,
+                },
+                {
+                  name: "180 D",
+                  value: 3,
+                },
+                {
+                  name: "360 D",
+                  value: 4,
+                },
+              ],
               onChange: (e) => {
                 handleTimePeriod(e.target.value);
                 changeDevObject(e);
@@ -886,7 +906,7 @@ const DevelopersApi = (props) => {
               name: "address",
               description: "Address",
               required: true,
-              validation: 'address',
+              validation: "address",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -902,7 +922,7 @@ const DevelopersApi = (props) => {
               title: "Email",
               name: "email",
               description: "Email",
-              validation: 'email',
+              validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -912,6 +932,7 @@ const DevelopersApi = (props) => {
               name: "password",
               description: "Password",
               validation: "password",
+              inputType: "password",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -928,7 +949,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -946,6 +967,7 @@ const DevelopersApi = (props) => {
               name: "currentPassword",
               description: "Current Password",
               required: true,
+              inputType: "password",
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -955,6 +977,8 @@ const DevelopersApi = (props) => {
               description: "New password",
               validation: "password",
               required: true,
+              inputType: "password",
+
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -962,7 +986,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              // validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -979,7 +1003,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              // validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1004,7 +1028,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1013,7 +1037,7 @@ const DevelopersApi = (props) => {
               title: "Name",
               name: "name",
               description: "Name",
-              validation: 'text',
+              validation: "text",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1022,7 +1046,7 @@ const DevelopersApi = (props) => {
               title: "Email",
               name: "email",
               description: "Email",
-              validation: 'email',
+              validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1031,7 +1055,7 @@ const DevelopersApi = (props) => {
               title: "Mobile",
               name: "mobile",
               description: "Mobile",
-              validation: 'numbers',
+              type: "mobile",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1040,7 +1064,7 @@ const DevelopersApi = (props) => {
               title: "Date",
               name: "date_of_birth",
               description: "Date of birth",
-              type: 'date',
+              type: "date",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1050,7 +1074,9 @@ const DevelopersApi = (props) => {
               name: "nationality",
               description: "Nationality",
               required: true,
-              validation: 'text',
+              type: "select",
+              selectType: "country",
+              selectLabel: "Select Country",
               onChange: (e) => changeDevObject(e),
             },
             {
@@ -1059,7 +1085,7 @@ const DevelopersApi = (props) => {
               name: "avatar",
               description: "Avatar",
               required: true,
-              type: 'upload',
+              type: "upload",
               onChange: (e) => changeDevObject(e),
             },
           ],
@@ -1075,7 +1101,7 @@ const DevelopersApi = (props) => {
               title: "Code",
               name: "code",
               description: "Code",
-              validation: 'numbers',
+              validation: "numbers",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1092,7 +1118,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1109,7 +1135,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1118,7 +1144,7 @@ const DevelopersApi = (props) => {
               title: "Email",
               name: "email",
               description: "Email",
-              validation: 'email',
+              validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1135,7 +1161,7 @@ const DevelopersApi = (props) => {
               title: "Code",
               name: "code",
               description: "Code",
-              validation: 'numbers',
+              validation: "numbers",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1144,7 +1170,8 @@ const DevelopersApi = (props) => {
               title: "Password",
               name: "password",
               description: "Password",
-              validation: 'password',
+              validation: "password",
+              inputType: "password",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1161,7 +1188,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1178,7 +1205,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1187,7 +1214,7 @@ const DevelopersApi = (props) => {
               title: "Token",
               name: "token",
               description: "Token",
-              // validation: 'address',
+              validation: "text",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1204,7 +1231,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1213,7 +1240,7 @@ const DevelopersApi = (props) => {
               title: "Token",
               name: "token",
               description: "Token",
-              // validation: 'address',
+              validation: "text",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1230,7 +1257,7 @@ const DevelopersApi = (props) => {
               title: "Address",
               name: "address",
               description: "Address",
-              validation: 'address',
+              validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1281,13 +1308,17 @@ const DevelopersApi = (props) => {
         setDeveloperApiSuccessResponse(stakersInfo);
       }
       if (route === "getStackerInfo_stakersRecord") {
-        setDeveloperApiSuccessResponse(stakersRecord);
+        setDeveloperApiSuccessResponse(stakersRecord[0]);
       }
     }
 
     if (type === "GET") {
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
+
+      if (!route.includes("api/loan/")) {
+        return makeRequest(type, route, devAppObject);
+      }
 
       makeRequest(type, fullUrl);
     }
