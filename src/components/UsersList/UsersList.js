@@ -5,7 +5,7 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 
-const UsersList = () => {
+const UsersList = (props) => {
     const axios = useAxios();
     const {
         tableFilterData,
@@ -208,6 +208,7 @@ const UsersList = () => {
     return (
         <AdminPanel
             adminPage={'table'}
+            animate={props.animate}
             tableData={tableData}
             tableHead={th}
             tableSearchSelect={false}
