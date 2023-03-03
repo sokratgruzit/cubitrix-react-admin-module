@@ -17,6 +17,8 @@ const DevelopersApi = (props) => {
     useState(false);
   const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
     useState({});
+  const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
+      useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const { connect, disconnect } = useConnect();
 
@@ -45,7 +47,7 @@ const DevelopersApi = (props) => {
       if (data) {
         options.data = data;
       }
-
+      setDeveloperApiErrorResponse(false)
       const response = await axios(options);
       if (response.data.result) {
         return setDeveloperApiSuccessResponse(response.data.result);
@@ -958,7 +960,7 @@ const DevelopersApi = (props) => {
         },
         {
           id: 3,
-          description: "Get an account",
+          description: "Update an account",
           route: "api/accounts/update_profile_auth",
           type: "POST",
           inputs: [
@@ -1356,7 +1358,7 @@ const DevelopersApi = (props) => {
         setDeveloperApiValues={setDevAppObject}
         developerApiSuccessResponse={developerApiSuccessResponse}
         setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
-        developerApiFailResponse={developerApiFailResponse}
+        developerApiFailResponse={developerApiErrorResponse || developerApiFailResponse}
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
         developerApiResponseActive={developerApiResponseActive}
