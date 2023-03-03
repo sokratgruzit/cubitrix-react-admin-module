@@ -1316,10 +1316,6 @@ const DevelopersApi = (props) => {
       const queryString = buildQueryString(devAppObject);
       const fullUrl = `${route}${queryString ? `?${queryString}` : ""}`;
 
-      if (!route.includes("api/loan/")) {
-        return makeRequest(type, route, devAppObject);
-      }
-
       makeRequest(type, fullUrl);
     }
 
