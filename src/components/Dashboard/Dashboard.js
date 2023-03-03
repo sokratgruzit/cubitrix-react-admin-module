@@ -5,6 +5,7 @@ import styles from "./Dashboard.module.css";
 const Dashboard = (props) => {
   return (
     <>
+
       <AdminPanel adminPage={"dashboard"} animate={props.animate} />
     </>
   );
