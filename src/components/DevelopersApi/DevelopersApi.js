@@ -20,6 +20,7 @@ const DevelopersApi = (props) => {
   const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
       useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
+  const [developerApiLoading, setDeveloperApiLoading] = useState(false);
   const { connect, disconnect } = useConnect();
 
   const account = useSelector((state) => state.connect.account);
@@ -47,15 +48,15 @@ const DevelopersApi = (props) => {
       if (data) {
         options.data = data;
       }
-      setDeveloperApiErrorResponse(false)
+      setDeveloperApiErrorResponse(false);
       const response = await axios(options);
       if (response.data.result) {
         return setDeveloperApiSuccessResponse(response.data.result);
       }
-      console.log(response)
+      console.log(response);
       setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
-      console.log(error.response);
+      setDeveloperApiErrorResponse(error.response);
     }
   }
 
@@ -1286,6 +1287,7 @@ const DevelopersApi = (props) => {
 
   const handleDeveloperApiTryOut = (route, type) => {
     setDeveloperApiResponseActive(route);
+    setDeveloperApiLoading(true);
 
     if (type === "METAMASK") {
       if (route === "stake") {
@@ -1326,6 +1328,7 @@ const DevelopersApi = (props) => {
     if (type === "POST") {
       makeRequest(type, route, devAppObject);
     }
+    setDeveloperApiLoading(false);
   };
 
   function buildQueryString(params) {
@@ -1358,33 +1361,36 @@ const DevelopersApi = (props) => {
         setDeveloperApiValues={setDevAppObject}
         developerApiSuccessResponse={developerApiSuccessResponse}
         setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
-        developerApiFailResponse={developerApiErrorResponse || developerApiFailResponse}
+        developerApiFailResponse={
+          developerApiErrorResponse || developerApiFailResponse
+        }
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
         developerApiResponseActive={developerApiResponseActive}
         setDeveloperApiResponseActive={setDeveloperApiResponseActive}
         handleDeveloperApiTryOut={handleDeveloperApiTryOut}
+        developerApiLoading={developerApiLoading}
         developersApiConnectButton={
           account ? (
-              <Button
-                  label={"Disconnect Wallet"}
-                  size={"btn-sm"}
-                  type={"btn-primary"}
-                  arrow={"arrow-none"}
-                  element={"button"}
-                  onClick={() => disconnect()}
-                  customStyles={{ margin: "0" }}
-              />
+            <Button
+              label={"Disconnect Wallet"}
+              size={"btn-sm"}
+              type={"btn-primary"}
+              arrow={"arrow-none"}
+              element={"button"}
+              onClick={() => disconnect()}
+              customStyles={{ margin: "0" }}
+            />
           ) : (
-              <Button
-                  label={"Connect Wallet"}
-                  size={"btn-sm"}
-                  type={"btn-primary"}
-                  arrow={"arrow-none"}
-                  element={"button"}
-                  onClick={() => connect("metaMask", injected)}
-                  customStyles={{ margin: "0" }}
-              />
+            <Button
+              label={"Connect Wallet"}
+              size={"btn-sm"}
+              type={"btn-primary"}
+              arrow={"arrow-none"}
+              element={"button"}
+              onClick={() => connect("metaMask", injected)}
+              customStyles={{ margin: "0" }}
+            />
           )
         }
         walletConnect={account ? true : false}
