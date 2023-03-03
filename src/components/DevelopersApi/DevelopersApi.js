@@ -898,7 +898,7 @@ const DevelopersApi = (props) => {
         {
           id: 0,
           description: "Login account",
-          route: "accounts/login",
+          route: "api/accounts/login",
           type: "POST",
           inputs: [
             {
@@ -914,7 +914,7 @@ const DevelopersApi = (props) => {
         {
           id: 1,
           description: "Login with email",
-          route: "accounts/recovery/login",
+          route: "api/accounts/recovery/login",
           type: "POST",
           inputs: [
             {
@@ -941,7 +941,7 @@ const DevelopersApi = (props) => {
         {
           id: 2,
           description: "Get an account",
-          route: "accounts/get_account",
+          route: "api/accounts/get_account",
           type: "POST",
           inputs: [
             {
@@ -958,7 +958,7 @@ const DevelopersApi = (props) => {
         {
           id: 3,
           description: "Get an account",
-          route: "accounts/update_profile_auth",
+          route: "api/accounts/update_profile_auth",
           type: "POST",
           inputs: [
             {
@@ -995,7 +995,7 @@ const DevelopersApi = (props) => {
         {
           id: 4,
           description: "Create differnt accounts",
-          route: "accounts/koko",
+          route: "api/accounts/create_different_accounts",
           type: "POST",
           inputs: [
             {
@@ -1020,7 +1020,7 @@ const DevelopersApi = (props) => {
         {
           id: 5,
           description: "Update meta",
-          route: "accounts/update_profile",
+          route: "api/accounts/update_profile",
           type: "POST",
           inputs: [
             {
@@ -1093,7 +1093,7 @@ const DevelopersApi = (props) => {
         {
           id: 6,
           description: "Verify",
-          route: "accounts/verify",
+          route: "api/accounts/verify",
           type: "POST",
           inputs: [
             {
@@ -1110,7 +1110,7 @@ const DevelopersApi = (props) => {
         {
           id: 7,
           description: "Resend email",
-          route: "accounts/resend-email",
+          route: "api/accounts/resend-email",
           type: "POST",
           inputs: [
             {
@@ -1127,7 +1127,7 @@ const DevelopersApi = (props) => {
         {
           id: 8,
           description: "Get reset password email",
-          route: "accounts/get-reset-password-email",
+          route: "api/accounts/get-reset-password-email",
           type: "POST",
           inputs: [
             {
@@ -1153,7 +1153,7 @@ const DevelopersApi = (props) => {
         {
           id: 9,
           description: "Reset password",
-          route: "accounts/reset-password",
+          route: "api/accounts/reset-password",
           type: "POST",
           inputs: [
             {
@@ -1180,7 +1180,7 @@ const DevelopersApi = (props) => {
         {
           id: 10,
           description: "Generate OTP (google 2fa)",
-          route: "accounts/otp/generate",
+          route: "api/accounts/otp/generate",
           type: "POST",
           inputs: [
             {
@@ -1197,7 +1197,7 @@ const DevelopersApi = (props) => {
         {
           id: 11,
           description: "Verify OTP (google 2fa)",
-          route: "accounts/otp/verify",
+          route: "api/accounts/otp/verify",
           type: "POST",
           inputs: [
             {
@@ -1223,7 +1223,7 @@ const DevelopersApi = (props) => {
         {
           id: 12,
           description: "Validate OTP (google 2fa)",
-          route: "accounts/otp/validate",
+          route: "api/accounts/otp/validate",
           type: "POST",
           inputs: [
             {
@@ -1249,7 +1249,7 @@ const DevelopersApi = (props) => {
         {
           id: 13,
           description: "Disable OTP (google 2fa)",
-          route: "accounts/otp/disable",
+          route: "api/accounts/otp/disable",
           type: "POST",
           inputs: [
             {
@@ -1266,7 +1266,7 @@ const DevelopersApi = (props) => {
         {
           id: 14,
           description: "Get all account",
-          route: "accounts/roles",
+          route: "api/accounts/roles",
           type: "GET",
           inputs: [],
         },
