@@ -688,6 +688,7 @@ const DevelopersApi = (props) => {
               description: "Timeperiod (each option represents value 0-4)",
               required: true,
               type: "select",
+              selectPosition: "top",
               options: [
                 {
                   name: "30 D",
@@ -1077,6 +1078,7 @@ const DevelopersApi = (props) => {
               type: "select",
               selectType: "country",
               selectLabel: "Select Country",
+              selectPosition: "top",
               onChange: (e) => changeDevObject(e),
             },
             {

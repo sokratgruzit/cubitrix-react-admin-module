@@ -218,7 +218,7 @@ function App() {
     {
       id: 1,
       name: "Dashboard",
-      route: "/dashboard",
+      route: "/",
       svg: (
         <svg
           width="18"
