@@ -10,7 +10,7 @@ import useAxios from "../../hooks/useAxios";
 
 import styles from "./DevelopersApi.module.css";
 
-const DevelopersApi = () => {
+const DevelopersApi = (props) => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
   const [developerApiResponseActive, setDeveloperApiResponseActive] =
@@ -1321,6 +1321,7 @@ const DevelopersApi = () => {
     <>
       <AdminPanel
         adminPage={"developerApi"}
+        animate={props.animate}
         developersApi={developerApiArray}
         developersApiValues={devAppObject}
         setDeveloperApiValues={setDevAppObject}

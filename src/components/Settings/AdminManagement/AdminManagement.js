@@ -8,7 +8,7 @@ import {
 import { useTableParameters } from "../../../hooks/useTableParameters";
 import useAxios from "../../../hooks/useAxios";
 
-const AdminManagement = () => {
+const AdminManagement = (props) => {
     const axios = useAxios();
     const [popUpActive, setPopUpActive] = useState(false);
     const [addAdminError, setAddAdminError] = useState('');
@@ -210,6 +210,7 @@ const AdminManagement = () => {
         <>
             <AdminPanel
                 adminPage={'table'}
+                animate={props.animate}
                 tableData={tableData}
                 tableHead={th}
                 mobile={mobile}

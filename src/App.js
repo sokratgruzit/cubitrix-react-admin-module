@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -18,11 +18,15 @@ import Login from "./components/Login/Login";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const [animateDom, setAnimateDom] = useState(false);
 
   const { MetaMaskEagerlyConnect } = useConnect();
 
   useEffect(() => {
     MetaMaskEagerlyConnect(injected);
+    setTimeout(() => {
+      setAnimateDom(true);
+    },500)
     // eslint-disable-next-line
   }, []);
 
@@ -443,9 +447,10 @@ function App() {
             headSvg={adminHeaderData.svg}
             userImageUrl={adminHeaderData.userImageUrl}
             authsDropdown={adminHeaderData.authsDropdown}
+            animate={animateDom}
           />
           <div className={`admin-container`}>
-            <div className={`admin-sidebar`}>
+            <div className={`admin-sidebar animate-translateX ${animateDom ? 'animate' : ''}`} style={{transitionDelay: '.1s'}}>
               {sideBar.map((item, index) => {
                 return (
                   <Button
@@ -464,12 +469,12 @@ function App() {
               })}
             </div>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/users-list" element={<UsersList />} />
-              <Route path="/accounts" element={<Accounts />} />
-              <Route path="/developers-api" element={<DevelopersApi />} />
-              <Route path="/settings/admin-management" element={<AdminManagement />} />
+              <Route path="/" element={<Dashboard animate={animateDom}  />} />
+              <Route path="/transactions" element={<Transactions animate={animateDom}  />} />
+              <Route path="/users-list" element={<UsersList animate={animateDom}  />} />
+              <Route path="/accounts" element={<Accounts animate={animateDom}  />} />
+              <Route path="/developers-api" element={<DevelopersApi animate={animateDom} />} />
+              <Route path="/settings/admin-management" element={<AdminManagement animate={animateDom}  />} />
             </Routes>
           </div>
         </>
