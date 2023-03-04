@@ -13,12 +13,9 @@ import styles from "./DevelopersApi.module.css";
 const DevelopersApi = (props) => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
-  const [developerApiResponseActive, setDeveloperApiResponseActive] =
-    useState(false);
-  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
-    useState({});
-  const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
-      useState(false);
+  const [developerApiResponseActive, setDeveloperApiResponseActive] = useState(false);
+  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] = useState({});
+  const [developerApiErrorResponse, setDeveloperApiErrorResponse] = useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
   const { connect, disconnect } = useConnect();
@@ -27,17 +24,12 @@ const DevelopersApi = (props) => {
 
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
-  const {
-    approve,
-    stake,
-    unstake,
-    harvest,
-    handleDepositAmount,
-    handleTimePeriod,
-  } = useStake({ Router, tokenAddress });
+  const { approve, stake, unstake, harvest, handleDepositAmount, handleTimePeriod } =
+    useStake({ Router, tokenAddress });
 
-  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } =
-    useSelector((state) => state.stake);
+  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } = useSelector(
+    (state) => state.stake,
+  );
 
   async function makeRequest(method, url, data) {
     try {
@@ -830,8 +822,7 @@ const DevelopersApi = (props) => {
               id: 20,
               title: "Tx Type",
               name: "tx_type",
-              description:
-                "Write transaction type here, example ('deposit','transfer')",
+              description: "Write transaction type here, example ('deposit','transfer')",
               value: "",
               required: true,
               validation: "text",
@@ -908,7 +899,8 @@ const DevelopersApi = (props) => {
             {
               title: "address",
               name: "address",
-              description: "Address",
+              description:
+                "Creates basic accounts for address to a database. Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               required: true,
               validation: "address",
               onChange: (e) => changeDevObject(e),
@@ -917,34 +909,7 @@ const DevelopersApi = (props) => {
         },
         {
           id: 1,
-          description: "Login with email",
-          route: "api/accounts/recovery/login",
-          type: "POST",
-          inputs: [
-            {
-              id: 0,
-              title: "Email",
-              name: "email",
-              description: "Email",
-              validation: "email",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 1,
-              title: "Password",
-              name: "password",
-              description: "Password",
-              validation: "password",
-              inputType: "password",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 2,
-          description: "Get an account",
+          description: "Get account data",
           route: "api/accounts/get_account",
           type: "POST",
           inputs: [
@@ -952,7 +917,7 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Address",
               name: "address",
-              description: "Address",
+              description: "Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -960,70 +925,8 @@ const DevelopersApi = (props) => {
           ],
         },
         {
-          id: 3,
-          description: "Update an account",
-          route: "api/accounts/update_profile_auth",
-          type: "POST",
-          inputs: [
-            {
-              id: 0,
-              title: "Current Password",
-              name: "currentPassword",
-              description: "Current Password",
-              required: true,
-              inputType: "password",
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 1,
-              title: "New Password",
-              name: "newPassword",
-              description: "New password",
-              validation: "password",
-              required: true,
-              inputType: "password",
-
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 2,
-              title: "Address",
-              name: "address",
-              description: "Address",
-              validation: "address",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 4,
-          description: "Create differnt accounts",
-          route: "api/accounts/create_different_accounts",
-          type: "POST",
-          inputs: [
-            {
-              id: 0,
-              title: "Address",
-              name: "address",
-              description: "Address",
-              validation: "address",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-            {
-              id: 1,
-              title: "Type",
-              name: "type",
-              description: "Type",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 5,
-          description: "Update meta",
+          id: 2,
+          description: "Add personal info to account",
           route: "api/accounts/update_profile",
           type: "POST",
           inputs: [
@@ -1084,37 +987,20 @@ const DevelopersApi = (props) => {
               selectPosition: "top",
               onChange: (e) => changeDevObject(e),
             },
-            {
-              id: 6,
-              title: "Avatar",
-              name: "avatar",
-              description: "Avatar",
-              required: true,
-              type: "upload",
-              onChange: (e) => changeDevObject(e),
-            },
+            // {
+            //   id: 6,
+            //   title: "Avatar",
+            //   name: "avatar",
+            //   description: "Avatar",
+            //   required: true,
+            //   type: "upload",
+            //   onChange: (e) => changeDevObject(e),
+            // },
           ],
         },
         {
-          id: 6,
-          description: "Verify",
-          route: "api/accounts/verify",
-          type: "POST",
-          inputs: [
-            {
-              id: 0,
-              title: "Code",
-              name: "code",
-              description: "Code",
-              validation: "numbers",
-              required: true,
-              onChange: (e) => changeDevObject(e),
-            },
-          ],
-        },
-        {
-          id: 7,
-          description: "Resend email",
+          id: 3,
+          description: "Resend verification email",
           route: "api/accounts/resend-email",
           type: "POST",
           inputs: [
@@ -1130,9 +1016,25 @@ const DevelopersApi = (props) => {
           ],
         },
         {
-          id: 8,
-          description: "Get reset password email",
-          route: "api/accounts/get-reset-password-email",
+          id: 4,
+          description: "Verify Email",
+          route: "api/accounts/verify",
+          type: "POST",
+          inputs: [
+            {
+              id: 0,
+              title: "Code",
+              name: "code",
+              description: "Code ( this code is in the link that is sent to your email )",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 5,
+          description: "Create/Update Account password ( Only verrified accounts )",
+          route: "api/accounts/update_profile_auth",
           type: "POST",
           inputs: [
             {
@@ -1146,27 +1048,36 @@ const DevelopersApi = (props) => {
             },
             {
               id: 1,
-              title: "Email",
-              name: "email",
-              description: "Email",
-              validation: "email",
+              title: "Current Password",
+              name: "currentPassword",
+              description: "Current Password ( only when updating password )",
+              inputType: "password",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 2,
+              title: "New Password",
+              name: "newPassword",
+              description: "New password",
+              validation: "password",
               required: true,
+              inputType: "password",
               onChange: (e) => changeDevObject(e),
             },
           ],
         },
         {
-          id: 9,
-          description: "Reset password",
-          route: "api/accounts/reset-password",
+          id: 6,
+          description: "Login with email",
+          route: "api/accounts/recovery/login",
           type: "POST",
           inputs: [
             {
               id: 0,
-              title: "Code",
-              name: "code",
-              description: "Code",
-              validation: "numbers",
+              title: "Email",
+              name: "email",
+              description: "Email",
+              validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1175,6 +1086,74 @@ const DevelopersApi = (props) => {
               title: "Password",
               name: "password",
               description: "Password",
+              validation: "password",
+              inputType: "password",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 7,
+          description: "Create differnt accounts ( E.g., loan, staking, trade.)",
+          route: "api/accounts/create_different_accounts",
+          type: "POST",
+          inputs: [
+            {
+              id: 0,
+              title: "Address",
+              name: "address",
+              description: "Address",
+              validation: "address",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 1,
+              title: "Type",
+              name: "type",
+              description: "Type",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 8,
+          description: "Forgot password ( send email )",
+          route: "api/accounts/get-reset-password-email",
+          type: "POST",
+          inputs: [
+            {
+              id: 0,
+              title: "Email",
+              name: "email",
+              description: "Email ( reset password link will be sent to this email )",
+              validation: "email",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+        {
+          id: 9,
+          description: "Reset password ( via email link )",
+          route: "api/accounts/reset-password",
+          type: "POST",
+          inputs: [
+            {
+              id: 0,
+              title: "Code",
+              name: "code",
+              description: "Code ( this code is in the link that is sent to your email )",
+              required: true,
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 1,
+              title: "Password",
+              name: "password",
+              description: "Password ( new password )",
               validation: "password",
               inputType: "password",
               required: true,
@@ -1342,9 +1321,7 @@ const DevelopersApi = (props) => {
         } else {
           queryString += "&";
         }
-        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(
-          params[key]
-        )}`;
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
       }
     }
 
@@ -1361,9 +1338,7 @@ const DevelopersApi = (props) => {
         setDeveloperApiValues={setDevAppObject}
         developerApiSuccessResponse={developerApiSuccessResponse}
         setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
-        developerApiFailResponse={
-          developerApiErrorResponse || developerApiFailResponse
-        }
+        developerApiFailResponse={developerApiErrorResponse || developerApiFailResponse}
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
         developerApiResponseActive={developerApiResponseActive}
