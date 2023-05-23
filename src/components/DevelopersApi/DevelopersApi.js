@@ -18,7 +18,7 @@ const DevelopersApi = (props) => {
   const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
     useState({});
   const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
-      useState(false);
+    useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
   const { connect, disconnect } = useConnect();
@@ -66,6 +66,39 @@ const DevelopersApi = (props) => {
   };
 
   let developerApiArray = [
+    {
+      title: "Global Options",
+      items: [
+        {
+          id: 0,
+          description: "Update Fee Options",
+          route: "api/transactions/update_options",
+          type: "POST",
+          inputs: [
+            {
+              id: 1,
+              title: "Loan extensions fee",
+              name: "loan_extensions_fee",
+              description: "Fee",
+              value: "",
+              required: true,
+              validation: "numbers",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 2,
+              title: "Trade extensions fee",
+              name: "trade_extensions_fee",
+              description: "Fee",
+              value: "",
+              required: true,
+              validation: "numbers",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
+    },
     {
       title: "Loan",
       items: [
@@ -1326,6 +1359,16 @@ const DevelopersApi = (props) => {
     }
 
     if (type === "POST") {
+      if (route === "api/transactions/update_options") {
+        makeRequest(type, route, {
+          type: "extension_options",
+          object_value: {
+            loan_extensions_fee: Number(devAppObject.loan_extensions_fee),
+            trade_extensions_fee: Number(devAppObject.trade_extensions_fee),
+          },
+        });
+        return;
+      }
       makeRequest(type, route, devAppObject);
     }
     setDeveloperApiLoading(false);
