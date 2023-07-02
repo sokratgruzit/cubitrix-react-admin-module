@@ -13,9 +13,12 @@ import styles from "./DevelopersApi.module.css";
 const DevelopersApi = (props) => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
-  const [developerApiResponseActive, setDeveloperApiResponseActive] = useState(false);
-  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] = useState({});
-  const [developerApiErrorResponse, setDeveloperApiErrorResponse] = useState(false);
+  const [developerApiResponseActive, setDeveloperApiResponseActive] =
+    useState(false);
+  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
+    useState({});
+  const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
+    useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
   const { connect, disconnect } = useConnect();
@@ -24,12 +27,17 @@ const DevelopersApi = (props) => {
 
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
-  const { approve, stake, unstake, harvest, handleDepositAmount, handleTimePeriod } =
-    useStake({ Router, tokenAddress });
+  const {
+    approve,
+    stake,
+    unstake,
+    harvest,
+    handleDepositAmount,
+    handleTimePeriod,
+  } = useStake({ Router, tokenAddress });
 
-  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } = useSelector(
-    (state) => state.stake,
-  );
+  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } =
+    useSelector((state) => state.stake);
 
   async function makeRequest(method, url, data) {
     try {
@@ -58,6 +66,39 @@ const DevelopersApi = (props) => {
   };
 
   let developerApiArray = [
+    {
+      title: "Global Options",
+      items: [
+        {
+          id: 0,
+          description: "Update Fee Options",
+          route: "api/transactions/update_options",
+          type: "POST",
+          inputs: [
+            {
+              id: 1,
+              title: "Loan extensions fee",
+              name: "loan_extensions_fee",
+              description: "Fee",
+              value: "",
+              required: true,
+              validation: "numbers",
+              onChange: (e) => changeDevObject(e),
+            },
+            {
+              id: 2,
+              title: "Trade extensions fee",
+              name: "trade_extensions_fee",
+              description: "Fee",
+              value: "",
+              required: true,
+              validation: "numbers",
+              onChange: (e) => changeDevObject(e),
+            },
+          ],
+        },
+      ],
+    },
     {
       title: "Loan",
       items: [
@@ -822,7 +863,8 @@ const DevelopersApi = (props) => {
               id: 20,
               title: "Tx Type",
               name: "tx_type",
-              description: "Write transaction type here, example ('deposit','transfer')",
+              description:
+                "Write transaction type here, example ('deposit','transfer')",
               value: "",
               required: true,
               validation: "text",
@@ -917,7 +959,8 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Address",
               name: "address",
-              description: "Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+              description:
+                "Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -1025,7 +1068,8 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Code",
               name: "code",
-              description: "Code ( this code is in the link that is sent to your email )",
+              description:
+                "Code ( this code is in the link that is sent to your email )",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1033,7 +1077,8 @@ const DevelopersApi = (props) => {
         },
         {
           id: 5,
-          description: "Create/Update Account password ( Only verrified accounts )",
+          description:
+            "Create/Update Account password ( Only verrified accounts )",
           route: "api/accounts/update_profile_auth",
           type: "POST",
           inputs: [
@@ -1095,7 +1140,8 @@ const DevelopersApi = (props) => {
         },
         {
           id: 7,
-          description: "Create differnt accounts ( E.g., loan, staking, trade.)",
+          description:
+            "Create differnt accounts ( E.g., loan, staking, trade.)",
           route: "api/accounts/create_different_accounts",
           type: "POST",
           inputs: [
@@ -1128,7 +1174,8 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Email",
               name: "email",
-              description: "Email ( reset password link will be sent to this email )",
+              description:
+                "Email ( reset password link will be sent to this email )",
               validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -1145,7 +1192,8 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Code",
               name: "code",
-              description: "Code ( this code is in the link that is sent to your email )",
+              description:
+                "Code ( this code is in the link that is sent to your email )",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1305,6 +1353,16 @@ const DevelopersApi = (props) => {
     }
 
     if (type === "POST") {
+      if (route === "api/transactions/update_options") {
+        makeRequest(type, route, {
+          type: "extension_options",
+          object_value: {
+            loan_extensions_fee: Number(devAppObject.loan_extensions_fee),
+            trade_extensions_fee: Number(devAppObject.trade_extensions_fee),
+          },
+        });
+        return;
+      }
       makeRequest(type, route, devAppObject);
     }
     setDeveloperApiLoading(false);
@@ -1321,7 +1379,9 @@ const DevelopersApi = (props) => {
         } else {
           queryString += "&";
         }
-        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(
+          params[key]
+        )}`;
       }
     }
 
@@ -1338,7 +1398,9 @@ const DevelopersApi = (props) => {
         setDeveloperApiValues={setDevAppObject}
         developerApiSuccessResponse={developerApiSuccessResponse}
         setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
-        developerApiFailResponse={developerApiErrorResponse || developerApiFailResponse}
+        developerApiFailResponse={
+          developerApiErrorResponse || developerApiFailResponse
+        }
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
         developerApiResponseActive={developerApiResponseActive}
