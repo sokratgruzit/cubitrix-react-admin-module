@@ -13,18 +13,9 @@ import styles from "./DevelopersApi.module.css";
 const DevelopersApi = (props) => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
-<<<<<<< HEAD
-  const [developerApiResponseActive, setDeveloperApiResponseActive] =
-    useState(false);
-  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
-    useState({});
-  const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
-    useState(false);
-=======
   const [developerApiResponseActive, setDeveloperApiResponseActive] = useState(false);
   const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] = useState({});
   const [developerApiErrorResponse, setDeveloperApiErrorResponse] = useState(false);
->>>>>>> 410892d8745bf17f08619751e204519b6d76da49
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
   const { connect, disconnect } = useConnect();
