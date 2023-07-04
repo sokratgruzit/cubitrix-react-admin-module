@@ -1,0 +1,36 @@
+.table {
+    width: 100%;
+    padding: 40px 20px 120px 20px;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.title {
+    padding-bottom: 30px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, .1);
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid hsla(0, 0%, 100%, .1);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+
+.inputRow {
+    display: flex;
+    gap: 20px;
+}
