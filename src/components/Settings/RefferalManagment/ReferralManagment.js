@@ -66,11 +66,16 @@ const ReferralManagment = ({
         setRows((prevRows) => [...prevRows, inputs]);
     };
 
+
     const deleteRow = () => {
         if (rows.length > 1) {
             setRows((prevRows) => prevRows.slice(0, -1));
         }
     };
+
+    const saveHandler = () => {
+        console.log('save');
+    }
 
     const [inputs, setInputs] = useState({
         input: {
@@ -261,6 +266,17 @@ const ReferralManagment = ({
                                 />
                             </div>
                         )}
+                    </div>
+                    <div className={styles.row}>
+                        <Button
+                            label={'Save'}
+                            size={"btn-lg"}
+                            type={"btn-primary"}
+                            element={"button"}
+                            onClick={saveHandler}
+                            customStyles={{ width: '30%' }}
+                        />
+
                     </div>
                 </div>
             </div>
