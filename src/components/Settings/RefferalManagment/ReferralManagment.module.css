@@ -51,3 +51,9 @@
     align-items: center;
     justify-content: center;
 }
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
