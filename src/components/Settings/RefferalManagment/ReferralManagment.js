@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import {
     Tabs,
     Switches,
@@ -102,8 +103,14 @@ const ReferralManagment = ({
     // },
 
 
-    const saveHandler = () => {
-        console.log(sendData, 'save');
+
+    const saveHandler = async () => {
+        try {
+            const response = await axios.post('/api/data/create_referral_settings', sendData);
+            console.log(response.data); 
+        } catch (error) {
+            console.error(error); 
+        }
     };
 
     useEffect(() => {
@@ -125,6 +132,19 @@ const ReferralManagment = ({
             },
         }));
     }, [binaryLevel]);
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('/api/data/get_referral_settings');
+            console.log(response.data); 
+        } catch (error) {
+            console.error(error); 
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [])
 
 
     const handleMaxCommissionChange = (index, value) => {
