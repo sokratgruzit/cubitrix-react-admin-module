@@ -19,6 +19,7 @@ const ReferralManagment = ({
     const [uniLevel, setuniLevel] = useState(1);
     const [binaryLevel, setBinaryLevel] = useState(1);
     const [uniData, setUniData] = useState({
+        name: 'Uni',
         active: false,
         level: uniLevel,
         calculated: "",
@@ -26,6 +27,7 @@ const ReferralManagment = ({
         maxCommPercentage: [],
     });
     const [binaryData, setBinaryData] = useState({
+        name: 'Binary Bv',
         active: false,
         level: binaryLevel,
         calculated: "",
@@ -73,20 +75,6 @@ const ReferralManagment = ({
         }));
 
     };
-
-    useEffect(() => {
-        setUniData((prevUniData) => ({
-            ...prevUniData,
-            level: uniLevel
-        }));
-    }, [uniLevel]);
-
-    useEffect(() => {
-        setBinaryData((prevBinaryData) => ({
-            ...prevBinaryData,
-            level: binaryLevel
-        }));
-    }, [binaryLevel]);
 
     const uniMaxCommissionChangeHandler = (index, value) => {
         setUniData((prevUniData) => {
@@ -190,8 +178,8 @@ const ReferralManagment = ({
                                     type={"default"}
                                     emptyFieldErr={false}
                                     inputType={"text"}
-                                    placeholder={"1"}
-                                    label={`max commission level ${index + 1}`}
+                                    placeholder={"1"}   
+                                    label={`Level ${index + 1} maximum comission`}
                                     onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
@@ -200,7 +188,7 @@ const ReferralManagment = ({
                                     emptyFieldErr={false}
                                     inputType={"text"}
                                     placeholder={"1"}
-                                    label={`max commission perc ${index + 1}`}
+                                    label={`Level ${index + 1} max comission percentage`}
                                     onChange={(i) => uniMaxCommissionPercentageChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
@@ -262,7 +250,7 @@ const ReferralManagment = ({
                                     emptyFieldErr={false}
                                     inputType={"text"}
                                     placeholder={"1"}
-                                    label={`max commission level ${index + 1}`}
+                                    label={`Level ${index + 1} Bv From`}
                                     onChange={(i) => binaryMaxCommissionChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
@@ -271,7 +259,7 @@ const ReferralManagment = ({
                                     emptyFieldErr={false}
                                     inputType={"text"}
                                     placeholder={"1"}
-                                    label={`max commission perc ${index + 1}`}
+                                    label={`Level ${index + 1} Bv To`}
                                     onChange={(i) => binaryMaxCommissionPercentChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
