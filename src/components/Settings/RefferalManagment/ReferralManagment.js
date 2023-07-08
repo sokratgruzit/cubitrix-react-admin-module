@@ -18,22 +18,19 @@ const ReferralManagment = ({
     const [step, setStep] = useState(1);
     const [uniLevel, setuniLevel] = useState(1);
     const [binaryLevel, setBinaryLevel] = useState(1);
-    const [sendData, setSendData] = useState({
-        uni: {
-            active: false,
-            level: uniLevel,
-            calculated: "",
-            maxCommision: [],
-            maxCommPercentage: [],
-        },
-
-        binaryBv: {
-            active: false,
-            level: binaryLevel,
-            calculated: "",
-            maxCommision: [],
-            maxCommPercentage: [],
-        }
+    const [uniData, setUniData] = useState({
+        active: false,
+        level: uniLevel,
+        calculated: "",
+        maxCommision: [],
+        maxCommPercentage: [],
+    });
+    const [binaryData, setBinaryData] = useState({
+        active: false,
+        level: binaryLevel,
+        calculated: "",
+        maxCommision: [],
+        maxCommPercentage: [],
     });
 
     let stepper = [
@@ -73,133 +70,94 @@ const ReferralManagment = ({
 
     }
 
-    const selectHandler = (value) => {
-        if (uniLevel && activeTab === 0) {
-            setSendData((prevSendData) => ({
-                ...prevSendData,
-                uni: {
-                    ...prevSendData.uni,
-                    calculated: value,
-                },
-
-            }));
-        }
-        if (binaryLevel && activeTab === 1) {
-            setSendData((prevSendData) => ({
-                ...prevSendData,
-                binaryBv: {
-                    ...prevSendData.uni,
-                    calculated: value,
-                },
-
-            }));
-        }
-
+    const selectHandlerUni = (value) => {
+        setUniData((prevUniData) => ({
+            ...prevUniData,
+            calculated: value
+        }));
     };
 
-    // binaryBv: {
-    //     ...prevSendData.binaryBv,
-    //     calculated: value,
-    // },
+    const selectHandlerBinary = (value) => {
+        setBinaryData((prevBinaryData) => ({
+            ...prevBinaryData,
+            calculated: value
+        }));
 
-
-
-    const saveHandler = async () => {
-        try {
-            const response = await axios.post('/api/data/create_referral_settings', sendData);
-            console.log(response.data); 
-        } catch (error) {
-            console.error(error); 
-        }
     };
 
     useEffect(() => {
-        setSendData((prevSendData) => ({
-            ...prevSendData,
-            uni: {
-                ...prevSendData.uni,
-                level: uniLevel,
-            },
+        setUniData((prevUniData) => ({
+            ...prevUniData,
+            level: uniLevel
         }));
     }, [uniLevel]);
 
     useEffect(() => {
-        setSendData((prevSendData) => ({
-            ...prevSendData,
-            binaryBv: {
-                ...prevSendData.binaryBv,
-                level: binaryLevel,
-            },
+        setBinaryData((prevBinaryData) => ({
+            ...prevBinaryData,
+            level: binaryLevel
         }));
     }, [binaryLevel]);
 
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('/api/data/get_referral_settings');
-            console.log(response.data); 
-        } catch (error) {
-            console.error(error); 
-        }
-    };
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get('/api/data/get_referral_settings');
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchData();
-    }, [])
+    // useEffect(() => {
+    //     fetchData();
+    // }, [])
 
 
-    const handleMaxCommissionChange = (index, value) => {
-        setSendData((prevSendData) => {
-            const updatedSendData = { ...prevSendData };
 
-            if (uniLevel && activeTab === 0) {
-                const uniMaxCommission = [...prevSendData.uni.maxCommision];
-                uniMaxCommission[index] = value;
-                updatedSendData.uni = {
-                    ...prevSendData.uni,
-                    maxCommision: uniMaxCommission,
-                };
-            }
+    const uniMaxCommissionChangeHandler = (index, value) => {
+        setUniData((prevUniData) => {
+            const updatedUniData = { ...prevUniData };
+            updatedUniData.maxCommision[index] = value;
 
-            if (binaryLevel && activeTab === 1) {
-                const binaryMaxCommission = [...prevSendData.binaryBv.maxCommision];
-                binaryMaxCommission[index] = value;
-                updatedSendData.binaryBv = {
-                    ...prevSendData.binaryBv,
-                    maxCommision: binaryMaxCommission,
-                };
-            }
-
-            return updatedSendData;
+            return updatedUniData;
         });
     };
 
-    const handleMaxCommissionPercentageChange = (index, value) => {
-        setSendData((prevSendData) => {
-            const updatedSendData = { ...prevSendData };
+    const uniMaxCommissionPercentageChangeHandler = (index, value) => {
+        setUniData((prevUniData) => {
+            const updatedUniData = { ...prevUniData };
+            updatedUniData.maxCommPercentage[index] = value;
 
-            if (uniLevel && activeTab === 0) {
-                const uniMaxCommPercentage = [...prevSendData.uni.maxCommPercentage];
-                uniMaxCommPercentage[index] = value;
-                updatedSendData.uni = {
-                    ...prevSendData.uni,
-                    maxCommPercentage: uniMaxCommPercentage,
-                };
-            }
+            return updatedUniData;
+        });
+    };
 
-            if (binaryLevel && activeTab === 1) {
-                const binaryMaxCommPercentage = [...prevSendData.binaryBv.maxCommPercentage];
-                binaryMaxCommPercentage[index] = value;
-                updatedSendData.binaryBv = {
-                    ...prevSendData.binaryBv,
-                    maxCommPercentage: binaryMaxCommPercentage,
-                };
-            }
+    const binaryMaxCommissionChangeHandler = (index, value) => {
+        setBinaryData((prevBinaryData) => {
+            const updatedBinaryData = { ...prevBinaryData }
+            updatedBinaryData.maxCommision[index] = value;
 
-            return updatedSendData;
+            return updatedBinaryData;
+        });
+    };
+
+    const binaryMaxCommissionPercentChangeHandler = (index, value) => {
+        setBinaryData((prevBinaryData) => {
+            const updatedBinaryData = { ...prevBinaryData }
+            updatedBinaryData.maxCommPercentage[index] = value;
+
+            return updatedBinaryData;
         });
     };
 
 
+    const saveUniDataHandler = () => {
+        console.log(uniData, 'uni')
+    }
+
+    const saveBinaryDataHandler = () => {
+        console.log(binaryData, 'binary')
+    }
 
     return (
         <div className={styles.table}>
@@ -220,12 +178,9 @@ const ReferralManagment = ({
                         <p>Uni</p>
                         <Switches
                             onChange={(e) =>
-                                setSendData((prevSendData) => ({
-                                    ...prevSendData,
-                                    uni: {
-                                        ...prevSendData.uni,
-                                        active: e.target.checked,
-                                    },
+                                setUniData((prevUniData) => ({
+                                    ...prevUniData,
+                                    active: e.target.checked
                                 }))
                             }
                             type={"sm-switches"}
@@ -237,7 +192,7 @@ const ReferralManagment = ({
                         emptyFieldErr={false}
                         defaultData={defaultData}
                         label={"Calculated"}
-                        selectHandler={selectHandler}
+                        selectHandler={selectHandlerUni}
                         selectLabel={"select"}
                         active={active}
                         status={""}
@@ -264,7 +219,7 @@ const ReferralManagment = ({
                                     inputType={"text"}
                                     placeholder={"1"}
                                     label={`max commission level ${index + 1}`}
-                                    onChange={(i) => handleMaxCommissionChange(index, i.target.value)}
+                                    onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
                                 <Input
@@ -273,11 +228,19 @@ const ReferralManagment = ({
                                     inputType={"text"}
                                     placeholder={"1"}
                                     label={`max commission perc ${index + 1}`}
-                                    onChange={(i) => handleMaxCommissionPercentageChange(index, i.target.value)}
+                                    onChange={(i) => uniMaxCommissionPercentageChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
                             </div>
                         ))}
+                        <Button
+                            label={'save'}
+                            size={"btn-lg"}
+                            type={"btn-primary"}
+                            element={"button"}
+                            onClick={saveUniDataHandler}
+                        // customStyles={{ width: '30%' }}
+                        />
                     </div>
                 </div>
             </div>
@@ -287,12 +250,9 @@ const ReferralManagment = ({
                         <p>Binary</p>
                         <Switches
                             onChange={(e) =>
-                                setSendData((prevSendData) => ({
+                                setBinaryData((prevSendData) => ({
                                     ...prevSendData,
-                                    binaryBv: {
-                                        ...prevSendData.uni,
-                                        active: e.target.checked,
-                                    },
+                                    active: e.target.checked
                                 }))
                             }
                             type={"sm-switches"}
@@ -304,7 +264,7 @@ const ReferralManagment = ({
                         emptyFieldErr={false}
                         defaultData={defaultData}
                         label={"Calculated"}
-                        selectHandler={selectHandler}
+                        selectHandler={selectHandlerBinary}
                         selectLabel={"select"}
                         active={active}
                         status={""}
@@ -331,7 +291,7 @@ const ReferralManagment = ({
                                     inputType={"text"}
                                     placeholder={"1"}
                                     label={`max commission level ${index + 1}`}
-                                    onChange={(i) => handleMaxCommissionChange(index, i.target.value)}
+                                    onChange={(i) => binaryMaxCommissionChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
                                 <Input
@@ -340,7 +300,7 @@ const ReferralManagment = ({
                                     inputType={"text"}
                                     placeholder={"1"}
                                     label={`max commission perc ${index + 1}`}
-                                    onChange={(i) => handleMaxCommissionPercentageChange(index, i.target.value)}
+                                    onChange={(i) => binaryMaxCommissionPercentChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
                             </div>
@@ -350,7 +310,7 @@ const ReferralManagment = ({
                             size={"btn-lg"}
                             type={"btn-primary"}
                             element={"button"}
-                            onClick={saveHandler}
+                            onClick={saveBinaryDataHandler}
                         // customStyles={{ width: '30%' }}
                         />
                     </div>
