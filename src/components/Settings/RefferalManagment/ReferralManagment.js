@@ -33,6 +33,7 @@ const ReferralManagment = ({
         calculated: "",
         maxCommision: [],
         maxCommPercentage: [],
+        bvcPrice: [],
     });
 
     let stepper = [
@@ -112,6 +113,15 @@ const ReferralManagment = ({
         });
     };
 
+    const bvcPriceChangeHandler = (index, value) => {
+        setBinaryData((prevBinaryData) => {
+            const updatedBinaryData = { ...prevBinaryData }
+            updatedBinaryData.bvcPrice[index] = value;
+
+            return updatedBinaryData;
+        });
+    }
+
 
     const saveUniDataHandler = () => {
         console.log(uniData, 'uni')
@@ -120,6 +130,22 @@ const ReferralManagment = ({
     const saveBinaryDataHandler = () => {
         console.log(binaryData, 'binary')
     }
+
+    useEffect(() => {
+        const getData = async () => {
+            axios.get('http://localhost:4000/api/data/get_referral_setting')
+                .then(response => {
+                    // Handle the successful response
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error);
+                });
+        }
+
+        getData();
+    }, [])
 
     return (
         <div className={styles.table}>
@@ -178,7 +204,7 @@ const ReferralManagment = ({
                                     type={"default"}
                                     emptyFieldErr={false}
                                     inputType={"text"}
-                                    placeholder={"1"}   
+                                    placeholder={"1"}
                                     label={`Level ${index + 1} maximum comission`}
                                     onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
                                     statusCard={''}
@@ -261,6 +287,15 @@ const ReferralManagment = ({
                                     placeholder={"1"}
                                     label={`Level ${index + 1} Bv To`}
                                     onChange={(i) => binaryMaxCommissionPercentChangeHandler(index, i.target.value)}
+                                    statusCard={''}
+                                />
+                                <Input
+                                    type={"default"}
+                                    emptyFieldErr={false}
+                                    inputType={"text"}
+                                    placeholder={"1"}
+                                    label={`Level ${index + 1} Bvc Price`}
+                                    onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
                                     statusCard={''}
                                 />
                             </div>
