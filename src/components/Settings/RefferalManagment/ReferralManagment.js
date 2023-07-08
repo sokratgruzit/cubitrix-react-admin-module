@@ -18,6 +18,9 @@ const ReferralManagment = ({
     const [step, setStep] = useState(1);
     const [uniLevel, setuniLevel] = useState(1);
     const [binaryLevel, setBinaryLevel] = useState(1);
+    const [uniMaxCom, setUniMaxCom] = useState();
+    const [uniMaxComPerc, setUniMaxComPerc] = useState();
+
     const [uniData, setUniData] = useState({
         name: 'Uni',
         active: false,
@@ -123,29 +126,60 @@ const ReferralManagment = ({
     }
 
 
-    const saveUniDataHandler = () => {
-        console.log(uniData, 'uni')
-    }
-
-    const saveBinaryDataHandler = () => {
-        console.log(binaryData, 'binary')
-    }
-
-    useEffect(() => {
-        const getData = async () => {
-            axios.get('http://localhost:4000/api/data/get_referral_setting')
-                .then(response => {
-                    // Handle the successful response
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    // Handle the error
-                    console.error(error);
+    const saveUniDataHandler = async (req, res) => {
+        await axios
+            .post("/api/data/get_referral_setting", {
+                uniData
+            })
+            .then((res) => {
+                console.log(res);
+                setuniLevel(1);
+                setUniData({
+                    name: 'Uni',
+                    active: false,
+                    level: uniLevel,
+                    calculated: "",
+                    maxCommision: [],
+                    maxCommPercentage: [],
                 });
-        }
+            }
+            );
+    }
 
-        getData();
-    }, [])
+    const saveBinaryDataHandler = async (req, res) => {
+        await axios
+            .post("/api/data/get_referral_setting", {
+                binaryData
+            })
+            .then((res) => {
+                console.log(res);
+
+            });
+        setBinaryLevel(1);
+        setBinaryData({
+            name: 'Binary Bv',
+            active: false,
+            level: binaryLevel,
+            calculated: "",
+            maxCommision: [],
+            maxCommPercentage: [],
+        });
+    }
+
+    // useEffect(() => {
+    //     const getData = async () => {
+    //         axios.get('http://localhost:4000/api/data/get_referral_setting')
+    //             .then(response => {
+    //                 console.log(response.data);
+    //             })
+    //             .catch(error => {
+    //                 // Handle the error
+    //                 console.error(error);
+    //             });
+    //     }
+
+    //     getData();
+    // }, [])
 
     return (
         <div className={styles.table}>
@@ -164,6 +198,7 @@ const ReferralManagment = ({
                     <div className={styles.row}>
                         <p>Uni</p>
                         <Switches
+                            // value={uniData.active ? 'checked' : ''}
                             onChange={(e) =>
                                 setUniData((prevUniData) => ({
                                     ...prevUniData,
@@ -191,7 +226,7 @@ const ReferralManagment = ({
                         inputType={"text"}
                         placeholder={"1"}
                         label={'uni level'}
-                        value={uniLevel}
+                        // value={uniLevel}
                         onChange={(i) => setuniLevel(i.target.value)}
                         statusCard={''}
                     />
@@ -205,8 +240,12 @@ const ReferralManagment = ({
                                     emptyFieldErr={false}
                                     inputType={"text"}
                                     placeholder={"1"}
+                                    // value={uniMaxCom}
                                     label={`Level ${index + 1} maximum comission`}
-                                    onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
+                                    onChange={(i) => {
+                                        // setUniMaxCom(i.target.value);
+                                        uniMaxCommissionChangeHandler(index, i.target.value);
+                                    }}
                                     statusCard={''}
                                 />
                                 <Input
@@ -214,8 +253,12 @@ const ReferralManagment = ({
                                     emptyFieldErr={false}
                                     inputType={"text"}
                                     placeholder={"1"}
+                                    // value={uniMaxComPerc}
                                     label={`Level ${index + 1} max comission percentage`}
-                                    onChange={(i) => uniMaxCommissionPercentageChangeHandler(index, i.target.value)}
+                                    onChange={(i) => {
+                                        // setUniMaxComPerc(i.target.value);
+                                        uniMaxCommissionPercentageChangeHandler(index, i.target.value);
+                                    }}
                                     statusCard={''}
                                 />
                             </div>
