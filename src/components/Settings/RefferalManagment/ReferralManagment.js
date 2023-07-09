@@ -127,59 +127,45 @@ const ReferralManagment = ({
 
 
     const saveUniDataHandler = async (req, res) => {
+        let name = uniData.name;
         await axios
-            .post("/api/data/get_referral_setting", {
+            .post("/api/data/edit_referral_setting", {
+                name,
                 uniData
             })
             .then((res) => {
                 console.log(res);
-                setuniLevel(1);
-                setUniData({
-                    name: 'Uni',
-                    active: false,
-                    level: uniLevel,
-                    calculated: "",
-                    maxCommision: [],
-                    maxCommPercentage: [],
-                });
             }
             );
     }
 
     const saveBinaryDataHandler = async (req, res) => {
+        let name = binaryData.name;
         await axios
-            .post("/api/data/get_referral_setting", {
+            .post("/api/data/edit_referral_setting", {
+                name,
                 binaryData
             })
             .then((res) => {
                 console.log(res);
-
             });
-        setBinaryLevel(1);
-        setBinaryData({
-            name: 'Binary Bv',
-            active: false,
-            level: binaryLevel,
-            calculated: "",
-            maxCommision: [],
-            maxCommPercentage: [],
-        });
     }
 
-    // useEffect(() => {
-    //     const getData = async () => {
-    //         axios.get('http://localhost:4000/api/data/get_referral_setting')
-    //             .then(response => {
-    //                 console.log(response.data);
-    //             })
-    //             .catch(error => {
-    //                 // Handle the error
-    //                 console.error(error);
-    //             });
-    //     }
+    useEffect(() => {
+        const getData = async name => {
+            axios.post('/api/data/get_referral_setting', name)
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    // Handle the error
+                    console.error(error);
+                });
+        }
 
-    //     getData();
-    // }, [])
+        getData(uniData.name);
+        getData(binaryData.name);
+    }, []);
 
     return (
         <div className={styles.table}>
