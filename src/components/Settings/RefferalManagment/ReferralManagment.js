@@ -11,6 +11,8 @@ import {
 import styles from "./ReferralManagment.module.css";
 
 const ReferralManagment = ({ animate }) => {
+  const [defaultUniData, setDefaultUniData] = useState();
+  const [defaultBinaryData, setDefaultBinaryData] = useState();
   const [active, setActive] = useState();
   const [activeTab, setActiveTab] = useState(0);
   const [step, setStep] = useState(1);
@@ -158,18 +160,29 @@ const ReferralManagment = ({ animate }) => {
       axios
         .post("/api/data/get_referral_setting", { name })
         .then((response) => {
-          console.log(response.data, "data?");
+            if(response.data.key === 'referral_uni_options') {
+                setDefaultUniData(response.data);
+                // setUniData()
+            }
+            if(response.data.key === 'referral_binary_bv_options') {
+                setDefaultBinaryData(response.data);
+            }
         })
         .catch((error) => {
-          // Handle the error
           console.error(error);
         });
     };
 
     getData(uniData.name);
     getData(binaryData.name);
+
   }, []);
 
+  console.log(defaultUniData, 'default uni data');
+  console.log(defaultBinaryData, 'default binary data');
+  console.log(defaultUniData?.object_value?.uniData?.active, 'i need');
+  console.log(uniData, 'i have')
+  
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
@@ -193,6 +206,7 @@ const ReferralManagment = ({ animate }) => {
                   active: e.target.checked,
                 }))
               }
+              value={uniData.active}
               type={"sm-switches"}
             />
           </div>
