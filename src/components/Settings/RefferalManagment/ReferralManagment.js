@@ -22,9 +22,9 @@ const ReferralManagment = ({ animate }) => {
     level: uniLevel,
     calculated: "",
     lvlOptions: {
-        maxCommision: [],
-        maxCommPercentage: [],
-    }
+      maxCommision: [],
+      maxCommPercentage: [],
+    },
   });
   const [binaryData, setBinaryData] = useState({
     name: "Binary Bv",
@@ -34,11 +34,10 @@ const ReferralManagment = ({ animate }) => {
     maxUsers: "",
     bv: "",
     lvlOptions: {
-        maxCommision: [],
-        maxCommPercentage: [],
-        bvcPrice: []
+      maxCommision: [],
+      maxCommPercentage: [],
+      bvcPrice: [],
     },
-   
   });
 
   let stepper = [
@@ -123,53 +122,53 @@ const ReferralManagment = ({ animate }) => {
 
   const bvcPriceChangeHandler = (index, value) => {
     setBinaryData((prevBinaryData) => {
-        const updatedBinaryData = { ...prevBinaryData }
-        updatedBinaryData.lvlOptions.bvcPrice[index] = value;
+      const updatedBinaryData = { ...prevBinaryData };
+      updatedBinaryData.lvlOptions.bvcPrice[index] = value;
 
-        return updatedBinaryData;
+      return updatedBinaryData;
     });
-}
+  };
 
-const saveUniDataHandler = async (req, res) => {
+  const saveUniDataHandler = async (req, res) => {
     let name = uniData.name;
     await axios
-        .post("/api/data/edit_referral_setting", {
-            name,
-            uniData
-        })
-        .then((res) => {
-            console.log(res);
-        }
-    );
-};
+      .post("/api/data/edit_referral_setting", {
+        name,
+        uniData,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
-const saveBinaryDataHandler = async (req, res) => {
+  const saveBinaryDataHandler = async (req, res) => {
     let name = binaryData.name;
     await axios
-        .post("/api/data/edit_referral_setting", {
-            name,
-            binaryData
-        })
-        .then((res) => {
-            console.log(res);
-        });
-};
+      .post("/api/data/edit_referral_setting", {
+        name,
+        binaryData,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
 
-useEffect(() => {
-    const getData = async name => {
-        axios.get('/api/data/get_referral_setting', name)
-            .then(response => {
-                console.log(response.data, 'data?');
-            })
-            .catch(error => {
-                // Handle the error
-                console.error(error);
-            });
-    }
+  useEffect(() => {
+    const getData = async (name) => {
+      axios
+        .post("/api/data/get_referral_setting", { name })
+        .then((response) => {
+          console.log(response.data, "data?");
+        })
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    };
 
     getData(uniData.name);
     getData(binaryData.name);
-}, []);
+  }, []);
 
   return (
     <div className={styles.table}>
@@ -294,37 +293,37 @@ useEffect(() => {
             placeholder={"1"}
             label={`BV`}
             onChange={(i) =>
-                setBinaryData((prevSendData) => ({
-                    ...prevSendData,
-                    bv: i.target.value,
-                }))
+              setBinaryData((prevSendData) => ({
+                ...prevSendData,
+                bv: i.target.value,
+              }))
             }
             statusCard={""}
-            />
-            <Input
-                type={"default"}
-                emptyFieldErr={false}
-                inputType={"text"}
-                placeholder={"1"}
-                label={`Binary Max users`}
-                onChange={(i) =>
-                    setBinaryData((prevSendData) => ({
-                        ...prevSendData,
-                        maxUsers: i.target.value,
-                    }))
-                }
-                statusCard={""}
-            />
-            <Input
-                type={"default"}
-                emptyFieldErr={false}
-                inputType={"text"}
-                placeholder={"1"}
-                label={"binary level"}
-                value={binaryLevel}
-                onChange={(i) => setBinaryLevel(i.target.value)}
-                statusCard={""}
-            />
+          />
+          <Input
+            type={"default"}
+            emptyFieldErr={false}
+            inputType={"text"}
+            placeholder={"1"}
+            label={`Binary Max users`}
+            onChange={(i) =>
+              setBinaryData((prevSendData) => ({
+                ...prevSendData,
+                maxUsers: i.target.value,
+              }))
+            }
+            statusCard={""}
+          />
+          <Input
+            type={"default"}
+            emptyFieldErr={false}
+            inputType={"text"}
+            placeholder={"1"}
+            label={"binary level"}
+            value={binaryLevel}
+            onChange={(i) => setBinaryLevel(i.target.value)}
+            statusCard={""}
+          />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
@@ -355,14 +354,14 @@ useEffect(() => {
                   }
                   statusCard={""}
                 />
-                  <Input
-                    type={"default"}
-                    emptyFieldErr={false}
-                    inputType={"text"}
-                    placeholder={"1"}
-                    label={`Level ${index + 1} Bvc Price`}
-                    onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
-                    statusCard={''}
+                <Input
+                  type={"default"}
+                  emptyFieldErr={false}
+                  inputType={"text"}
+                  placeholder={"1"}
+                  label={`Level ${index + 1} Bvc Price`}
+                  onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
+                  statusCard={""}
                 />
               </div>
             ))}
