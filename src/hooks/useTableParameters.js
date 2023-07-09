@@ -121,28 +121,28 @@ const tableFilterData = {
       ],
     },
     selects: [
-      {
-        name: "Nationality",
-        value: "nationality",
-        options: [
-          {
-            name: "Armenia",
-            value: "armenia",
-          },
-          {
-            name: "Azer",
-            value: "azer",
-          },
-          {
-            name: "China",
-            value: "china",
-          },
-          {
-            name: "Chukcha",
-            value: "chukcha",
-          },
-        ],
-      },
+      // {
+      //   name: "Nationality",
+      //   value: "nationality",
+      //   options: [
+      //     {
+      //       name: "Armenia",
+      //       value: "armenia",
+      //     },
+      //     {
+      //       name: "Azer",
+      //       value: "azer",
+      //     },
+      //     {
+      //       name: "China",
+      //       value: "china",
+      //     },
+      //     {
+      //       name: "Chukcha",
+      //       value: "chukcha",
+      //     },
+      //   ],
+      // },
       {
         name: "Account Type Id",
         value: "account_type_id",
