@@ -7,6 +7,7 @@ import Accounts from "./components/Accounts/Accounts";
 import UsersList from "./components/UsersList/UsersList";
 import DevelopersApi from "./components/DevelopersApi/DevelopersApi";
 import AdminManagement from "./components/Settings/AdminManagement/AdminManagement";
+import ReferralManagment from "./components/Settings/RefferalManagment/ReferralManagment";
 import "@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css";
 import { Button, AdminHeader } from "@cubitrix/cubitrix-react-ui-module";
 import { useConnect } from "@cubitrix/cubitrix-react-connect-module";
@@ -432,6 +433,10 @@ function App() {
           name: "Admin Management",
           route: "/admin-management",
         },
+        {
+          name: "Referral Management",
+          route: "/referral-management",
+        },
       ],
     },
   ];
@@ -475,6 +480,7 @@ function App() {
               <Route path="/accounts" element={<Accounts animate={animateDom}  />} />
               <Route path="/developers-api" element={<DevelopersApi animate={animateDom} />} />
               <Route path="/settings/admin-management" element={<AdminManagement animate={animateDom}  />} />
+              <Route path="/settings/referral-management" element={<ReferralManagment animate={animateDom}  />} />
             </Routes>
           </div>
         </>
