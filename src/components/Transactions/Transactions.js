@@ -22,7 +22,6 @@ const Transactions = (props) => {
   let [td, setTd] = useState([]);
   let [pageNow, setPageNow] = useState(1);
   let [pageAll, setPageAll] = useState(1);
-  const [transactionActions, setTransactionActions] = useState(false);
   let [tx_type, setTx_type] = useState("");
   let [from, setFrom] = useState("");
   let [to, setTo] = useState("");
@@ -70,7 +69,6 @@ const Transactions = (props) => {
           {
             title: "Actions",
             onClick: () => {
-              setTransactionActions(true);
               setSelectedTransaction(item);
             },
             svg: (
@@ -79,8 +77,7 @@ const Transactions = (props) => {
                 height="18"
                 viewBox="0 0 18 18"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -105,82 +102,75 @@ const Transactions = (props) => {
         className={`table-parent ${mobileExpand === index ? "active" : ""}`}
         onClick={() => {
           mobileExpandFunc(index);
-        }}
-      >
+        }}>
         <div className="table">
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
-          >
+            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
             <span>{item.tx_hash}</span>
           </div>
           <div
             className={`td ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
-          >
+            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <span>{item.from}</span>
           </div>
           <div
             className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
-          >
+            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
             <span>{item.to}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
-          >
+            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{item.amount}</span>
             <span className={`table-currency`}>{item.tx_currency}</span>
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
-          >
+            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
             <span>{item?.tx_fee}</span>
             <span className={`table-currency`}>{item.tx_fee_currency}</span>
           </div>
           <div
             className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
-          >
+            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
             <span>{item.domination}</span>
           </div>
           <div
             className={`td ${th[6].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}
-          >
+            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}>
             <span>{moment(item.createdAt).format("LL")}</span>
           </div>
           <div
             className={`td ${th[7].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}
-          >
+            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
             <span
               className={`alert-status-box 
                             ${item.tx_status === "active" && "alert-status-blue"} 
                             ${item.tx_status === "active1" && "alert-status-yellow"}
-                            ${item.tx_status === "pending" && "alert-status-green"}`}
-            >
+                            ${item.tx_status === "pending" && "alert-status-green"}`}>
               {item.tx_status}
             </span>
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[8].mobileWidth : th[8].width}%` }}
-          >
+            style={{
+              width: `${mobile ? th[8].mobileWidth : th[8].width}%`,
+              paddingRight: "0px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
             <span
               className={`alert-status-box 
                             ${item.tx_type === "deposit" && "alert-status-blue"} 
                             ${item.tx_type === "withdraw" && "alert-status-yellow"}
-                            ${item.tx_type === "transfer" && "alert-status-green"}`}
-            >
+                            ${item.tx_type === "transfer" && "alert-status-green"}`}>
               {item.tx_type}
             </span>
+            <div style={{ display: "flex" }} className="table-more">
+              <MoreButton dropdownData={dropdownData} />
+            </div>
           </div>
-        </div>
-        <div className="table-more">
-          <MoreButton dropdownData={dropdownData} />
         </div>
         <div className="icon-place">
           <svg
@@ -188,8 +178,7 @@ const Transactions = (props) => {
             height="7"
             viewBox="0 0 12 7"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
               stroke="white"
@@ -224,8 +213,7 @@ const Transactions = (props) => {
                 className={`alert-status-box 
                                 ${item.tx_status === "active" && "alert-status-blue"} 
                                 ${item.tx_status === "active1" && "alert-status-yellow"}
-                                ${item.tx_status === "pending" && "alert-status-green"}`}
-              >
+                                ${item.tx_status === "pending" && "alert-status-green"}`}>
                 {item.tx_status}
               </span>
             </div>
@@ -235,8 +223,9 @@ const Transactions = (props) => {
                 className={`alert-status-box 
                                 ${item.tx_type === "deposit" && "alert-status-blue"} 
                                 ${item.tx_type === "withdraw" && "alert-status-yellow"}
-                                ${item.tx_type === "transfer" && "alert-status-green"}`}
-              ></span>
+                                ${
+                                  item.tx_type === "transfer" && "alert-status-green"
+                                }`}></span>
             </div>
           </div>
         </div>
@@ -271,56 +260,71 @@ const Transactions = (props) => {
     // code to delete the transaction
   };
 
+  const addTransactionSelects = [
+    {
+      name: "Transaction Type",
+      value: "tx_type",
+      options: [
+        {
+          name: "Approved",
+          value: "approved",
+        },
+        {
+          name: "Pending",
+          value: "pending",
+        },
+        {
+          name: "Cancelled",
+          value: "cancelled",
+        },
+      ],
+    },
+    {
+      name: "Tranx Currency",
+      value: "tx_currency",
+      options: [
+        {
+          name: "ether",
+          value: "ether",
+        },
+      ],
+    },
+  ];
+
+  const [popUpData, setPopUpData] = useState({
+    tx_type: "",
+    from: "",
+    to: "",
+    amount: "",
+    tx_currency: "",
+  });
+
   return (
     <>
-      {transactionActions && (
+      {selectedTransaction && (
+        // <Popup
+        //   label={"Transaction Actions"}
+        //   handlePopUpClose={() => setSelectedTransaction(null)}
+        //   popUpElement={
+        //     <div className={styles.background}>
+        //       <div>
+        //         <p>Deposit method: {selectedTransaction?.tx_options?.method}</p>
+        //         <p>Transaction Hash: {selectedTransaction?.tx_hash}</p>
+        //         <p>Transaction Amount: {selectedTransaction?.amount}</p>
+        //         <div className={styles.actionsWrap}></div>
+        //       </div>
+        //     </div>
+        //   }
+        // />
         <Popup
-          label={"Transaction Actions"}
-          handlePopUpClose={() => setTransactionActions(false)}
-          popUpElement={
-            <div className={styles.background}>
-              <div>
-                <p>Deposit method: {selectedTransaction?.tx_options?.method}</p>
-                <p>Transaction Hash: {selectedTransaction?.tx_hash}</p>
-                <p>Transaction Amount: {selectedTransaction?.amount}</p>
-                <div className={styles.actionsWrap}>
-                  <Button
-                    element="button"
-                    label={`Accept`}
-                    type="btn-primary"
-                    size="btn-lg"
-                    customStyles={{
-                      width: "100%",
-                      margin: "0",
-                    }}
-                    onClick={handleAccept}
-                  />
-                  <Button
-                    element="button"
-                    label={`Reject`}
-                    type="btn-secondary"
-                    size="btn-lg"
-                    customStyles={{
-                      width: "100%",
-                      margin: "0",
-                    }}
-                    onClick={handleReject}
-                  />
-                  <Button
-                    element="button"
-                    label={`Delete`}
-                    type="btn-secondary"
-                    size="btn-lg"
-                    customStyles={{
-                      width: "100%",
-                      margin: "0",
-                    }}
-                    onClick={handleDelete}
-                  />
-                </div>
-              </div>
-            </div>
-          }
+          type={"addTransaction"}
+          label={`Edit Transaction`}
+          addTransactionSelects={addTransactionSelects}
+          // handleAddTransaction={handleAddTransaction}
+          // addTransactionError={"cant add transaction"}
+          // handlePopUpClose={() => setActiveItem(null)}
+          popUpData={popUpData}
+          setPopUpData={setPopUpData}
         />
       )}
       <AdminPanel
