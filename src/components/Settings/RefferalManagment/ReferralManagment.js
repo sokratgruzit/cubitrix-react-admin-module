@@ -162,7 +162,7 @@ const ReferralManagment = ({ animate }) => {
         .then((response) => {
             if(response.data.key === 'referral_uni_options') {
                 setDefaultUniData(response.data);
-                // setUniData()
+                
             }
             if(response.data.key === 'referral_binary_bv_options') {
                 setDefaultBinaryData(response.data);
