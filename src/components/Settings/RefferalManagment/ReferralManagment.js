@@ -16,12 +16,11 @@ const ReferralManagment = ({ animate }) => {
   const [active, setActive] = useState();
   const [activeTab, setActiveTab] = useState(0);
   const [step, setStep] = useState(1);
-  const [uniLevel, setuniLevel] = useState(1);
   const [binaryLevel, setBinaryLevel] = useState(1);
   const [uniData, setUniData] = useState({
     name: "Uni",
     active: false,
-    level: uniLevel,
+    level: "",
     calculated: "",
     lvlOptions: {
       maxCommision: [],
@@ -31,7 +30,7 @@ const ReferralManagment = ({ animate }) => {
   const [binaryData, setBinaryData] = useState({
     name: "Binary Bv",
     active: false,
-    level: binaryLevel,
+    level: "",
     calculated: "",
     maxUsers: "",
     bv: "",
@@ -161,11 +160,10 @@ const ReferralManagment = ({ animate }) => {
         .post("/api/data/get_referral_setting", { name })
         .then((response) => {
             if(response.data.key === 'referral_uni_options') {
-                setDefaultUniData(response.data);
-                // setUniData()
+                setUniData(response.data.object_value.uniData);
             }
             if(response.data.key === 'referral_binary_bv_options') {
-                setDefaultBinaryData(response.data);
+                setBinaryData(response.data.object_value.binaryData);
             }
         })
         .catch((error) => {
@@ -178,11 +176,29 @@ const ReferralManagment = ({ animate }) => {
 
   }, []);
 
-  console.log(defaultUniData, 'default uni data');
-  console.log(defaultBinaryData, 'default binary data');
-  console.log(defaultUniData?.object_value?.uniData?.active, 'i need');
-  console.log(uniData, 'i have')
+  const rowsHandler = () => {
+    const newLevel = parseInt(uniData.level); // Convert level to an integer
   
+    if (!isNaN(newLevel)) {
+      setUniData((prevUniData) => {
+        const slicedMaxCommPercentage = prevUniData.lvlOptions.maxCommPercentage.slice(0, newLevel);
+        const slicedMaxCommision = prevUniData.lvlOptions.maxCommision.slice(0, newLevel);
+  
+        return {
+          ...prevUniData,
+          lvlOptions: {
+            maxCommPercentage: slicedMaxCommPercentage,
+            maxCommision: slicedMaxCommision,
+          },
+        };
+      });
+    }
+  };
+  
+  
+
+  console.log(uniData, 'uni data');
+  console.log(binaryData, 'binary data');
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
@@ -200,13 +216,13 @@ const ReferralManagment = ({ animate }) => {
           <div className={styles.row}>
             <p>Uni</p>
             <Switches
+              value={uniData?.active === undefined ? false : true}
               onChange={(e) =>
                 setUniData((prevUniData) => ({
                   ...prevUniData,
                   active: e.target.checked,
                 }))
               }
-              value={uniData.active}
               type={"sm-switches"}
             />
           </div>
@@ -214,6 +230,7 @@ const ReferralManagment = ({ animate }) => {
             type={"lable-input-select"}
             icon={false}
             emptyFieldErr={false}
+            value={uniData.calculated}
             defaultData={defaultData}
             label={"Calculated"}
             selectHandler={selectHandlerUni}
@@ -228,20 +245,27 @@ const ReferralManagment = ({ animate }) => {
             inputType={"text"}
             placeholder={"1"}
             label={"uni level"}
-            value={uniLevel}
-            onChange={(i) => setuniLevel(i.target.value)}
+            value={uniData.level}
+            onChange={(i) => {
+                setUniData((prevUniData) => ({
+                    ...prevUniData,
+                    level: i.target.value,
+                }));
+                rowsHandler();
+            }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: uniLevel }, (_, index) => (
+            {Array.from({ length: uniData.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
+                  value={uniData.lvlOptions.maxCommision[index]}
                   label={`Level ${index + 1} maximum comission`}
                   onChange={(i) =>
                     uniMaxCommissionChangeHandler(index, i.target.value)
@@ -253,6 +277,7 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
+                  value={uniData.lvlOptions.maxCommPercentage[index]}
                   label={`Level ${index + 1} max comission percentage`}
                   onChange={(i) =>
                     uniMaxCommissionPercentageChangeHandler(
@@ -279,6 +304,7 @@ const ReferralManagment = ({ animate }) => {
           <div className={styles.row}>
             <p>Binary</p>
             <Switches
+              value={binaryData?.active === undefined ? false : true}
               onChange={(i) =>
                 setBinaryData((prevSendData) => ({
                   ...prevSendData,
@@ -293,6 +319,7 @@ const ReferralManagment = ({ animate }) => {
             icon={false}
             emptyFieldErr={false}
             defaultData={defaultData}
+            value={binaryData.calculated}
             label={"Calculated"}
             selectHandler={selectHandlerBinary}
             selectLabel={"select"}
@@ -304,6 +331,7 @@ const ReferralManagment = ({ animate }) => {
             type={"default"}
             emptyFieldErr={false}
             inputType={"text"}
+            value={binaryData.bv}
             placeholder={"1"}
             label={`BV`}
             onChange={(i) =>
@@ -319,6 +347,7 @@ const ReferralManagment = ({ animate }) => {
             emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
+            value={binaryData.maxUsers}
             label={`Binary Max users`}
             onChange={(i) =>
               setBinaryData((prevSendData) => ({
@@ -334,20 +363,26 @@ const ReferralManagment = ({ animate }) => {
             inputType={"text"}
             placeholder={"1"}
             label={"binary level"}
-            value={binaryLevel}
-            onChange={(i) => setBinaryLevel(i.target.value)}
+            value={binaryData.level}
+            onChange={(i) => {
+                setBinaryData((prevBinaryData) => ({
+                    ...prevBinaryData,
+                    level: i.target.value,
+                }));
+            }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: binaryLevel }, (_, index) => (
+            {Array.from({ length: binaryData.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
+                  value={binaryData.lvlOptions.maxCommision[index]}
                   label={`Level ${index + 1} Bv From`}
                   onChange={(i) =>
                     binaryMaxCommissionChangeHandler(index, i.target.value)
@@ -359,6 +394,7 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
+                  value={binaryData.lvlOptions.maxCommPercentage[index]}
                   label={`Level ${index + 1} Bv To`}
                   onChange={(i) =>
                     binaryMaxCommissionPercentChangeHandler(
@@ -373,6 +409,7 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
+                  value={binaryData.lvlOptions.bvcPrice[index]}
                   label={`Level ${index + 1} Bvc Price`}
                   onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
                   statusCard={""}
