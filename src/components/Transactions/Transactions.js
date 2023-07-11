@@ -421,6 +421,10 @@ const Transactions = (props) => {
     onChange(e);
   };
 
+  function handleTransactionEdit() {
+    console.log(popUpData);
+  }
+
   return (
     <>
       {selectedTransaction && (
@@ -482,6 +486,14 @@ const Transactions = (props) => {
                   );
                 })}
               </div>
+              <Button
+                label={"Save"}
+                size={"btn-lg"}
+                type={"btn-primary"}
+                element={"button"}
+                onClick={handleTransactionEdit}
+                customStyles={{ width: "100%" }}
+              />
             </div>
           }
         />
