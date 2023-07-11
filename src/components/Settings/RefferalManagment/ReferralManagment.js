@@ -34,11 +34,8 @@ const ReferralManagment = ({ animate }) => {
     calculated: "",
     maxUsers: "",
     bv: "",
-    lvlOptions: {
-      maxCommision: [],
-      maxCommPercentage: [],
-      bvcPrice: [],
-    },
+    flush_out: 0,
+    options: [],
   });
 
   let stepper = [
@@ -100,33 +97,6 @@ const ReferralManagment = ({ animate }) => {
       updatedUniData.lvlOptions.maxCommPercentage[index] = value;
 
       return updatedUniData;
-    });
-  };
-
-  const binaryMaxCommissionChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.maxCommision[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-  const binaryMaxCommissionPercentChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.maxCommPercentage[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-  const bvcPriceChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.bvcPrice[index] = value;
-
-      return updatedBinaryData;
     });
   };
 
@@ -197,6 +167,39 @@ const ReferralManagment = ({ animate }) => {
     }
   };
 
+  const binaryRowsHandler = (level) => {
+    const newLevel = parseInt(level); // Convert level to an integer
+
+    if (!isNaN(newLevel)) {
+      setBinaryData((prevBinaryData) => {
+        return {
+          ...prevBinaryData,
+          options: Array.from({ length: newLevel }, (_, index) => ({
+            from: "",
+            to: "",
+            price: "",
+          })),
+        };
+      });
+    }
+  };
+
+  const binaryOptionChangeHandler = (index, value, field) => {
+    setBinaryData((prevBinaryData) => {
+      const updatedBinaryData = { ...prevBinaryData };
+      const updatedOptions = [...updatedBinaryData.options];
+
+      if (!updatedOptions[index]) {
+        updatedOptions[index] = { from: "", to: "", price: "" };
+      }
+
+      updatedOptions[index][field] = value;
+      updatedBinaryData.options = updatedOptions;
+
+      return updatedBinaryData;
+    });
+  };
+
   console.log(uniData, "uni data");
   console.log(binaryData, "binary data");
   return (
@@ -258,7 +261,7 @@ const ReferralManagment = ({ animate }) => {
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: uniData.level }, (_, index) => (
+            {Array.from({ length: uniData?.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
@@ -355,6 +358,21 @@ const ReferralManagment = ({ animate }) => {
           <Input
             type={"default"}
             emptyFieldErr={false}
+            inputType={"number"}
+            placeholder={"0"}
+            value={binaryData.flushed_out}
+            label={`Flushed out in months`}
+            onChange={(i) =>
+              setBinaryData((prevSendData) => ({
+                ...prevSendData,
+                flushed_out: i.target.value,
+              }))
+            }
+            statusCard={""}
+          />
+          <Input
+            type={"default"}
+            emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
             label={"binary level"}
@@ -364,23 +382,24 @@ const ReferralManagment = ({ animate }) => {
                 ...prevBinaryData,
                 level: i.target.value,
               }));
+              binaryRowsHandler(i.target.value);
             }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: binaryData.level }, (_, index) => (
+            {Array.from({ length: binaryData?.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.maxCommision[index]}
+                  value={binaryData.options?.[index]?.from}
                   label={`Level ${index + 1} Bv From`}
                   onChange={(i) =>
-                    binaryMaxCommissionChangeHandler(index, i.target.value)
+                    binaryOptionChangeHandler(index, i.target.value, "from")
                   }
                   statusCard={""}
                 />
@@ -389,11 +408,9 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.maxCommPercentage[index]}
+                  value={binaryData.options[index]?.to}
                   label={`Level ${index + 1} Bv To`}
-                  onChange={(i) =>
-                    binaryMaxCommissionPercentChangeHandler(index, i.target.value)
-                  }
+                  onChange={(i) => binaryOptionChangeHandler(index, i.target.value, "to")}
                   statusCard={""}
                 />
                 <Input
@@ -401,9 +418,11 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.bvcPrice[index]}
+                  value={binaryData.options[index]?.price}
                   label={`Level ${index + 1} Bvc Price`}
-                  onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
+                  onChange={(i) =>
+                    binaryOptionChangeHandler(index, i.target.value, "price")
+                  }
                   statusCard={""}
                 />
               </div>
