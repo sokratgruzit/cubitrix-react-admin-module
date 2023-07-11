@@ -145,22 +145,25 @@ const ReferralManagment = ({ animate }) => {
     getData(binaryData.name);
   }, []);
 
-  const rowsHandler = () => {
-    const newLevel = parseInt(uniData.level); // Convert level to an integer
+  const rowsHandler = (level) => {
+    const newLevel = parseInt(level); // Convert level to an integer
 
     if (!isNaN(newLevel)) {
       setUniData((prevUniData) => {
-        const slicedMaxCommPercentage = prevUniData.lvlOptions.maxCommPercentage.slice(
-          0,
-          newLevel,
-        );
-        const slicedMaxCommision = prevUniData.lvlOptions.maxCommision.slice(0, newLevel);
+        let { maxCommPercentage, maxCommision } = prevUniData.lvlOptions;
+
+        maxCommPercentage = [...maxCommPercentage.slice(0, newLevel)];
+        maxCommision = [...maxCommision.slice(0, newLevel)];
+
+        // If newLevel is greater than current array length, fill the extra items with null
+        while (maxCommPercentage.length < newLevel) maxCommPercentage.push(null);
+        while (maxCommision.length < newLevel) maxCommision.push(null);
 
         return {
           ...prevUniData,
           lvlOptions: {
-            maxCommPercentage: slicedMaxCommPercentage,
-            maxCommision: slicedMaxCommision,
+            maxCommPercentage: maxCommPercentage,
+            maxCommision: maxCommision,
           },
         };
       });
@@ -172,13 +175,22 @@ const ReferralManagment = ({ animate }) => {
 
     if (!isNaN(newLevel)) {
       setBinaryData((prevBinaryData) => {
+        let { options } = prevBinaryData;
+
+        // If newLevel is smaller, slice the array
+        if (options.length > newLevel) {
+          options = options.slice(0, newLevel);
+        }
+        // If newLevel is larger, fill the array with empty objects
+        else {
+          while (options.length < newLevel) {
+            options.push(null);
+          }
+        }
+
         return {
           ...prevBinaryData,
-          options: Array.from({ length: newLevel }, (_, index) => ({
-            from: "",
-            to: "",
-            price: "",
-          })),
+          options: options,
         };
       });
     }
@@ -190,7 +202,7 @@ const ReferralManagment = ({ animate }) => {
       const updatedOptions = [...updatedBinaryData.options];
 
       if (!updatedOptions[index]) {
-        updatedOptions[index] = { from: "", to: "", price: "" };
+        updatedOptions[index] = { from: null, to: null, price: null };
       }
 
       updatedOptions[index][field] = value;
@@ -254,7 +266,7 @@ const ReferralManagment = ({ animate }) => {
                 ...prevUniData,
                 level: i.target.value,
               }));
-              rowsHandler();
+              rowsHandler(i.target.value);
             }}
             statusCard={""}
           />
