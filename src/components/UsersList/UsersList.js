@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AdminPanel, MoreButton } from "@cubitrix/cubitrix-react-ui-module";
+import { AdminPanel, Input, MoreButton, Popup } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
@@ -19,6 +19,8 @@ const UsersList = (props) => {
   const [tableExpand, setTableExpand] = useState(null);
   const [accountType, setAccountType] = useState(null);
 
+  const [activeItem, setActiveItem] = useState(null);
+
   let tableExpandFunc = (id) => {
     if (id !== tableExpand) {
       setTableExpand(id);
@@ -35,85 +37,108 @@ const UsersList = (props) => {
         id: 0,
         list: [
           {
-            title: 'Edit',
+            title: "Edit",
             onClick: () => {
-              console.log(item)
+              setActiveItem(item);
             },
             svg: (
               <svg
-                xmlns='http://www.w3.org/2000/svg'
-                width='18px'
-                height='18px'
-                viewBox='0 0 24 24'
-                fill='none'
-                stroke='#ffffff'>
-                <g id='SVGRepo_bgCarrier' strokeWidth='0' />
+                xmlns="http://www.w3.org/2000/svg"
+                width="18px"
+                height="18px"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#ffffff">
+                <g id="SVGRepo_bgCarrier" strokeWidth="0" />
 
-                <g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round' />
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
 
-                <g id='SVGRepo_iconCarrier'>
-                  {' '}
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
                   <path
-                    d='M4 5L15 5'
-                    stroke='#ffffff'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />{' '}
-                  <path d='M4 8H15' stroke='#ffffff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />{' '}
-                  <path d='M4 11H11' stroke='#ffffff' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' />{' '}
+                    d="M4 5L15 5"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />{" "}
                   <path
-                    d='M18.4563 13.5423L13.9268 18.0719C13.6476 18.3511 13.292 18.5414 12.9048 18.6188L10.8153 19.0367L11.2332 16.9472C11.3106 16.5601 11.5009 16.2045 11.7801 15.9253L16.3096 11.3957M18.4563 13.5423L19.585 12.4135C19.9755 12.023 19.9755 11.3898 19.585 10.9993L18.8526 10.2669C18.4621 9.8764 17.8289 9.8764 17.4384 10.2669L16.3096 11.3957M18.4563 13.5423L16.3096 11.3957'
-                    stroke='#ffffff'
-                    strokeWidth='2'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                  />{' '}
+                    d="M4 8H15"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />{" "}
+                  <path
+                    d="M4 11H11"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />{" "}
+                  <path
+                    d="M18.4563 13.5423L13.9268 18.0719C13.6476 18.3511 13.292 18.5414 12.9048 18.6188L10.8153 19.0367L11.2332 16.9472C11.3106 16.5601 11.5009 16.2045 11.7801 15.9253L16.3096 11.3957M18.4563 13.5423L19.585 12.4135C19.9755 12.023 19.9755 11.3898 19.585 10.9993L18.8526 10.2669C18.4621 9.8764 17.8289 9.8764 17.4384 10.2669L16.3096 11.3957M18.4563 13.5423L16.3096 11.3957"
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />{" "}
                 </g>
               </svg>
             ),
           },
           {
-            title: 'Delete',
-            onClick: () => { deleteUser(id) },
+            title: "Delete",
+            onClick: () => {
+              deleteUser(id);
+            },
             svg: (
-              <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 18 18"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M3.13815 3.19472C4.80861 3.02602 6.47927 2.94165 8.15005 2.94165C10.9545 2.94165 13.7668 3.08439 16.5617 3.36136C16.9052 3.3954 17.156 3.70146 17.122 4.04495C17.088 4.38845 16.7819 4.63931 16.4384 4.60527C13.6833 4.33224 10.9122 4.19165 8.15005 4.19165C6.52113 4.19165 4.89209 4.27392 3.26286 4.43849L3.26103 4.43867L1.56103 4.60533C1.2175 4.63901 0.911707 4.38783 0.878027 4.0443C0.844348 3.70077 1.09553 3.39498 1.43906 3.3613L3.13815 3.19472Z'
-                  fill='white'
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M3.13815 3.19472C4.80861 3.02602 6.47927 2.94165 8.15005 2.94165C10.9545 2.94165 13.7668 3.08439 16.5617 3.36136C16.9052 3.3954 17.156 3.70146 17.122 4.04495C17.088 4.38845 16.7819 4.63931 16.4384 4.60527C13.6833 4.33224 10.9122 4.19165 8.15005 4.19165C6.52113 4.19165 4.89209 4.27392 3.26286 4.43849L3.26103 4.43867L1.56103 4.60533C1.2175 4.63901 0.911707 4.38783 0.878027 4.0443C0.844348 3.70077 1.09553 3.39498 1.43906 3.3613L3.13815 3.19472Z"
+                  fill="white"
                 />
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M6.883 2.15388L6.69972 3.24526C6.64255 3.58567 6.32025 3.81528 5.97984 3.75812C5.63943 3.70095 5.40981 3.37865 5.46698 3.03824L5.65032 1.94657C5.65352 1.92755 5.65682 1.90764 5.66015 1.88748C5.71753 1.54091 5.80172 1.03247 6.14063 0.648157C6.53568 0.200179 7.13843 0.041748 7.90835 0.041748H10.0917C10.871 0.041748 11.4731 0.212914 11.8658 0.665453C12.2052 1.05654 12.2873 1.5668 12.3421 1.9075C12.3447 1.92408 12.3473 1.94026 12.3499 1.956L12.5329 3.03746C12.5905 3.3778 12.3613 3.70039 12.021 3.75799C11.6806 3.81558 11.358 3.58637 11.3004 3.24603L11.1165 2.15899C11.0468 1.73147 11.0027 1.57801 10.9217 1.48471C10.8769 1.43308 10.7207 1.29175 10.0917 1.29175H7.90835C7.26994 1.29175 7.11852 1.42915 7.07816 1.47492C7.00139 1.56197 6.95807 1.70822 6.883 2.15388Z'
-                  fill='white'
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.883 2.15388L6.69972 3.24526C6.64255 3.58567 6.32025 3.81528 5.97984 3.75812C5.63943 3.70095 5.40981 3.37865 5.46698 3.03824L5.65032 1.94657C5.65352 1.92755 5.65682 1.90764 5.66015 1.88748C5.71753 1.54091 5.80172 1.03247 6.14063 0.648157C6.53568 0.200179 7.13843 0.041748 7.90835 0.041748H10.0917C10.871 0.041748 11.4731 0.212914 11.8658 0.665453C12.2052 1.05654 12.2873 1.5668 12.3421 1.9075C12.3447 1.92408 12.3473 1.94026 12.3499 1.956L12.5329 3.03746C12.5905 3.3778 12.3613 3.70039 12.021 3.75799C11.6806 3.81558 11.358 3.58637 11.3004 3.24603L11.1165 2.15899C11.0468 1.73147 11.0027 1.57801 10.9217 1.48471C10.8769 1.43308 10.7207 1.29175 10.0917 1.29175H7.90835C7.26994 1.29175 7.11852 1.42915 7.07816 1.47492C7.00139 1.56197 6.95807 1.70822 6.883 2.15388Z"
+                  fill="white"
                 />
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M14.7487 5.99302C15.0932 6.01525 15.3544 6.31252 15.3321 6.65698L14.7903 15.0521L14.7891 15.0679C14.7672 15.3814 14.743 15.7262 14.6784 16.047C14.6114 16.3797 14.4934 16.7307 14.2541 17.0422C13.7531 17.6945 12.9006 17.9584 11.6751 17.9584H6.3251C5.09963 17.9584 4.24708 17.6945 3.7461 17.0422C3.50685 16.7307 3.38878 16.3797 3.32178 16.047C3.25717 15.7262 3.23303 15.3814 3.21107 15.0679L3.20973 15.0486L2.66807 6.65698C2.64583 6.31252 2.90705 6.01525 3.25151 5.99302C3.59597 5.97079 3.89324 6.232 3.91547 6.57646L4.45691 14.9647C4.45695 14.9653 4.45699 14.9658 4.45703 14.9664C4.48055 15.302 4.50045 15.5682 4.54718 15.8002C4.59268 16.0262 4.65586 16.1746 4.73744 16.2808C4.87813 16.464 5.22557 16.7084 6.3251 16.7084H11.6751C12.7746 16.7084 13.1221 16.464 13.2628 16.2808C13.3444 16.1746 13.4075 16.0262 13.453 15.8002C13.4998 15.5682 13.5197 15.302 13.5432 14.9664C13.5432 14.9658 13.5433 14.9653 13.5433 14.9647L14.0847 6.57646C14.107 6.232 14.4042 5.97079 14.7487 5.99302Z'
-                  fill='white'
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M14.7487 5.99302C15.0932 6.01525 15.3544 6.31252 15.3321 6.65698L14.7903 15.0521L14.7891 15.0679C14.7672 15.3814 14.743 15.7262 14.6784 16.047C14.6114 16.3797 14.4934 16.7307 14.2541 17.0422C13.7531 17.6945 12.9006 17.9584 11.6751 17.9584H6.3251C5.09963 17.9584 4.24708 17.6945 3.7461 17.0422C3.50685 16.7307 3.38878 16.3797 3.32178 16.047C3.25717 15.7262 3.23303 15.3814 3.21107 15.0679L3.20973 15.0486L2.66807 6.65698C2.64583 6.31252 2.90705 6.01525 3.25151 5.99302C3.59597 5.97079 3.89324 6.232 3.91547 6.57646L4.45691 14.9647C4.45695 14.9653 4.45699 14.9658 4.45703 14.9664C4.48055 15.302 4.50045 15.5682 4.54718 15.8002C4.59268 16.0262 4.65586 16.1746 4.73744 16.2808C4.87813 16.464 5.22557 16.7084 6.3251 16.7084H11.6751C12.7746 16.7084 13.1221 16.464 13.2628 16.2808C13.3444 16.1746 13.4075 16.0262 13.453 15.8002C13.4998 15.5682 13.5197 15.302 13.5432 14.9664C13.5432 14.9658 13.5433 14.9653 13.5433 14.9647L14.0847 6.57646C14.107 6.232 14.4042 5.97079 14.7487 5.99302Z"
+                  fill="white"
                 />
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M6.9834 12.75C6.9834 12.4048 7.26322 12.125 7.6084 12.125H10.3834C10.7286 12.125 11.0084 12.4048 11.0084 12.75C11.0084 13.0952 10.7286 13.375 10.3834 13.375H7.6084C7.26322 13.375 6.9834 13.0952 6.9834 12.75Z'
-                  fill='white'
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.9834 12.75C6.9834 12.4048 7.26322 12.125 7.6084 12.125H10.3834C10.7286 12.125 11.0084 12.4048 11.0084 12.75C11.0084 13.0952 10.7286 13.375 10.3834 13.375H7.6084C7.26322 13.375 6.9834 13.0952 6.9834 12.75Z"
+                  fill="white"
                 />
                 <path
-                  fillRule='evenodd'
-                  clipRule='evenodd'
-                  d='M6.29175 9.41675C6.29175 9.07157 6.57157 8.79175 6.91675 8.79175H11.0834C11.4286 8.79175 11.7084 9.07157 11.7084 9.41675C11.7084 9.76193 11.4286 10.0417 11.0834 10.0417H6.91675C6.57157 10.0417 6.29175 9.76193 6.29175 9.41675Z'
-                  fill='white'
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M6.29175 9.41675C6.29175 9.07157 6.57157 8.79175 6.91675 8.79175H11.0834C11.4286 8.79175 11.7084 9.07157 11.7084 9.41675C11.7084 9.76193 11.4286 10.0417 11.0834 10.0417H6.91675C6.57157 10.0417 6.29175 9.76193 6.29175 9.41675Z"
+                  fill="white"
                 />
               </svg>
             ),
           },
         ],
       },
-    ]
+    ];
     return dropdownData;
   };
 
@@ -153,26 +178,24 @@ const UsersList = (props) => {
         className={`table-parent ${mobileExpand === index ? "active" : ""}`}
         onClick={() => {
           mobileExpandFunc(index);
-        }}
-      >
+        }}>
         <div className="table">
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
-          >
+            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
             <span>{item.name}</span>
           </div>
           <div
             onClick={() => {
               tableExpandFunc(item.address);
             }}
-            className={`td expand ${accountType !== null ||
-                (tableExpand === item.address && item.inner_accounts.length !== 0)
+            className={`td expand ${
+              accountType !== null ||
+              (tableExpand === item.address && item.inner_accounts.length !== 0)
                 ? "active"
                 : ""
-              } ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
-          >
+            } ${th[1].mobileWidth ? true : false}`}
+            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <div>
               <span>{item.address}</span>
               {item.inner_accounts.length > 0 ? (
@@ -181,8 +204,7 @@ const UsersList = (props) => {
                   height="7"
                   viewBox="0 0 12 7"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M1.70095 5.6665L5.52859 1.83887C5.98063 1.38683 6.72032 1.38683 7.17236 1.83887L11 5.6665"
                     stroke="#9C9DA3"
@@ -213,33 +235,33 @@ const UsersList = (props) => {
           </div>
           <div
             className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
-          >
+            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
             <span>{item.email}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
-          >
+            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>
               {item.mobile?.code} {item.mobile?.number}{" "}
             </span>
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
-          >
+            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
             <span>{item.nationality}</span>
           </div>
           <div
             className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
-          >
+            style={{
+              width: `${mobile ? th[5].mobileWidth : th[5].width}%`,
+              display: "flex",
+              justifyContent: "space-between",
+            }}>
             <span>{moment(item.date_of_birth).format("LL")}</span>
+            <div style={{ display: "flex" }} className="table-more">
+              <MoreButton dropdownData={dynamicDropDown(item)} />
+            </div>
           </div>
-        </div>
-        <div style={{ display: 'flex' }} className="table-more">
-          <MoreButton dropdownData={dynamicDropDown(item)} />
         </div>
         <div className="icon-place">
           <svg
@@ -247,8 +269,7 @@ const UsersList = (props) => {
             height="7"
             viewBox="0 0 12 7"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
               stroke="white"
@@ -283,31 +304,168 @@ const UsersList = (props) => {
 
   const deleteUser = async (_id) => {
     try {
-        await axios.post("http://localhost:4000", { _id })
-            .then(() => {
-              console.log('deleted?')
-            });
+      await axios.post("http://localhost:4000", { _id }).then(() => {
+        console.log("deleted?");
+      });
     } catch (err) {
-        console.log(err);
-    };
-};
+      console.log(err);
+    }
+  };
+
+  const [popUpData, setPopUpData] = useState({
+    address: "",
+    name: "",
+    email: "",
+  });
+
+  const inputs = [
+    {
+      title: "Address",
+      name: "address",
+      type: "default",
+      placeholder: "address",
+      value: popUpData.address,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Name",
+      name: "name",
+      type: "default",
+      placeholder: "name",
+      value: popUpData.name,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Email",
+      name: "email",
+      type: "default",
+      placeholder: "email",
+      value: popUpData.email,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+  ];
+
+  useEffect(() => {
+    if (activeItem) {
+      console.log(activeItem);
+      setPopUpData({
+        address: activeItem.address,
+        name: activeItem.name,
+        email: activeItem.email,
+      });
+    }
+  }, [activeItem]);
+
+  const handleInputChange = (e, params) => {
+    const { name, onChange } = params;
+
+    let data;
+    if (!e.target) {
+      data = {
+        target: {
+          value: e,
+          name,
+        },
+      };
+      return onChange(data);
+    }
+
+    onChange(e);
+  };
 
   return (
-    <AdminPanel
-      adminPage={"table"}
-      animate={props.animate}
-      tableData={tableData}
-      tableHead={th}
-      tableSearchSelect={false}
-      mobile={mobile}
-      pageLabel={"Users List"}
-      tableFilter={true}
-      tableFilterData={tableFilterData}
-      setTableFilterOutcomingData={setTableFilterOutcomingData}
-      paginationCurrent={pageNow}
-      paginationTotal={pageAll}
-      paginationEvent={(page) => setPageNow(page)}
-    />
+    <>
+      {activeItem && (
+        <Popup
+          label={`Edit Transaction`}
+          inputs={inputs}
+          handlePopUpClose={() => setActiveItem(null)}
+          popUpData={popUpData}
+          setPopUpData={setPopUpData}
+          popUpElement={
+            <div className="transactions_popup_container">
+              <div className="transactions-inputs">
+                {inputs?.map((params, index) => {
+                  let selectedOption;
+                  if (params.type === "lable-input-select") {
+                    selectedOption = params?.options.find(
+                      (option) => option.value === popUpData[params?.name],
+                    );
+                  }
+                  return (
+                    <div className="exchange-input-wrapper" key={index}>
+                      <Input
+                        key={index}
+                        type={params?.type}
+                        label={params.title}
+                        name={params.name}
+                        value={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.name ||
+                              params?.defaultAny ||
+                              params?.options[0]?.value
+                            : popUpData[params?.name] === undefined
+                            ? params?.defaultAny
+                            : popUpData[params?.name]
+                        }
+                        customStyles={{ width: "100%" }}
+                        selectHandler={(opt) => {
+                          handleInputChange(opt, params);
+                        }}
+                        placeholder={params?.placeholder}
+                        onChange={(e) => handleInputChange(e, params)}
+                        defaultData={params?.options}
+                        customInputStyles={{
+                          border: "1px solid rgba(255, 255, 255, 0.1)",
+                        }}
+                        svg={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.svg
+                            : params?.svg
+                        }
+                        editable={true}
+                      />
+                      {params?.rightText && (
+                        <span className="font-14 exchange-input-right">
+                          {params?.rightText}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          }
+        />
+      )}
+      <AdminPanel
+        adminPage={"table"}
+        animate={props.animate}
+        tableData={tableData}
+        tableHead={th}
+        tableSearchSelect={false}
+        mobile={mobile}
+        pageLabel={"Users List"}
+        tableFilter={true}
+        tableFilterData={tableFilterData}
+        setTableFilterOutcomingData={setTableFilterOutcomingData}
+        paginationCurrent={pageNow}
+        paginationTotal={pageAll}
+        paginationEvent={(page) => setPageNow(page)}
+      />
+    </>
   );
 };
 
