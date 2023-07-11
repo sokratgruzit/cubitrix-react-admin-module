@@ -85,7 +85,7 @@ const ReferralManagment = ({ animate }) => {
   const uniMaxCommissionChangeHandler = (index, value) => {
     setUniData((prevUniData) => {
       const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.maxCommision[index] = value;
+      updatedUniData.lvlOptions.maxCommision[index] = value === "" ? null : value;
 
       return updatedUniData;
     });
@@ -94,7 +94,7 @@ const ReferralManagment = ({ animate }) => {
   const uniMaxCommissionPercentageChangeHandler = (index, value) => {
     setUniData((prevUniData) => {
       const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.maxCommPercentage[index] = value;
+      updatedUniData.lvlOptions.maxCommPercentage[index] = value === "" ? null : value;
 
       return updatedUniData;
     });
@@ -205,15 +205,13 @@ const ReferralManagment = ({ animate }) => {
         updatedOptions[index] = { from: null, to: null, price: null };
       }
 
-      updatedOptions[index][field] = value;
+      updatedOptions[index][field] = value === "" ? null : value;
       updatedBinaryData.options = updatedOptions;
 
       return updatedBinaryData;
     });
   };
 
-  console.log(uniData, "uni data");
-  console.log(binaryData, "binary data");
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
