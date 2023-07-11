@@ -3,8 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@cubitrix/cubitrix-react-connect-module": "^0.0.34",
     "@cubitrix/cubitrix-react-ui-module": "^0.4.32",
+=======
+    "@cubitrix/cubitrix-react-ui-module": "^0.1.86",
+>>>>>>> 0898ffe2646faee194a42f6cb5357d572b46ddd5
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
