@@ -22,9 +22,11 @@ const ReferralManagment = ({ animate }) => {
     active: false,
     level: "",
     calculated: "",
-    options: [],
+    lvlOptions: {
+      maxCommision: [],
+      maxCommPercentage: [],
+    },
   });
-
   const [binaryData, setBinaryData] = useState({
     name: "Binary Bv",
     active: false,
@@ -35,38 +37,6 @@ const ReferralManagment = ({ animate }) => {
     flush_out: 0,
     options: [],
   });
-
-  const uniOptionChangeHandler = (index, value, field) => {
-    setUniData((prevUniData) => {
-      const updatedUniData = { ...prevUniData };
-      const updatedOptions = [...updatedUniData.options];
-
-      if (!updatedOptions[index]) {
-        updatedOptions[index] = { from: "", to: "" };
-      }
-
-      updatedOptions[index][field] = value;
-      updatedUniData.options = updatedOptions;
-
-      return updatedUniData;
-    });
-  };
-
-  const binaryOptionChangeHandler = (index, value, field) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      const updatedOptions = [...updatedBinaryData.options];
-
-      if (!updatedOptions[index]) {
-        updatedOptions[index] = { from: "", to: "", price: "" };
-      }
-
-      updatedOptions[index][field] = value;
-      updatedBinaryData.options = updatedOptions;
-
-      return updatedBinaryData;
-    });
-  };
 
   let stepper = [
     {
@@ -112,6 +82,24 @@ const ReferralManagment = ({ animate }) => {
     }));
   };
 
+  const uniMaxCommissionChangeHandler = (index, value) => {
+    setUniData((prevUniData) => {
+      const updatedUniData = { ...prevUniData };
+      updatedUniData.lvlOptions.maxCommision[index] = value;
+
+      return updatedUniData;
+    });
+  };
+
+  const uniMaxCommissionPercentageChangeHandler = (index, value) => {
+    setUniData((prevUniData) => {
+      const updatedUniData = { ...prevUniData };
+      updatedUniData.lvlOptions.maxCommPercentage[index] = value;
+
+      return updatedUniData;
+    });
+  };
+
   const saveUniDataHandler = async (req, res) => {
     let name = uniData.name;
     await axios
@@ -126,7 +114,6 @@ const ReferralManagment = ({ animate }) => {
 
   const saveBinaryDataHandler = async (req, res) => {
     let name = binaryData.name;
-    console.log(binaryData);
     await axios
       .post("/api/data/edit_referral_setting", {
         name,
@@ -158,16 +145,23 @@ const ReferralManagment = ({ animate }) => {
     getData(binaryData.name);
   }, []);
 
-  const rowsHandler = (level) => {
-    const newLevel = parseInt(level); // Convert level to an integer
+  const rowsHandler = () => {
+    const newLevel = parseInt(uniData.level); // Convert level to an integer
+
     if (!isNaN(newLevel)) {
       setUniData((prevUniData) => {
+        const slicedMaxCommPercentage = prevUniData.lvlOptions.maxCommPercentage.slice(
+          0,
+          newLevel,
+        );
+        const slicedMaxCommision = prevUniData.lvlOptions.maxCommision.slice(0, newLevel);
+
         return {
           ...prevUniData,
-          options: Array.from({ length: newLevel }, (_, index) => ({
-            from: "",
-            to: "",
-          })),
+          lvlOptions: {
+            maxCommPercentage: slicedMaxCommPercentage,
+            maxCommision: slicedMaxCommision,
+          },
         };
       });
     }
@@ -175,6 +169,7 @@ const ReferralManagment = ({ animate }) => {
 
   const binaryRowsHandler = (level) => {
     const newLevel = parseInt(level); // Convert level to an integer
+
     if (!isNaN(newLevel)) {
       setBinaryData((prevBinaryData) => {
         return {
@@ -189,6 +184,24 @@ const ReferralManagment = ({ animate }) => {
     }
   };
 
+  const binaryOptionChangeHandler = (index, value, field) => {
+    setBinaryData((prevBinaryData) => {
+      const updatedBinaryData = { ...prevBinaryData };
+      const updatedOptions = [...updatedBinaryData.options];
+
+      if (!updatedOptions[index]) {
+        updatedOptions[index] = { from: "", to: "", price: "" };
+      }
+
+      updatedOptions[index][field] = value;
+      updatedBinaryData.options = updatedOptions;
+
+      return updatedBinaryData;
+    });
+  };
+
+  console.log(uniData, "uni data");
+  console.log(binaryData, "binary data");
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
@@ -241,23 +254,23 @@ const ReferralManagment = ({ animate }) => {
                 ...prevUniData,
                 level: i.target.value,
               }));
-              rowsHandler(i.target.value);
+              rowsHandler();
             }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: uniData.level }, (_, index) => (
+            {Array.from({ length: uniData?.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={uniData.options?.[index]?.from}
+                  value={uniData.lvlOptions.maxCommision[index]}
                   label={`Level ${index + 1} maximum comission`}
-                  onChange={(i) => uniOptionChangeHandler(index, i.target.value, "from")}
+                  onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
                   statusCard={""}
                 />
                 <Input
@@ -265,9 +278,11 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={uniData.options[index]?.to}
+                  value={uniData.lvlOptions.maxCommPercentage[index]}
                   label={`Level ${index + 1} max comission percentage`}
-                  onChange={(i) => uniOptionChangeHandler(index, i.target.value, "to")}
+                  onChange={(i) =>
+                    uniMaxCommissionPercentageChangeHandler(index, i.target.value)
+                  }
                   statusCard={""}
                 />
               </div>
@@ -288,12 +303,12 @@ const ReferralManagment = ({ animate }) => {
             <p>Binary</p>
             <Switches
               value={binaryData?.active === undefined ? false : true}
-              onChange={(i) => {
+              onChange={(i) =>
                 setBinaryData((prevSendData) => ({
                   ...prevSendData,
                   active: i.target.checked,
-                }));
-              }}
+                }))
+              }
               type={"sm-switches"}
             />
           </div>
@@ -343,6 +358,21 @@ const ReferralManagment = ({ animate }) => {
           <Input
             type={"default"}
             emptyFieldErr={false}
+            inputType={"number"}
+            placeholder={"0"}
+            value={binaryData.flushed_out}
+            label={`Flushed out in months`}
+            onChange={(i) =>
+              setBinaryData((prevSendData) => ({
+                ...prevSendData,
+                flushed_out: i.target.value,
+              }))
+            }
+            statusCard={""}
+          />
+          <Input
+            type={"default"}
+            emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
             label={"binary level"}
@@ -356,25 +386,10 @@ const ReferralManagment = ({ animate }) => {
             }}
             statusCard={""}
           />
-          <Input
-            type={"default"}
-            emptyFieldErr={false}
-            inputType={"number"}
-            value={binaryData.flush_out}
-            placeholder={"Number of months"}
-            label={`Flush out in months`}
-            onChange={(i) =>
-              setBinaryData((prevSendData) => ({
-                ...prevSendData,
-                flush_out: i.target.value,
-              }))
-            }
-            statusCard={""}
-          />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: binaryData.level }, (_, index) => (
+            {Array.from({ length: binaryData?.level }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
@@ -412,7 +427,6 @@ const ReferralManagment = ({ animate }) => {
                 />
               </div>
             ))}
-
             <Button
               label={"save"}
               size={"btn-lg"}
