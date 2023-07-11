@@ -261,7 +261,7 @@ const ReferralManagment = ({ animate }) => {
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: uniData?.level }, (_, index) => (
+            {Array.from({ length: uniData?.level ?? 0 }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
@@ -389,7 +389,7 @@ const ReferralManagment = ({ animate }) => {
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: binaryData?.level }, (_, index) => (
+            {Array.from({ length: binaryData?.level ?? 0 }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
