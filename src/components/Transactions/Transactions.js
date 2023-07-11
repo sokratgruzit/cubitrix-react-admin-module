@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import {
   AdminPanel,
   Button,
+  Input,
   MoreButton,
   Popup,
 } from "@cubitrix/cubitrix-react-ui-module";
@@ -123,7 +124,9 @@ const Transactions = (props) => {
             className={`td ${th[3].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{item.amount}</span>
-            <span className={`table-currency`}>{item.tx_currency}</span>
+            <span className={`table-currency`}>
+              {item?.tx_options?.account_category_from ?? "ATR"}
+            </span>
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
@@ -296,35 +299,191 @@ const Transactions = (props) => {
     from: "",
     to: "",
     amount: "",
-    tx_currency: "",
+    tx_status: "",
+    tx_hash: "",
   });
+
+  const inputs = [
+    {
+      title: "Transaction hash",
+      name: "tx_hash",
+      type: "default",
+      placeholder: "hash",
+      value: popUpData.tx_hash,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Select Transaction type",
+      name: "tx_type",
+      type: "lable-input-select",
+      options: [
+        { name: "Deposit", value: "deposit" },
+        { name: "Bonus", value: "bonus" },
+        { name: "Withdraw", value: "withdraw" },
+        { name: "Transfer", value: "transfer" },
+        { name: "Payment", value: "payment" },
+        { name: "Internal transfer", value: "internal_transfer" },
+      ],
+      defaultAny: "Select",
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Select Transaction type",
+      name: "tx_status",
+      type: "lable-input-select",
+      options: [
+        { name: "Approved", value: "approved" },
+        { name: "Pending", value: "pending" },
+        { name: "Canceled", value: "canceled" },
+      ],
+      defaultAny: "Select",
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Address from",
+      name: "from",
+      type: "default",
+      placeholder: "address",
+      value: popUpData.from,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Address to",
+      name: "to",
+      type: "default",
+      placeholder: "address",
+      value: popUpData.to,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Transfer amount",
+      name: "amount",
+      type: "default",
+      rightText: "ATR",
+      placeholder: "enter",
+      value: popUpData.amount,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+  ];
+
+  useEffect(() => {
+    if (selectedTransaction) {
+      setPopUpData({
+        tx_type: selectedTransaction.tx_type,
+        tx_status: selectedTransaction.tx_status,
+        from: selectedTransaction.from,
+        to: selectedTransaction.to,
+        amount: selectedTransaction.amount,
+        tx_currency: selectedTransaction.tx_currency,
+        tx_hash: selectedTransaction.tx_hash,
+      });
+    }
+  }, [selectedTransaction]);
+
+  const handleInputChange = (e, params) => {
+    const { name, onChange } = params;
+
+    let data;
+    if (!e.target) {
+      data = {
+        target: {
+          value: e,
+          name,
+        },
+      };
+      return onChange(data);
+    }
+
+    onChange(e);
+  };
 
   return (
     <>
       {selectedTransaction && (
-        // <Popup
-        //   label={"Transaction Actions"}
-        //   handlePopUpClose={() => setSelectedTransaction(null)}
-        //   popUpElement={
-        //     <div className={styles.background}>
-        //       <div>
-        //         <p>Deposit method: {selectedTransaction?.tx_options?.method}</p>
-        //         <p>Transaction Hash: {selectedTransaction?.tx_hash}</p>
-        //         <p>Transaction Amount: {selectedTransaction?.amount}</p>
-        //         <div className={styles.actionsWrap}></div>
-        //       </div>
-        //     </div>
-        //   }
-        // />
         <Popup
-          type={"addTransaction"}
           label={`Edit Transaction`}
-          addTransactionSelects={addTransactionSelects}
-          // handleAddTransaction={handleAddTransaction}
-          // addTransactionError={"cant add transaction"}
-          // handlePopUpClose={() => setActiveItem(null)}
+          inputs={inputs}
+          handlePopUpClose={() => setSelectedTransaction(null)}
           popUpData={popUpData}
           setPopUpData={setPopUpData}
+          popUpElement={
+            <div className="transactions_popup_container">
+              <div className="transactions-inputs">
+                {inputs?.map((params, index) => {
+                  let selectedOption;
+                  if (params.type === "lable-input-select") {
+                    selectedOption = params?.options.find(
+                      (option) => option.value === popUpData[params?.name],
+                    );
+                  }
+                  return (
+                    <div className="exchange-input-wrapper" key={index}>
+                      <Input
+                        key={index}
+                        type={params?.type}
+                        label={params.title}
+                        name={params.name}
+                        value={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.name ||
+                              params?.defaultAny ||
+                              params?.options[0]?.value
+                            : popUpData[params?.name] === undefined
+                            ? params?.defaultAny
+                            : popUpData[params?.name]
+                        }
+                        customStyles={{ width: "100%" }}
+                        selectHandler={(opt) => {
+                          handleInputChange(opt, params);
+                        }}
+                        placeholder={params?.placeholder}
+                        onChange={(e) => handleInputChange(e, params)}
+                        defaultData={params?.options}
+                        customInputStyles={{
+                          border: "1px solid rgba(255, 255, 255, 0.1)",
+                        }}
+                        svg={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.svg
+                            : params?.svg
+                        }
+                        editable={true}
+                      />
+                      {params?.rightText && (
+                        <span className="font-14 exchange-input-right">
+                          {params?.rightText}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          }
         />
       )}
       <AdminPanel

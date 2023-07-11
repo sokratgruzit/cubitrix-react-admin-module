@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AdminPanel, MoreButton, Popup } from "@cubitrix/cubitrix-react-ui-module";
+import { AdminPanel, Input, MoreButton, Popup } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
@@ -312,18 +312,142 @@ const UsersList = (props) => {
     }
   };
 
+  const [popUpData, setPopUpData] = useState({
+    address: "",
+    name: "",
+    email: "",
+  });
+
+  const inputs = [
+    {
+      title: "Address",
+      name: "address",
+      type: "default",
+      placeholder: "address",
+      value: popUpData.address,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Name",
+      name: "name",
+      type: "default",
+      placeholder: "name",
+      value: popUpData.name,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Email",
+      name: "email",
+      type: "default",
+      placeholder: "email",
+      value: popUpData.email,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+  ];
+
+  useEffect(() => {
+    if (activeItem) {
+      console.log(activeItem);
+      setPopUpData({
+        address: activeItem.address,
+        name: activeItem.name,
+        email: activeItem.email,
+      });
+    }
+  }, [activeItem]);
+
+  const handleInputChange = (e, params) => {
+    const { name, onChange } = params;
+
+    let data;
+    if (!e.target) {
+      data = {
+        target: {
+          value: e,
+          name,
+        },
+      };
+      return onChange(data);
+    }
+
+    onChange(e);
+  };
+
   return (
     <>
       {activeItem && (
         <Popup
-          type={"addTransaction"}
           label={`Edit Transaction`}
-          // addTransactionSelects={addTransactionSelects}
-          // handleAddTransaction={handleAddTransaction}
-          // addTransactionError={"cant add transaction"}
+          inputs={inputs}
           handlePopUpClose={() => setActiveItem(null)}
-          // popUpData={popUpData}
-          // setPopUpData={setPopUpData}
+          popUpData={popUpData}
+          setPopUpData={setPopUpData}
+          popUpElement={
+            <div className="transactions_popup_container">
+              <div className="transactions-inputs">
+                {inputs?.map((params, index) => {
+                  let selectedOption;
+                  if (params.type === "lable-input-select") {
+                    selectedOption = params?.options.find(
+                      (option) => option.value === popUpData[params?.name],
+                    );
+                  }
+                  return (
+                    <div className="exchange-input-wrapper" key={index}>
+                      <Input
+                        key={index}
+                        type={params?.type}
+                        label={params.title}
+                        name={params.name}
+                        value={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.name ||
+                              params?.defaultAny ||
+                              params?.options[0]?.value
+                            : popUpData[params?.name] === undefined
+                            ? params?.defaultAny
+                            : popUpData[params?.name]
+                        }
+                        customStyles={{ width: "100%" }}
+                        selectHandler={(opt) => {
+                          handleInputChange(opt, params);
+                        }}
+                        placeholder={params?.placeholder}
+                        onChange={(e) => handleInputChange(e, params)}
+                        defaultData={params?.options}
+                        customInputStyles={{
+                          border: "1px solid rgba(255, 255, 255, 0.1)",
+                        }}
+                        svg={
+                          params?.type === "lable-input-select"
+                            ? selectedOption?.svg
+                            : params?.svg
+                        }
+                        editable={true}
+                      />
+                      {params?.rightText && (
+                        <span className="font-14 exchange-input-right">
+                          {params?.rightText}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          }
         />
       )}
       <AdminPanel
