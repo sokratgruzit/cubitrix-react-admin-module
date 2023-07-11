@@ -112,51 +112,6 @@ const ReferralManagment = ({ animate }) => {
     }));
   };
 
-  const uniMaxCommissionChangeHandler = (index, value) => {
-    setUniData((prevUniData) => {
-      const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.from[index] = value;
-
-      return updatedUniData;
-    });
-  };
-
-  const uniMaxCommissionPercentageChangeHandler = (index, value) => {
-    setUniData((prevUniData) => {
-      const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.to[index] = value;
-
-      return updatedUniData;
-    });
-  };
-
-  const binaryMaxCommissionChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.from[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-  const binaryMaxCommissionPercentChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.to[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-  const bvcPriceChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.price[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
   const saveUniDataHandler = async (req, res) => {
     let name = uniData.name;
     await axios
@@ -300,7 +255,7 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={uniData.options[index]?.from}
+                  value={uniData.options?.[index]?.from}
                   label={`Level ${index + 1} maximum comission`}
                   onChange={(i) => uniOptionChangeHandler(index, i.target.value, "from")}
                   statusCard={""}
@@ -426,7 +381,7 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.options[index]?.from}
+                  value={binaryData.options?.[index]?.from}
                   label={`Level ${index + 1} Bv From`}
                   onChange={(i) =>
                     binaryOptionChangeHandler(index, i.target.value, "from")
