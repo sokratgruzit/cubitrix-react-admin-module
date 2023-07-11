@@ -1,6 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AdminPanel, Input, MoreButton, Popup } from "@cubitrix/cubitrix-react-ui-module";
+import {
+  AdminPanel,
+  Button,
+  Input,
+  MoreButton,
+  Popup,
+} from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
@@ -316,6 +322,7 @@ const UsersList = (props) => {
     address: "",
     name: "",
     email: "",
+    nationality: "",
   });
 
   const inputs = [
@@ -355,6 +362,31 @@ const UsersList = (props) => {
           [e.target.name]: e.target.value,
         })),
     },
+    {
+      title: "Mobile Number",
+      name: "mobile",
+      type: "label-input-phone-number",
+      placeholder: "mobile",
+      value: popUpData.mobile,
+      onChange: (e) => {
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        }));
+      },
+    },
+    {
+      title: "Date of birth",
+      name: "date_of_birth",
+      type: "date-picker-input",
+      placeholder: "date of birth",
+      value: popUpData.date_of_birth,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
   ];
 
   useEffect(() => {
@@ -364,6 +396,11 @@ const UsersList = (props) => {
         address: activeItem.address,
         name: activeItem.name,
         email: activeItem.email,
+        mobile: activeItem.mobile,
+        nationality: activeItem.nationality,
+        date_of_birth: activeItem.date_of_birth
+          ? new Date(activeItem.date_of_birth)
+          : new Date(),
       });
     }
   }, [activeItem]);
@@ -385,13 +422,25 @@ const UsersList = (props) => {
     onChange(e);
   };
 
+  function handleUserEdit() {
+    console.log(popUpData);
+  }
+
   return (
     <>
       {activeItem && (
         <Popup
           label={`Edit Transaction`}
           inputs={inputs}
-          handlePopUpClose={() => setActiveItem(null)}
+          handlePopUpClose={() => {
+            setActiveItem(null);
+            setPopUpData({
+              address: "",
+              name: "",
+              email: "",
+              nationality: "",
+            });
+          }}
           popUpData={popUpData}
           setPopUpData={setPopUpData}
           popUpElement={
@@ -436,6 +485,7 @@ const UsersList = (props) => {
                             : params?.svg
                         }
                         editable={true}
+                        selectType={"country"}
                       />
                       {params?.rightText && (
                         <span className="font-14 exchange-input-right">
@@ -445,6 +495,26 @@ const UsersList = (props) => {
                     </div>
                   );
                 })}
+                <Input
+                  type={"lable-input-select"}
+                  icon={false}
+                  selectType={"country"}
+                  value={popUpData.nationality}
+                  label={"Nationality"}
+                  onClick={(e) => handleInputChange(e, "nationality")}
+                  customStyles={{ width: "100%" }}
+                  editable={true}
+                  selectLabel={"Select Country"}
+                />
+
+                <Button
+                  label={"Save"}
+                  size={"btn-lg"}
+                  type={"btn-primary"}
+                  element={"button"}
+                  onClick={handleUserEdit}
+                  customStyles={{ width: "100%" }}
+                />
               </div>
             </div>
           }
