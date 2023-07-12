@@ -174,8 +174,6 @@ const UsersList = (props) => {
     }
   }, [tableFilterOutcomingData, pageNow]);
 
-  console.log(td);
-
   let tableData;
   tableData = td.map((item, index) => {
     return (
@@ -397,7 +395,7 @@ const UsersList = (props) => {
         name: activeItem.name,
         email: activeItem.email,
         mobile: activeItem.mobile,
-        nationality: activeItem.nationality,
+        nationality: activeItem.nationality ?? "",
         date_of_birth: activeItem.date_of_birth
           ? new Date(activeItem.date_of_birth)
           : new Date(),
@@ -422,8 +420,24 @@ const UsersList = (props) => {
     onChange(e);
   };
 
+  const [userUpdateLoading, setUserUpdateLoading] = useState(false);
   function handleUserEdit() {
-    console.log(popUpData);
+    setUserUpdateLoading(true);
+    axios
+      .post("/api/data/edit-account-meta", popUpData)
+      .then((res) => {
+        setUserUpdateLoading(false);
+        setTd((prev) =>
+          prev.map((item) =>
+            item.address === res.data.address ? { ...item, ...res.data } : item,
+          ),
+        );
+        alert("User updated successfully");
+      })
+      .catch((err) => {
+        setUserUpdateLoading(false);
+        alert("User update failed");
+      });
   }
 
   return (
@@ -508,12 +522,13 @@ const UsersList = (props) => {
                 />
 
                 <Button
-                  label={"Save"}
+                  label={userUpdateLoading ? "Loading..." : "Save"}
                   size={"btn-lg"}
                   type={"btn-primary"}
                   element={"button"}
                   onClick={handleUserEdit}
                   customStyles={{ width: "100%" }}
+                  disabled={userUpdateLoading}
                 />
               </div>
             </div>
