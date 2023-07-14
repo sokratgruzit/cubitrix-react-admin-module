@@ -57,11 +57,11 @@ const ReferralManagment = ({
     let defaultData = [
         {
             name: "Transaction",
-            value: "1",
+            value: "some value (1)",
         },
         {
             name: "Hash",
-            value: "2",
+            value: "some value (2)",
         },
     ];
 
@@ -133,15 +133,15 @@ const ReferralManagment = ({
             })
             .then((res) => {
                 console.log(res);
-                setuniLevel(1);
-                setUniData({
-                    name: 'Uni',
-                    active: false,
-                    level: uniLevel,
-                    calculated: "",
-                    maxCommision: [],
-                    maxCommPercentage: [],
-                });
+                // setuniLevel(1);
+                // setUniData({
+                //     name: 'Uni',
+                //     active: false,
+                //     level: uniLevel,
+                //     calculated: "",
+                //     maxCommision: [],
+                //     maxCommPercentage: [],
+                // });
             }
             );
     }
@@ -153,17 +153,17 @@ const ReferralManagment = ({
             })
             .then((res) => {
                 console.log(res);
-
+                // setBinaryLevel(1);
+                // setBinaryData({
+                //     name: 'Binary Bv',
+                //     active: false,
+                //     level: binaryLevel,
+                //     calculated: "",
+                //     maxCommision: [],
+                //     maxCommPercentage: [],
+                // });
             });
-        setBinaryLevel(1);
-        setBinaryData({
-            name: 'Binary Bv',
-            active: false,
-            level: binaryLevel,
-            calculated: "",
-            maxCommision: [],
-            maxCommPercentage: [],
-        });
+
     }
 
     // useEffect(() => {
