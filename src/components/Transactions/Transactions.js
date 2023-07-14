@@ -33,10 +33,9 @@ const Transactions = (props) => {
   let [tx_currency, setTx_currency] = useState("ether");
   const [isReady, setIsReady] = useState(false);
 
-
   const [tx_status, setTx_status] = useState({
     tx_status: "",
-    id: ""
+    id: "",
   });
 
   const [selectedTransaction, setSelectedTransaction] = useState(null);
@@ -52,7 +51,8 @@ const Transactions = (props) => {
         setPageAll(res.data.success.pages);
         setTd(res.data.success.data);
       });
-  }
+  };
+
   useEffect(() => {
     fetchData();
   }, [tableFilterOutcomingData, pageNow]);
@@ -69,7 +69,7 @@ const Transactions = (props) => {
         console.log(res);
         fetchData();
       });
-  };
+  }
 
   const statusEditHandler = (item) => {
     setTx_status((prevState) => ({
@@ -77,14 +77,33 @@ const Transactions = (props) => {
       id: item._id
     }));
   };
-  
+
   const statusSelectHandler = (value) => {
     setTx_status((prevState) => ({
       ...prevState,
       tx_status: value
     }));
+    editStatus();
   };
-  
+
+  const notify = (res) => {
+    toast(`${res}`);
+  };
+
+  const editStatus = async () => {
+    axios
+      .post("/api/data/change_transaction_status", {
+        _id: tx_status.id,
+        tx_status: tx_status.tx_status
+      })
+      .then((res) => {
+        console.log(res);
+        notify(res.statusText)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   let statuses = [
     {
@@ -116,32 +135,38 @@ const Transactions = (props) => {
         ],
       },
     ];
+
     return (
       <div
         key={index}
         className={`table-parent ${mobileExpand === index ? "active" : ""}`}
         onClick={() => {
           mobileExpandFunc(index);
-        }}>
+        }}
+      >
         <div className="table">
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
+            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
+          >
             <span>{item.tx_hash}</span>
           </div>
           <div
             className={`td ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
+            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
+          >
             <span>{item.from}</span>
           </div>
           <div
             className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
+            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
+          >
             <span>{item.to}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
+            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
+          >
             <span>{item.amount}</span>
             <span className={`table-currency`}>
               {item?.tx_options?.account_category_from ?? "ATR"}
@@ -149,56 +174,62 @@ const Transactions = (props) => {
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
+            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
+          >
             <span>{item?.tx_fee}</span>
             <span className={`table-currency`}>{item.tx_fee_currency}</span>
           </div>
           <div
             className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
+            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
+          >
             <span>{item.domination}</span>
           </div>
           <div
             className={`td ${th[6].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}>
+            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}
+          >
             <span>{moment(item.createdAt).format("LL")}</span>
           </div>
           <div
             onClick={() => statusEditHandler(item)}
             className={`td ${th[7].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
-            {/* <span
-              // here edit in table ()
-              className={`alert-status-box 
+            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}
+          >
+            {item.type === "payment" ? (
+              <span
+                // here edit in table ()
+                className={`alert-status-box 
                             ${item.tx_status === "active" && "alert-status-blue"} 
                             ${item.tx_status === "active1" && "alert-status-yellow"}
                             ${item.tx_status === "pending" && "alert-status-green"}`}>
-            </span>
-            {item.tx_status} */}
-
-            <Input
-              type={"lable-input-select"}
-              icon={false}
-              // selectData={selectData}
-              emptyFieldErr={false}
-              defaultData={statuses}
-              // label={"edit status"}
-              selectHandler={statusSelectHandler}
-              value={item.tx_status}
-              active={true}
-              // status={"warning"}
-              // statusCard={
-              //   <HelpText
-              //     status={"error"}
-              //     title={"your text"}
-              //     fontSize={"font-12"}
-              //     icon={true}
-              //   />
-              // }
-              // title={"your text"}
-              color={"#FFA726"}
-            // customStyles={{ width: "320px" }}
-            />
+                {item.tx_status}
+              </span>
+            ) : (
+              <Input
+                type={"lable-input-select"}
+                icon={false}
+                // selectData={selectData}
+                emptyFieldErr={false}
+                defaultData={statuses}
+                // label={"edit status"}
+                selectHandler={statusSelectHandler}
+                value={item.tx_status}
+                active={true}
+                // status={"warning"}
+                // statusCard={
+                //   <HelpText
+                //     status={"error"}
+                //     title={"your text"}
+                //     fontSize={"font-12"}
+                //     icon={true}
+                //   />
+                // }
+                // title={"your text"}
+                color={"#FFA726"}
+              // customStyles={{ width: "320px" }}
+              />
+            )}
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
@@ -207,12 +238,19 @@ const Transactions = (props) => {
               paddingRight: "0px",
               display: "flex",
               justifyContent: "space-between",
-            }}>
+            }}
+          >
             <span
               className={`alert-status-box 
-                            ${item.tx_type === "deposit" && "alert-status-blue"} 
-                            ${item.tx_type === "withdraw" && "alert-status-yellow"}
-                            ${item.tx_type === "transfer" && "alert-status-green"}`}>
+                            ${item.tx_type === "deposit" && "alert-status-blue"
+                } 
+                            ${item.tx_type === "withdraw" &&
+                "alert-status-yellow"
+                }
+                            ${item.tx_type === "transfer" &&
+                "alert-status-green"
+                }`}
+            >
               {item.tx_type}
             </span>
             <div style={{ display: "flex" }} className="table-more">
@@ -226,7 +264,8 @@ const Transactions = (props) => {
             height="7"
             viewBox="0 0 12 7"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg">
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
               stroke="white"
@@ -259,9 +298,16 @@ const Transactions = (props) => {
               <div className="mobile-ttl">{th[7].name}</div>
               <span
                 className={`alert-status-box 
-                                ${item.tx_status === "active" && "alert-status-blue"} 
-                                ${item.tx_status === "active1" && "alert-status-yellow"}
-                                ${item.tx_status === "pending" && "alert-status-green"}`}>
+                                ${item.tx_status === "active" &&
+                  "alert-status-blue"
+                  } 
+                                ${item.tx_status === "active1" &&
+                  "alert-status-yellow"
+                  }
+                                ${item.tx_status === "pending" &&
+                  "alert-status-green"
+                  }`}
+              >
                 {item.tx_status}
               </span>
             </div>
@@ -269,10 +315,16 @@ const Transactions = (props) => {
               <div className="mobile-ttl">{th[8].name}</div>
               <span
                 className={`alert-status-box 
-                                ${item.tx_type === "deposit" && "alert-status-blue"} 
-                                ${item.tx_type === "withdraw" && "alert-status-yellow"}
-                                ${item.tx_type === "transfer" && "alert-status-green"
-                  }`}></span>
+                                ${item.tx_type === "deposit" &&
+                  "alert-status-blue"
+                  } 
+                                ${item.tx_type === "withdraw" &&
+                  "alert-status-yellow"
+                  }
+                                ${item.tx_type === "transfer" &&
+                  "alert-status-green"
+                  }`}
+              ></span>
             </div>
           </div>
         </div>
@@ -306,7 +358,6 @@ const Transactions = (props) => {
   const handleDelete = () => {
     // code to delete the transaction
   };
-
 
   const addTransactionSelects = [
     {
@@ -466,26 +517,6 @@ const Transactions = (props) => {
     onChange(e);
   };
 
-  const notify = (test) => {
-    console.log(test)
-    if(isReady) {
-      console.log(tx_status)
-      toast(`Transaction (${tx_status.id}) Changed Status To ${tx_status.tx_status}`);
-    }
-  };
-
-
-  useEffect(() => {
-    if (tx_status.tx_status !== "" && tx_status.id !== "") {
-      setIsReady(true);
-      notify(test);
-      console.log(tx_status, 'after that i want axios req')
-    } else {
-      setIsReady(false);
-    }
-  }, [tx_status]);
-
-
   function handleTransactionEdit() {
     console.log(popUpData);
   }
@@ -506,7 +537,7 @@ const Transactions = (props) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
                     selectedOption = params?.options.find(
-                      (option) => option.value === popUpData[params?.name],
+                      (option) => option.value === popUpData[params?.name]
                     );
                   }
                   return (
