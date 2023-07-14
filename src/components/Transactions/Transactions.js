@@ -221,25 +221,12 @@ const Transactions = (props) => {
               <Input
                 type={"lable-input-select"}
                 icon={false}
-                // selectData={selectData}
                 emptyFieldErr={false}
                 defaultData={statuses}
-                // label={"edit status"}
                 selectHandler={statusSelectHandler}
                 value={item.tx_status}
                 active={true}
-                // status={"warning"}
-                // statusCard={
-                //   <HelpText
-                //     status={"error"}
-                //     title={"your text"}
-                //     fontSize={"font-12"}
-                //     icon={true}
-                //   />
-                // }
-                // title={"your text"}
                 color={"#FFA726"}
-                // customStyles={{ width: "320px" }}
               />
             )}
           </div>
@@ -311,23 +298,40 @@ const Transactions = (props) => {
 
             <div className="td">
               <div className="mobile-ttl">{th[7].name}</div>
-              <span
-                className={`alert-status-box 
-                                ${
-                                  item.tx_status === "active" &&
-                                  "alert-status-blue"
-                                } 
-                                ${
-                                  item.tx_status === "active1" &&
-                                  "alert-status-yellow"
-                                }
-                                ${
-                                  item.tx_status === "pending" &&
-                                  "alert-status-green"
-                                }`}
-              >
-                {item.tx_status}
-              </span>
+              {item.type === "payment" ? (
+                <span
+                  className={`alert-status-box 
+                 ${item.tx_status === "active" && "alert-status-blue"} 
+                 ${item.tx_status === "active1" && "alert-status-yellow"}
+                 ${item.tx_status === "pending" && "alert-status-green"}`}
+                >
+                  {item.tx_status}
+                </span>
+              ) : (
+                <Input
+                  type={"lable-input-select"}
+                  icon={false}
+                  // selectData={selectData}
+                  emptyFieldErr={false}
+                  defaultData={statuses}
+                  // label={"edit status"}
+                  selectHandler={statusSelectHandler}
+                  value={item.tx_status}
+                  active={true}
+                  // status={"warning"}
+                  // statusCard={
+                  //   <HelpText
+                  //     status={"error"}
+                  //     title={"your text"}
+                  //     fontSize={"font-12"}
+                  //     icon={true}
+                  //   />
+                  // }
+                  // title={"your text"}
+                  color={"#FFA726"}
+                  // customStyles={{ width: "320px" }}
+                />
+              )}
             </div>
             <div className="td">
               <div className="mobile-ttl">{th[8].name}</div>
@@ -517,6 +521,7 @@ const Transactions = (props) => {
         amount: selectedTransaction.amount,
         tx_currency: selectedTransaction.tx_currency,
         tx_hash: selectedTransaction.tx_hash,
+        _id: selectedTransaction._id,
       });
     }
   }, [selectedTransaction]);
@@ -542,9 +547,26 @@ const Transactions = (props) => {
     editStatus();
   }, [isReady]);
 
-  function handleTransactionEdit() {
-    console.log(popUpData);
-  }
+  const editTransactionHandler = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("_id", popUpData._id);
+      formData.append("amount", popUpData.amount);
+      formData.append("from", popUpData.from);
+      formData.append("to", popUpData.to);
+      formData.append("tx_currency", popUpData.tx_currency);
+      formData.append("tx_hash", popUpData.tx_hash);
+      formData.append("tx_status", popUpData.tx_status);
+      formData.append("tx_type", popUpData.tx_type);
+
+      const response = await axios.post("/api/data/edit_transaction", formData);
+      console.log(response);
+      notify(response.statusText);
+      setSelectedTransaction(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -556,7 +578,10 @@ const Transactions = (props) => {
           popUpData={popUpData}
           setPopUpData={setPopUpData}
           popUpElement={
-            <div className="transactions_popup_container">
+            <div
+              style={{ flexDirection: "column" }}
+              className="transactions_popup_container"
+            >
               <div className="transactions-inputs">
                 {inputs?.map((params, index) => {
                   let selectedOption;
@@ -612,7 +637,7 @@ const Transactions = (props) => {
                 size={"btn-lg"}
                 type={"btn-primary"}
                 element={"button"}
-                onClick={handleTransactionEdit}
+                onClick={editTransactionHandler}
                 customStyles={{ width: "100%" }}
               />
             </div>
