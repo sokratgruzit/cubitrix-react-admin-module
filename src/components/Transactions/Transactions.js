@@ -76,6 +76,7 @@ const Transactions = (props) => {
       ...prevState,
       id: item._id
     }));
+    console.log(item)
   };
 
   const statusSelectHandler = (value) => {
@@ -83,27 +84,31 @@ const Transactions = (props) => {
       ...prevState,
       tx_status: value
     }));
-    editStatus();
+    setIsReady(true)
   };
 
   const notify = (res) => {
     toast(`${res}`);
   };
-
+  
   const editStatus = async () => {
-    axios
-      .post("/api/data/change_transaction_status", {
-        _id: tx_status.id,
-        tx_status: tx_status.tx_status
-      })
-      .then((res) => {
-        console.log(res);
-        notify(res.statusText)
-      })
-      .catch((err) => {
-        console.log(err);
+    let status = tx_status.tx_status;
+    let id = tx_status.id;
+  
+    console.log(status, 'status?');
+    try {
+      const response = await axios.post("/api/data/change_transaction_status", {
+        _id: id,
+        tx_status: status
       });
-  }
+      console.log(response);
+      notify(response.statusText);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  
 
   let statuses = [
     {
@@ -516,6 +521,10 @@ const Transactions = (props) => {
 
     onChange(e);
   };
+
+  useEffect(() => {
+    editStatus();
+  }, [isReady])
 
   function handleTransactionEdit() {
     console.log(popUpData);
