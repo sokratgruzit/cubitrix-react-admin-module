@@ -52,6 +52,7 @@ const Transactions = (props) => {
         setTd(res.data.success.data);
       });
   }
+
   useEffect(() => {
     fetchData();
   }, [tableFilterOutcomingData, pageNow]);
@@ -75,6 +76,7 @@ const Transactions = (props) => {
       ...prevState,
       id: item._id,
     }));
+    console.log(item);
   };
 
   const statusSelectHandler = (value) => {
@@ -82,6 +84,28 @@ const Transactions = (props) => {
       ...prevState,
       tx_status: value,
     }));
+    setIsReady(true);
+  };
+
+  const notify = (res) => {
+    toast(`${res}`);
+  };
+
+  const editStatus = async () => {
+    let status = tx_status.tx_status;
+    let id = tx_status.id;
+
+    console.log(status, "status?");
+    try {
+      const response = await axios.post("/api/data/change_transaction_status", {
+        _id: id,
+        tx_status: status,
+      });
+      console.log(response);
+      notify(response.statusText);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let statuses = [
@@ -114,6 +138,7 @@ const Transactions = (props) => {
         ],
       },
     ];
+
     return (
       <div
         key={index}
@@ -174,38 +199,49 @@ const Transactions = (props) => {
             className={`td ${th[7].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}
           >
-            {/* <span
-              // here edit in table ()
-              className={`alert-status-box 
-                            ${item.tx_status === "active" && "alert-status-blue"} 
-                            ${item.tx_status === "active1" && "alert-status-yellow"}
-                            ${item.tx_status === "pending" && "alert-status-green"}`}>
-            </span>
-            {item.tx_status} */}
-
-            <Input
-              type={"lable-input-select"}
-              icon={false}
-              // selectData={selectData}
-              emptyFieldErr={false}
-              defaultData={statuses}
-              // label={"edit status"}
-              selectHandler={statusSelectHandler}
-              value={item.tx_status}
-              active={true}
-              // status={"warning"}
-              // statusCard={
-              //   <HelpText
-              //     status={"error"}
-              //     title={"your text"}
-              //     fontSize={"font-12"}
-              //     icon={true}
-              //   />
-              // }
-              // title={"your text"}
-              color={"#FFA726"}
-              // customStyles={{ width: "320px" }}
-            />
+            {item.type === "payment" ? (
+              <span
+                // here edit in table ()
+                className={`alert-status-box 
+                            ${
+                              item.tx_status === "active" && "alert-status-blue"
+                            } 
+                            ${
+                              item.tx_status === "active1" &&
+                              "alert-status-yellow"
+                            }
+                            ${
+                              item.tx_status === "pending" &&
+                              "alert-status-green"
+                            }`}
+              >
+                {item.tx_status}
+              </span>
+            ) : (
+              <Input
+                type={"lable-input-select"}
+                icon={false}
+                // selectData={selectData}
+                emptyFieldErr={false}
+                defaultData={statuses}
+                // label={"edit status"}
+                selectHandler={statusSelectHandler}
+                value={item.tx_status}
+                active={true}
+                // status={"warning"}
+                // statusCard={
+                //   <HelpText
+                //     status={"error"}
+                //     title={"your text"}
+                //     fontSize={"font-12"}
+                //     icon={true}
+                //   />
+                // }
+                // title={"your text"}
+                color={"#FFA726"}
+                // customStyles={{ width: "320px" }}
+              />
+            )}
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
@@ -502,25 +538,9 @@ const Transactions = (props) => {
     onChange(e);
   };
 
-  const notify = (test) => {
-    console.log(test);
-    if (isReady) {
-      console.log(tx_status);
-      toast(
-        `Transaction (${tx_status.id}) Changed Status To ${tx_status.tx_status}`
-      );
-    }
-  };
-
   useEffect(() => {
-    if (tx_status.tx_status !== "" && tx_status.id !== "") {
-      setIsReady(true);
-      notify(test);
-      console.log(tx_status, "after that i want axios req");
-    } else {
-      setIsReady(false);
-    }
-  }, [tx_status]);
+    editStatus();
+  }, [isReady]);
 
   function handleTransactionEdit() {
     console.log(popUpData);
