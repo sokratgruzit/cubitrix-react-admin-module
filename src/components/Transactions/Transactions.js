@@ -28,6 +28,13 @@ const Transactions = (props) => {
   let [to, setTo] = useState("");
   let [amount, setAmount] = useState("");
   let [tx_currency, setTx_currency] = useState("ether");
+  const [isReady, setIsReady] = useState(false);
+
+
+  const [tx_status, setTx_status] = useState({
+    tx_status: "",
+    id: ""
+  });
 
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -62,15 +69,17 @@ const Transactions = (props) => {
   };
 
   const statusEditHandler = (item) => {
-    console.log(item, 'item');
-
-    // onClick={() => statusEditHandler(item)}
-
+    setTx_status({
+      tx_status: item.tx_status,
+      id: item._id
+    });
   };
 
   const statusSelectHandler = (value) => {
-    console.log("selecthandler");
-    console.log(value);
+    setTx_status({
+      tx_status: value,
+      id: tx_status.id
+    });
   };
 
   let statuses = [
@@ -154,39 +163,38 @@ const Transactions = (props) => {
             onClick={() => statusEditHandler(item)}
             className={`td ${th[7].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
-            <span
+            {/* <span
               // here edit in table ()
               className={`alert-status-box 
                             ${item.tx_status === "active" && "alert-status-blue"} 
                             ${item.tx_status === "active1" && "alert-status-yellow"}
                             ${item.tx_status === "pending" && "alert-status-green"}`}>
-              <Input
-                type={"lable-input-select"}
-                icon={false}
-                // selectData={selectData}
-                emptyFieldErr={false}
-                defaultData={statuses}
-                // label={"edit status"}
-                selectHandler={statusSelectHandler}
-                selectLabel={item.tx_status}
-                active={true}
-                // status={"warning"}
-                // statusCard={
-                //   <HelpText
-                //     status={"error"}
-                //     title={"your text"}
-                //     fontSize={"font-12"}
-                //     icon={true}
-                //   />
-                // }
-                // title={"your text"}
-                color={"#FFA726"}
-              // customStyles={{ width: "320px" }}
-              />
             </span>
-            {item.tx_status}
+            {item.tx_status} */}
 
-
+            <Input
+              type={"lable-input-select"}
+              icon={false}
+              // selectData={selectData}
+              emptyFieldErr={false}
+              defaultData={statuses}
+              // label={"edit status"}
+              selectHandler={statusSelectHandler}
+              selectLabel={item.tx_status}
+              active={true}
+              // status={"warning"}
+              // statusCard={
+              //   <HelpText
+              //     status={"error"}
+              //     title={"your text"}
+              //     fontSize={"font-12"}
+              //     icon={true}
+              //   />
+              // }
+              // title={"your text"}
+              color={"#FFA726"}
+              // customStyles={{ width: "320px" }}
+            />
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
@@ -453,7 +461,17 @@ const Transactions = (props) => {
 
     onChange(e);
   };
+    
+  useEffect(() => {
+    if (tx_status.tx_status !== "" && tx_status.id !== "") {
+      setIsReady(true);
+      console.log(tx_status, 'after that i want axios req')
+    } else {
+      setIsReady(false);
+    }
+  }, [tx_status]);  
 
+  
   function handleTransactionEdit() {
     console.log(popUpData);
   }
