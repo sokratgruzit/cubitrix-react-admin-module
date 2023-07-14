@@ -72,18 +72,19 @@ const Transactions = (props) => {
   };
 
   const statusEditHandler = (item) => {
-    setTx_status({
-      tx_status: item.tx_status,
+    setTx_status((prevState) => ({
+      ...prevState,
       id: item._id
-    });
+    }));
   };
-
+  
   const statusSelectHandler = (value) => {
-    setTx_status({
-      tx_status: value,
-      id: tx_status.id
-    });
+    setTx_status((prevState) => ({
+      ...prevState,
+      tx_status: value
+    }));
   };
+  
 
   let statuses = [
     {
@@ -183,7 +184,7 @@ const Transactions = (props) => {
               defaultData={statuses}
               // label={"edit status"}
               selectHandler={statusSelectHandler}
-              selectLabel={item.tx_status}
+              value={item.tx_status}
               active={true}
               // status={"warning"}
               // statusCard={
@@ -465,8 +466,10 @@ const Transactions = (props) => {
     onChange(e);
   };
 
-  const notify = () => {
+  const notify = (test) => {
+    console.log(test)
     if(isReady) {
+      console.log(tx_status)
       toast(`Transaction (${tx_status.id}) Changed Status To ${tx_status.tx_status}`);
     }
   };
@@ -475,7 +478,7 @@ const Transactions = (props) => {
   useEffect(() => {
     if (tx_status.tx_status !== "" && tx_status.id !== "") {
       setIsReady(true);
-      notify();
+      notify(test);
       console.log(tx_status, 'after that i want axios req')
     } else {
       setIsReady(false);
