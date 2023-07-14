@@ -11,6 +11,9 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import styles from "./Transactions.module.css";
 
 const Transactions = (props) => {
@@ -193,7 +196,7 @@ const Transactions = (props) => {
               // }
               // title={"your text"}
               color={"#FFA726"}
-              // customStyles={{ width: "320px" }}
+            // customStyles={{ width: "320px" }}
             />
           </div>
           <div
@@ -461,17 +464,25 @@ const Transactions = (props) => {
 
     onChange(e);
   };
-    
+
+  const notify = () => {
+    if(isReady) {
+      toast(`Transaction (${tx_status.id}) Changed Status To ${tx_status.tx_status}`);
+    }
+  };
+
+
   useEffect(() => {
     if (tx_status.tx_status !== "" && tx_status.id !== "") {
       setIsReady(true);
+      notify();
       console.log(tx_status, 'after that i want axios req')
     } else {
       setIsReady(false);
     }
-  }, [tx_status]);  
+  }, [tx_status]);
 
-  
+
   function handleTransactionEdit() {
     console.log(popUpData);
   }
@@ -564,6 +575,7 @@ const Transactions = (props) => {
         paginationTotal={pageAll}
         paginationEvent={(page) => setPageNow(page)}
       />
+      <ToastContainer theme="dark" />
     </>
   );
 };
