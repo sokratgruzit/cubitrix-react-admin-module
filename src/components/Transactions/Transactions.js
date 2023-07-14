@@ -11,6 +11,9 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import styles from "./Transactions.module.css";
 
 const Transactions = (props) => {
@@ -68,17 +71,17 @@ const Transactions = (props) => {
   }
 
   const statusEditHandler = (item) => {
-    setTx_status({
-      tx_status: item.tx_status,
+    setTx_status((prevState) => ({
+      ...prevState,
       id: item._id,
-    });
+    }));
   };
 
   const statusSelectHandler = (value) => {
-    setTx_status({
+    setTx_status((prevState) => ({
+      ...prevState,
       tx_status: value,
-      id: tx_status.id,
-    });
+    }));
   };
 
   let statuses = [
@@ -188,7 +191,7 @@ const Transactions = (props) => {
               defaultData={statuses}
               // label={"edit status"}
               selectHandler={statusSelectHandler}
-              selectLabel={item.tx_status}
+              value={item.tx_status}
               active={true}
               // status={"warning"}
               // statusCard={
@@ -499,9 +502,20 @@ const Transactions = (props) => {
     onChange(e);
   };
 
+  const notify = (test) => {
+    console.log(test);
+    if (isReady) {
+      console.log(tx_status);
+      toast(
+        `Transaction (${tx_status.id}) Changed Status To ${tx_status.tx_status}`
+      );
+    }
+  };
+
   useEffect(() => {
     if (tx_status.tx_status !== "" && tx_status.id !== "") {
       setIsReady(true);
+      notify(test);
       console.log(tx_status, "after that i want axios req");
     } else {
       setIsReady(false);
@@ -600,6 +614,7 @@ const Transactions = (props) => {
         paginationTotal={pageAll}
         paginationEvent={(page) => setPageNow(page)}
       />
+      <ToastContainer theme="dark" />
     </>
   );
 };
