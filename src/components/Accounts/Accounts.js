@@ -135,7 +135,9 @@ const Accounts = (props) => {
     return (
       <div
         key={item.id + item.address}
-        className={`table-parent ${mobileExpand === item.address ? "active" : ""}`}
+        className={`table-parent ${
+          mobileExpand === item.address ? "active" : ""
+        }`}
         onClick={() => {
           mobileExpandFunc(item.address);
         }}
@@ -145,7 +147,7 @@ const Accounts = (props) => {
             className={`td ${th[0].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
           >
-            <span>{item.account_type_id.name}</span>
+            <span>{item.account_category}</span>
           </div>
           <div
             onClick={() => {
@@ -195,18 +197,18 @@ const Accounts = (props) => {
                 );
               })}
               <div>
-                <i>email: </i> {item.account_metas.email}
+                <i>email: </i> {item?.account_metas?.email}
               </div>
               <div>
-                <i>mobile: </i> {item.account_metas.mobile?.code}{" "}
-                {item.account_metas.mobile?.number}
+                <i>mobile: </i> {item?.account_metas?.mobile?.code}{" "}
+                {item?.account_metas?.mobile?.number}
               </div>
               <div>
-                <i>nationality: </i> {item.account_metas.nationality}
+                <i>nationality: </i> {item?.account_metas?.nationality}
               </div>
               <div>
                 <i>date of birth: </i>{" "}
-                {moment(item.account_metas.date_of_birth).format("LL")}
+                {moment(item?.account_metas?.date_of_birth).format("LL")}
               </div>
             </div>
           </div>
