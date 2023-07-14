@@ -34,11 +34,8 @@ const ReferralManagment = ({ animate }) => {
     calculated: "",
     maxUsers: "",
     bv: "",
-    lvlOptions: {
-      maxCommision: [],
-      maxCommPercentage: [],
-      bvcPrice: [],
-    },
+    flush_out: 0,
+    options: [],
   });
 
   let stepper = [
@@ -88,7 +85,7 @@ const ReferralManagment = ({ animate }) => {
   const uniMaxCommissionChangeHandler = (index, value) => {
     setUniData((prevUniData) => {
       const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.maxCommision[index] = value;
+      updatedUniData.lvlOptions.maxCommision[index] = value === "" ? null : value;
 
       return updatedUniData;
     });
@@ -97,12 +94,13 @@ const ReferralManagment = ({ animate }) => {
   const uniMaxCommissionPercentageChangeHandler = (index, value) => {
     setUniData((prevUniData) => {
       const updatedUniData = { ...prevUniData };
-      updatedUniData.lvlOptions.maxCommPercentage[index] = value;
+      updatedUniData.lvlOptions.maxCommPercentage[index] = value === "" ? null : value;
 
       return updatedUniData;
     });
   };
 
+<<<<<<< HEAD
   const binaryMaxCommissionChangeHandler = (index, value) => {
     setBinaryData((prevBinaryData) => {
       const updatedBinaryData = { ...prevBinaryData };
@@ -143,6 +141,8 @@ const ReferralManagment = ({ animate }) => {
     });
   };
 
+=======
+>>>>>>> bda2be65d1a99334a1dc5b0f8badaa76ac3a17b2
   const saveUniDataHandler = async (req, res) => {
     let name = uniData.name;
     await axios
@@ -244,12 +244,12 @@ const ReferralManagment = ({ animate }) => {
       axios
         .post("/api/data/get_referral_setting", { name })
         .then((response) => {
-            if(response.data.key === 'referral_uni_options') {
-                setUniData(response.data.object_value.uniData);
-            }
-            if(response.data.key === 'referral_binary_bv_options') {
-                setBinaryData(response.data.object_value.binaryData);
-            }
+          if (response.data.key === "referral_uni_options") {
+            setUniData(response.data.object_value.uniData);
+          }
+          if (response.data.key === "referral_binary_bv_options") {
+            setBinaryData(response.data.object_value.binaryData);
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -258,33 +258,76 @@ const ReferralManagment = ({ animate }) => {
 
     getData(uniData.name);
     getData(binaryData.name);
-
   }, []);
 
-  const rowsHandler = () => {
-    const newLevel = parseInt(uniData.level); // Convert level to an integer
-  
+  const rowsHandler = (level) => {
+    const newLevel = parseInt(level); // Convert level to an integer
+
     if (!isNaN(newLevel)) {
       setUniData((prevUniData) => {
-        const slicedMaxCommPercentage = prevUniData.lvlOptions.maxCommPercentage.slice(0, newLevel);
-        const slicedMaxCommision = prevUniData.lvlOptions.maxCommision.slice(0, newLevel);
-  
+        let { maxCommPercentage, maxCommision } = prevUniData.lvlOptions;
+
+        maxCommPercentage = [...maxCommPercentage.slice(0, newLevel)];
+        maxCommision = [...maxCommision.slice(0, newLevel)];
+
+        // If newLevel is greater than current array length, fill the extra items with null
+        while (maxCommPercentage.length < newLevel) maxCommPercentage.push(null);
+        while (maxCommision.length < newLevel) maxCommision.push(null);
+
         return {
           ...prevUniData,
           lvlOptions: {
-            maxCommPercentage: slicedMaxCommPercentage,
-            maxCommision: slicedMaxCommision,
+            maxCommPercentage: maxCommPercentage,
+            maxCommision: maxCommision,
           },
         };
       });
 >>>>>>> 38cf88f3f831c8f8f9938d1ad45d486f28951cd9
     }
   };
-  
-  
 
-  console.log(uniData, 'uni data');
-  console.log(binaryData, 'binary data');
+  const binaryRowsHandler = (level) => {
+    const newLevel = parseInt(level); // Convert level to an integer
+
+    if (!isNaN(newLevel)) {
+      setBinaryData((prevBinaryData) => {
+        let { options } = prevBinaryData;
+
+        // If newLevel is smaller, slice the array
+        if (options.length > newLevel) {
+          options = options.slice(0, newLevel);
+        }
+        // If newLevel is larger, fill the array with empty objects
+        else {
+          while (options.length < newLevel) {
+            options.push(null);
+          }
+        }
+
+        return {
+          ...prevBinaryData,
+          options: options,
+        };
+      });
+    }
+  };
+
+  const binaryOptionChangeHandler = (index, value, field) => {
+    setBinaryData((prevBinaryData) => {
+      const updatedBinaryData = { ...prevBinaryData };
+      const updatedOptions = [...updatedBinaryData.options];
+
+      if (!updatedOptions[index]) {
+        updatedOptions[index] = { from: null, to: null, price: null };
+      }
+
+      updatedOptions[index][field] = value === "" ? null : value;
+      updatedBinaryData.options = updatedOptions;
+
+      return updatedBinaryData;
+    });
+  };
+
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
@@ -333,18 +376,18 @@ const ReferralManagment = ({ animate }) => {
             label={"uni level"}
             value={uniData.level}
             onChange={(i) => {
-                setUniData((prevUniData) => ({
-                    ...prevUniData,
-                    level: i.target.value,
-                }));
-                rowsHandler();
+              setUniData((prevUniData) => ({
+                ...prevUniData,
+                level: i.target.value,
+              }));
+              rowsHandler(i.target.value);
             }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: uniData.level }, (_, index) => (
+            {Array.from({ length: uniData?.level ?? 0 }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
@@ -353,9 +396,7 @@ const ReferralManagment = ({ animate }) => {
                   placeholder={"1"}
                   value={uniData.lvlOptions.maxCommision[index]}
                   label={`Level ${index + 1} maximum comission`}
-                  onChange={(i) =>
-                    uniMaxCommissionChangeHandler(index, i.target.value)
-                  }
+                  onChange={(i) => uniMaxCommissionChangeHandler(index, i.target.value)}
                   statusCard={""}
                 />
                 <Input
@@ -366,10 +407,7 @@ const ReferralManagment = ({ animate }) => {
                   value={uniData.lvlOptions.maxCommPercentage[index]}
                   label={`Level ${index + 1} max comission percentage`}
                   onChange={(i) =>
-                    uniMaxCommissionPercentageChangeHandler(
-                      index,
-                      i.target.value
-                    )
+                    uniMaxCommissionPercentageChangeHandler(index, i.target.value)
                   }
                   statusCard={""}
                 />
@@ -446,32 +484,48 @@ const ReferralManagment = ({ animate }) => {
           <Input
             type={"default"}
             emptyFieldErr={false}
+            inputType={"number"}
+            placeholder={"0"}
+            value={binaryData.flushed_out}
+            label={`Flushed out in months`}
+            onChange={(i) =>
+              setBinaryData((prevSendData) => ({
+                ...prevSendData,
+                flushed_out: i.target.value,
+              }))
+            }
+            statusCard={""}
+          />
+          <Input
+            type={"default"}
+            emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
             label={"binary level"}
             value={binaryData.level}
             onChange={(i) => {
-                setBinaryData((prevBinaryData) => ({
-                    ...prevBinaryData,
-                    level: i.target.value,
-                }));
+              setBinaryData((prevBinaryData) => ({
+                ...prevBinaryData,
+                level: i.target.value,
+              }));
+              binaryRowsHandler(i.target.value);
             }}
             statusCard={""}
           />
         </div>
         <div className={styles.block}>
           <div className={styles.col}>
-            {Array.from({ length: binaryData.level }, (_, index) => (
+            {Array.from({ length: binaryData?.level ?? 0 }, (_, index) => (
               <div key={index} className={styles.row}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.maxCommision[index]}
+                  value={binaryData.options?.[index]?.from}
                   label={`Level ${index + 1} Bv From`}
                   onChange={(i) =>
-                    binaryMaxCommissionChangeHandler(index, i.target.value)
+                    binaryOptionChangeHandler(index, i.target.value, "from")
                   }
                   statusCard={""}
                 />
@@ -480,14 +534,9 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.maxCommPercentage[index]}
+                  value={binaryData.options[index]?.to}
                   label={`Level ${index + 1} Bv To`}
-                  onChange={(i) =>
-                    binaryMaxCommissionPercentChangeHandler(
-                      index,
-                      i.target.value
-                    )
-                  }
+                  onChange={(i) => binaryOptionChangeHandler(index, i.target.value, "to")}
                   statusCard={""}
                 />
                 <Input
@@ -495,9 +544,11 @@ const ReferralManagment = ({ animate }) => {
                   emptyFieldErr={false}
                   inputType={"text"}
                   placeholder={"1"}
-                  value={binaryData.lvlOptions.bvcPrice[index]}
+                  value={binaryData.options[index]?.price}
                   label={`Level ${index + 1} Bvc Price`}
-                  onChange={(i) => bvcPriceChangeHandler(index, i.target.value)}
+                  onChange={(i) =>
+                    binaryOptionChangeHandler(index, i.target.value, "price")
+                  }
                   statusCard={""}
                 />
               </div>
@@ -515,15 +566,13 @@ const ReferralManagment = ({ animate }) => {
       <div
         className={`${styles.steps} ${styles.underWorking} ${
           step === 3 ? styles.actived : ""
-        }`}
-      >
+        }`}>
         <svg
           width="104"
           height="75"
           viewBox="0 0 104 75"
           fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path
             opacity="0.05"
             d="M96.6042 56.7063C103.822 49.5708 107.82 22.1331 98.7751 13.4263C85.0262 0.191923 62.2753 8.0439 44.8649 1.26497C27.4545 -5.51395 -2.49661e-06 16.2878 -4.12265e-06 34.8875C-6.00351e-06 56.4021 33.2381 76.1446 52.8247 74.9483C72.4114 73.752 88.2825 64.9331 96.6042 56.7063Z"
@@ -531,20 +580,8 @@ const ReferralManagment = ({ animate }) => {
           />
           <circle cx="95" cy="6" r="2" fill="#796AD4" fillOpacity="0.6" />
           <circle cx="88" cy="67" r="2" fill="#796AD4" fillOpacity="0.4" />
-          <circle
-            cx="10.5"
-            cy="62.5"
-            r="2.5"
-            fill="#796AD4"
-            fillOpacity="0.4"
-          />
-          <circle
-            cx="13.5"
-            cy="18.5"
-            r="1.5"
-            fill="#796AD4"
-            fillOpacity="0.8"
-          />
+          <circle cx="10.5" cy="62.5" r="2.5" fill="#796AD4" fillOpacity="0.4" />
+          <circle cx="13.5" cy="18.5" r="1.5" fill="#796AD4" fillOpacity="0.8" />
           <circle cx="15" cy="57" r="1" fill="#796AD4" fillOpacity="0.6" />
           <path
             d="M66 36.25C66 39.3651 65.0763 42.4102 63.3457 45.0002C61.615 47.5903 59.1552 49.609 56.2773 50.8011C53.3993 51.9932 50.2325 52.3051 47.1773 51.6974C44.1221 51.0897 41.3158 49.5896 39.1131 47.3869C36.9104 45.1843 35.4104 42.3779 34.8026 39.3227C34.1949 36.2675 34.5068 33.1007 35.6989 30.2227C36.891 27.3448 38.9097 24.885 41.4998 23.1544C44.0899 21.4237 47.135 20.5 50.25 20.5"

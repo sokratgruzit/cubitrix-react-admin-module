@@ -27,7 +27,7 @@ function App() {
     MetaMaskEagerlyConnect(injected);
     setTimeout(() => {
       setAnimateDom(true);
-    },500)
+    }, 500);
     // eslint-disable-next-line
   }, []);
 
@@ -51,8 +51,7 @@ function App() {
         height="40"
         viewBox="0 0 40 40"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+        xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_1065_3799)">
           <path
             d="M20.0059 -0.000158956C19.9982 -0.00255118 19.9901 -0.00255118 19.9825 -0.000158956C13.9025 3.50782 8.85429 8.556 5.34625 14.6359C1.83821 20.7159 -0.00578025 27.6128 1.36113e-05 34.6322C6.07723 38.1409 12.971 39.9881 19.9883 39.9881C27.0057 39.9881 33.8994 38.1409 39.9766 34.6322C39.9809 27.6145 38.1375 20.7194 34.6318 14.6401C31.1261 8.56071 26.0818 3.51142 20.0059 -0.000158956V-0.000158956ZM27.9988 27.8584C25.5687 29.2638 22.8111 30.0037 20.0039 30.0037C17.1967 30.0037 14.4391 29.2638 12.009 27.8584C12.0081 25.0542 12.7456 22.2992 14.1473 19.8704C15.5491 17.4416 17.5656 15.4248 19.9942 14.0226C22.4244 15.4235 24.4434 17.439 25.8485 19.8668C27.2535 22.2947 27.9951 25.0495 27.9988 27.8546V27.8584Z"
@@ -93,8 +92,7 @@ function App() {
             y1="21.0614"
             x2="38.1069"
             y2="12.5075"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" />
             <stop offset="0.05" stopColor="#45B0F5" />
             <stop offset="0.12" stopColor="#4295F8" />
@@ -110,8 +108,7 @@ function App() {
             y1="17.7388"
             x2="13.5826"
             y2="27.0951"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" stopOpacity="0" />
             <stop offset="1" stopColor="#47C9F3" />
           </linearGradient>
@@ -121,8 +118,7 @@ function App() {
             y1="20.9058"
             x2="3.7589"
             y2="13.688"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" />
             <stop offset="0.05" stopColor="#45B0F5" />
             <stop offset="0.12" stopColor="#4295F8" />
@@ -138,8 +134,7 @@ function App() {
             y1="17.7663"
             x2="26.3044"
             y2="26.6474"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" stopOpacity="0" />
             <stop offset="1" stopColor="#47C9F3" />
           </linearGradient>
@@ -149,8 +144,7 @@ function App() {
             y1="27.7493"
             x2="20.0721"
             y2="42.7654"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" />
             <stop offset="0.05" stopColor="#45B0F5" />
             <stop offset="0.12" stopColor="#4295F8" />
@@ -166,8 +160,7 @@ function App() {
             y1="35.084"
             x2="20.0019"
             y2="16.348"
-            gradientUnits="userSpaceOnUse"
-          >
+            gradientUnits="userSpaceOnUse">
             <stop stopColor="#47C9F3" stopOpacity="0" />
             <stop offset="1" stopColor="#47C9F3" />
           </linearGradient>
@@ -194,8 +187,7 @@ function App() {
                 height="18"
                 viewBox="0 0 18 18"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fillRule="evenodd"
                   clipRule="evenodd"
@@ -453,9 +445,14 @@ function App() {
             userImageUrl={adminHeaderData.userImageUrl}
             authsDropdown={adminHeaderData.authsDropdown}
             animate={animateDom}
+            title={"Atar"}
           />
           <div className={`admin-container`}>
-            <div className={`admin-sidebar animate-translateX ${animateDom ? 'animate' : ''}`} style={{transitionDelay: '.1s'}}>
+            <div
+              className={`admin-sidebar animate-translateX ${
+                animateDom ? "animate" : ""
+              }`}
+              style={{ transitionDelay: ".1s" }}>
               {sideBar.map((item, index) => {
                 return (
                   <Button
@@ -474,13 +471,25 @@ function App() {
               })}
             </div>
             <Routes>
-              <Route path="/" element={<Dashboard animate={animateDom}  />} />
-              <Route path="/transactions" element={<Transactions animate={animateDom}  />} />
-              <Route path="/users-list" element={<UsersList animate={animateDom}  />} />
-              <Route path="/accounts" element={<Accounts animate={animateDom}  />} />
-              <Route path="/developers-api" element={<DevelopersApi animate={animateDom} />} />
-              <Route path="/settings/admin-management" element={<AdminManagement animate={animateDom}  />} />
-              <Route path="/settings/referral-management" element={<ReferralManagment animate={animateDom}  />} />
+              <Route path="/" element={<Dashboard animate={animateDom} />} />
+              <Route
+                path="/transactions"
+                element={<Transactions animate={animateDom} />}
+              />
+              <Route path="/users-list" element={<UsersList animate={animateDom} />} />
+              <Route path="/accounts" element={<Accounts animate={animateDom} />} />
+              <Route
+                path="/developers-api"
+                element={<DevelopersApi animate={animateDom} />}
+              />
+              <Route
+                path="/settings/admin-management"
+                element={<AdminManagement animate={animateDom} />}
+              />
+              <Route
+                path="/settings/referral-management"
+                element={<ReferralManagment animate={animateDom} />}
+              />
             </Routes>
           </div>
         </>

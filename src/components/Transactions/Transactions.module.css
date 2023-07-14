@@ -1,0 +1,23 @@
+.details {
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.background {
+  background-color: #0f1321;
+  width: 100%;
+  min-height: 200px;
+  padding: 20px;
+  border-radius: 0 10px 10px 0;
+}
+
+.actionsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
