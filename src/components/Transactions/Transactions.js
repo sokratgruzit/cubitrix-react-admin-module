@@ -59,7 +59,34 @@ const Transactions = (props) => {
         console.log(res);
         fetchData();
       });
-  }
+  };
+
+  const statusEditHandler = (item) => {
+    console.log(item, 'item');
+
+    // onClick={() => statusEditHandler(item)}
+
+  };
+
+  const statusSelectHandler = (value) => {
+    console.log("selecthandler");
+    console.log(value);
+  };
+
+  let statuses = [
+    {
+      name: "Approved",
+      value: "approved",
+    },
+    {
+      name: "Pending",
+      value: "pending",
+    },
+    {
+      name: "Cancelled",
+      value: "cancelled",
+    },
+  ];
 
   let tableData;
   tableData = td.map((item, index) => {
@@ -68,31 +95,10 @@ const Transactions = (props) => {
         id: 0,
         list: [
           {
-            title: "Actions",
+            title: "Edit", // here to edit whole transaction by popup
             onClick: () => {
               setSelectedTransaction(item);
             },
-            svg: (
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M1.57891 1.57891C2.69097 0.466855 4.35504 0.041687 6.50002 0.041687H11.5C13.645 0.041687 15.3091 0.466855 16.4211 1.57891C17.5332 2.69097 17.9584 4.35504 17.9584 6.50002V11.5C17.9584 13.645 17.5332 15.3091 16.4211 16.4211C15.3091 17.5332 13.645 17.9584 11.5 17.9584H6.50002C4.35504 17.9584 2.69097 17.5332 1.57891 16.4211C0.466855 15.3091 0.041687 13.645 0.041687 11.5V6.50002C0.041687 4.35504 0.466855 2.69097 1.57891 1.57891ZM2.4628 2.4628C1.69985 3.22574 1.29169 4.47833 1.29169 6.50002V11.5C1.29169 13.5217 1.69985 14.7743 2.4628 15.5372C3.22574 16.3002 4.47833 16.7084 6.50002 16.7084H11.5C13.5217 16.7084 14.7743 16.3002 15.5372 15.5372C16.3002 14.7743 16.7084 13.5217 16.7084 11.5V6.50002C16.7084 4.47833 16.3002 3.22574 15.5372 2.4628C14.7743 1.69985 13.5217 1.29169 11.5 1.29169H6.50002C4.47833 1.29169 3.22574 1.69985 2.4628 2.4628Z"
-                  fill="white"
-                />
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12.984x 6.20011C13.2279 6.4444 13.2276 6.84013 12.9833 7.08399L8.25826 11.8007C8.01412 12.0444 7.61869 12.0442 7.37477 11.8003L5.01643 9.44194C4.77235 9.19786 4.77235 8.80213 5.01643 8.55805C5.26051 8.31398 5.65624 8.31398 5.90032 8.55805L7.8171 10.4748L12.1002 6.19933C12.3444 5.95547 12.7402 5.95582 12.984 6.20011Z"
-                  fill="white"
-                />
-              </svg>
-            ),
           },
         ],
       },
@@ -145,15 +151,42 @@ const Transactions = (props) => {
             <span>{moment(item.createdAt).format("LL")}</span>
           </div>
           <div
+            onClick={() => statusEditHandler(item)}
             className={`td ${th[7].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
             <span
+              // here edit in table ()
               className={`alert-status-box 
                             ${item.tx_status === "active" && "alert-status-blue"} 
                             ${item.tx_status === "active1" && "alert-status-yellow"}
                             ${item.tx_status === "pending" && "alert-status-green"}`}>
-              {item.tx_status}
+              <Input
+                type={"lable-input-select"}
+                icon={false}
+                // selectData={selectData}
+                emptyFieldErr={false}
+                defaultData={statuses}
+                // label={"edit status"}
+                selectHandler={statusSelectHandler}
+                selectLabel={item.tx_status}
+                active={true}
+                // status={"warning"}
+                // statusCard={
+                //   <HelpText
+                //     status={"error"}
+                //     title={"your text"}
+                //     fontSize={"font-12"}
+                //     icon={true}
+                //   />
+                // }
+                // title={"your text"}
+                color={"#FFA726"}
+              // customStyles={{ width: "320px" }}
+              />
             </span>
+            {item.tx_status}
+
+
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
@@ -226,9 +259,8 @@ const Transactions = (props) => {
                 className={`alert-status-box 
                                 ${item.tx_type === "deposit" && "alert-status-blue"} 
                                 ${item.tx_type === "withdraw" && "alert-status-yellow"}
-                                ${
-                                  item.tx_type === "transfer" && "alert-status-green"
-                                }`}></span>
+                                ${item.tx_type === "transfer" && "alert-status-green"
+                  }`}></span>
             </div>
           </div>
         </div>
@@ -262,6 +294,7 @@ const Transactions = (props) => {
   const handleDelete = () => {
     // code to delete the transaction
   };
+
 
   const addTransactionSelects = [
     {
@@ -454,11 +487,11 @@ const Transactions = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                              params?.defaultAny ||
-                              params?.options[0]?.value
+                            params?.defaultAny ||
+                            params?.options[0]?.value
                             : popUpData[params?.name] === undefined
-                            ? params?.defaultAny
-                            : popUpData[params?.name]
+                              ? params?.defaultAny
+                              : popUpData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {

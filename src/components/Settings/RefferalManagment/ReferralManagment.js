@@ -100,49 +100,6 @@ const ReferralManagment = ({ animate }) => {
     });
   };
 
-<<<<<<< HEAD
-  const binaryMaxCommissionChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.maxCommision[index] = value;
-
-<<<<<<< HEAD
-    let defaultData = [
-        {
-            name: "Transaction",
-            value: "some value (1)",
-        },
-        {
-            name: "Hash",
-            value: "some value (2)",
-        },
-    ];
-=======
-      return updatedBinaryData;
-    });
-  };
->>>>>>> 38cf88f3f831c8f8f9938d1ad45d486f28951cd9
-
-  const binaryMaxCommissionPercentChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.maxCommPercentage[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-  const bvcPriceChangeHandler = (index, value) => {
-    setBinaryData((prevBinaryData) => {
-      const updatedBinaryData = { ...prevBinaryData };
-      updatedBinaryData.lvlOptions.bvcPrice[index] = value;
-
-      return updatedBinaryData;
-    });
-  };
-
-=======
->>>>>>> bda2be65d1a99334a1dc5b0f8badaa76ac3a17b2
   const saveUniDataHandler = async (req, res) => {
     let name = uniData.name;
     await axios
@@ -167,78 +124,6 @@ const ReferralManagment = ({ animate }) => {
       });
   };
 
-<<<<<<< HEAD
-            return updatedUniData;
-        });
-    };
-
-    const binaryMaxCommissionChangeHandler = (index, value) => {
-        setBinaryData((prevBinaryData) => {
-            const updatedBinaryData = { ...prevBinaryData }
-            updatedBinaryData.maxCommision[index] = value;
-
-            return updatedBinaryData;
-        });
-    };
-
-    const binaryMaxCommissionPercentChangeHandler = (index, value) => {
-        setBinaryData((prevBinaryData) => {
-            const updatedBinaryData = { ...prevBinaryData }
-            updatedBinaryData.maxCommPercentage[index] = value;
-
-            return updatedBinaryData;
-        });
-    };
-
-    const bvcPriceChangeHandler = (index, value) => {
-        setBinaryData((prevBinaryData) => {
-            const updatedBinaryData = { ...prevBinaryData }
-            updatedBinaryData.bvcPrice[index] = value;
-
-            return updatedBinaryData;
-        });
-    }
-
-
-    const saveUniDataHandler = async (req, res) => {
-        await axios
-            .post("/api/data/get_referral_setting", {
-                uniData
-            })
-            .then((res) => {
-                console.log(res);
-                // setuniLevel(1);
-                // setUniData({
-                //     name: 'Uni',
-                //     active: false,
-                //     level: uniLevel,
-                //     calculated: "",
-                //     maxCommision: [],
-                //     maxCommPercentage: [],
-                // });
-            }
-            );
-    }
-
-    const saveBinaryDataHandler = async (req, res) => {
-        await axios
-            .post("/api/data/get_referral_setting", {
-                binaryData
-            })
-            .then((res) => {
-                console.log(res);
-                // setBinaryLevel(1);
-                // setBinaryData({
-                //     name: 'Binary Bv',
-                //     active: false,
-                //     level: binaryLevel,
-                //     calculated: "",
-                //     maxCommision: [],
-                //     maxCommPercentage: [],
-                // });
-            });
-
-=======
   useEffect(() => {
     const getData = async (name) => {
       axios
@@ -282,7 +167,6 @@ const ReferralManagment = ({ animate }) => {
           },
         };
       });
->>>>>>> 38cf88f3f831c8f8f9938d1ad45d486f28951cd9
     }
   };
 
