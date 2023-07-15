@@ -11,6 +11,10 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UsersList = (props) => {
   const axios = useAxios();
   const { tableFilterData, th, mobile, mobileExpand, mobileExpandFunc } =
@@ -320,22 +324,9 @@ const UsersList = (props) => {
     address: "",
     name: "",
     email: "",
-    nationality: "",
   });
 
   const inputs = [
-    {
-      title: "Address",
-      name: "address",
-      type: "default",
-      placeholder: "address",
-      value: popUpData.address,
-      onChange: (e) =>
-        setPopUpData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
     {
       title: "Name",
       name: "name",
@@ -361,24 +352,11 @@ const UsersList = (props) => {
         })),
     },
     {
-      title: "Mobile Number",
-      name: "mobile",
-      type: "label-input-phone-number",
-      placeholder: "mobile",
-      value: popUpData.mobile,
-      onChange: (e) => {
-        setPopUpData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        }));
-      },
-    },
-    {
-      title: "Date of birth",
-      name: "date_of_birth",
-      type: "date-picker-input",
-      placeholder: "date of birth",
-      value: popUpData.date_of_birth,
+      title: "Address",
+      name: "address",
+      type: "default",
+      placeholder: "address",
+      value: popUpData.address,
       onChange: (e) =>
         setPopUpData((prev) => ({
           ...prev,
@@ -394,11 +372,6 @@ const UsersList = (props) => {
         address: activeItem.address,
         name: activeItem.name,
         email: activeItem.email,
-        mobile: activeItem.mobile,
-        nationality: activeItem.nationality ?? "",
-        date_of_birth: activeItem.date_of_birth
-          ? new Date(activeItem.date_of_birth)
-          : new Date(),
       });
     }
   }, [activeItem]);
@@ -423,6 +396,8 @@ const UsersList = (props) => {
   const [userUpdateLoading, setUserUpdateLoading] = useState(false);
   function handleUserEdit() {
     setUserUpdateLoading(true);
+    console.log(popUpData, 'data');
+
     axios
       .post("/api/data/edit-account-meta", popUpData)
       .then((res) => {
@@ -432,19 +407,25 @@ const UsersList = (props) => {
             item.address === res.data.address ? { ...item, ...res.data } : item,
           ),
         );
-        alert("User updated successfully");
+        setActiveItem(null);
+        notify(res.statusText);
       })
       .catch((err) => {
         setUserUpdateLoading(false);
-        alert("User update failed");
+        notify(err);
       });
   }
+
+  const notify = (msg) => {
+    console.log(msg, 'hi')
+    toast(msg);
+  };
 
   return (
     <>
       {activeItem && (
         <Popup
-          label={`Edit Transaction`}
+          label={`Edit User`}
           inputs={inputs}
           handlePopUpClose={() => {
             setActiveItem(null);
@@ -452,7 +433,6 @@ const UsersList = (props) => {
               address: "",
               name: "",
               email: "",
-              nationality: "",
             });
           }}
           popUpData={popUpData}
@@ -509,18 +489,6 @@ const UsersList = (props) => {
                     </div>
                   );
                 })}
-                <Input
-                  type={"lable-input-select"}
-                  icon={false}
-                  selectType={"country"}
-                  value={popUpData.nationality}
-                  label={"Nationality"}
-                  onClick={(e) => handleInputChange(e, "nationality")}
-                  customStyles={{ width: "100%" }}
-                  editable={true}
-                  selectLabel={"Select Country"}
-                />
-
                 <Button
                   label={userUpdateLoading ? "Loading..." : "Save"}
                   size={"btn-lg"}
@@ -550,6 +518,7 @@ const UsersList = (props) => {
         paginationTotal={pageAll}
         paginationEvent={(page) => setPageNow(page)}
       />
+      <ToastContainer theme="dark" />
     </>
   );
 };

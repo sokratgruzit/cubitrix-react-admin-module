@@ -87,8 +87,8 @@ const Transactions = (props) => {
     setIsReady(true)
   };
 
-  const notify = (res) => {
-    toast(`${res}`);
+  const notify = (msg) => {
+    toast(msg);
   };
 
   const editStatus = async () => {
@@ -105,6 +105,7 @@ const Transactions = (props) => {
       setIsReady(false);
       fetchData();
     } catch (error) {
+      notify(error)
       console.log(error);
     }
   };
