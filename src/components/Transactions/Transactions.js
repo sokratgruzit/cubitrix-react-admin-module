@@ -95,7 +95,6 @@ const Transactions = (props) => {
     let status = tx_status.tx_status;
     let id = tx_status.id;
 
-    console.log(status, 'status?');
     try {
       const response = await axios.post("/api/data/change_transaction_status", {
         _id: id,
@@ -103,6 +102,8 @@ const Transactions = (props) => {
       });
       console.log(response);
       notify(response.statusText);
+      setIsReady(false);
+      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -538,7 +539,9 @@ const Transactions = (props) => {
   };
 
   useEffect(() => {
-    editStatus();
+    if(isReady) {
+      editStatus();
+    }
   }, [isReady])
 
   const editTransactionHandler = async () => {
@@ -556,12 +559,11 @@ const Transactions = (props) => {
       const response = await axios.post("/api/data/edit_transaction", formData);
       console.log(response);
       notify(response.statusText);
-      setSelectedTransaction(null);
+      setSelectedTransaction(null); 
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   return (
     <>
