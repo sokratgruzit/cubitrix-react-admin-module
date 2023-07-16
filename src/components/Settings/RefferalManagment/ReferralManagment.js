@@ -8,6 +8,8 @@ import {
   Button,
 } from "@cubitrix/cubitrix-react-ui-module";
 
+import { ToastContainer, toast } from "react-toastify";
+
 import styles from "./ReferralManagment.module.css";
 
 const ReferralManagment = ({ animate }) => {
@@ -68,6 +70,10 @@ const ReferralManagment = ({ animate }) => {
     },
   ];
 
+  const notify = (msg) => {
+    toast(msg);
+  };
+
   const selectHandlerUni = (value) => {
     setUniData((prevUniData) => ({
       ...prevUniData,
@@ -111,7 +117,12 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-      });
+        notify(res.statusText);
+      })
+      .catch((error) => {
+        console.log(error);
+        notify(res.statusText);
+      })
   };
 
   const saveBinaryDataHandler = async (req, res) => {
@@ -123,7 +134,12 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-      });
+        notify(res.statusText);
+      })
+      .catch((error) => {
+        console.log(error);
+        notify(res.statusText);
+      })
   };
 
   useEffect(() => {
@@ -157,7 +173,6 @@ const ReferralManagment = ({ animate }) => {
         maxCommPercentage = [...maxCommPercentage.slice(0, newLevel)];
         maxCommision = [...maxCommision.slice(0, newLevel)];
 
-        // If newLevel is greater than current array length, fill the extra items with null
         while (maxCommPercentage.length < newLevel)
           maxCommPercentage.push(null);
         while (maxCommision.length < newLevel) maxCommision.push(null);
@@ -174,17 +189,15 @@ const ReferralManagment = ({ animate }) => {
   };
 
   const binaryRowsHandler = (level) => {
-    const newLevel = parseInt(level); // Convert level to an integer
+    const newLevel = parseInt(level);
 
     if (!isNaN(newLevel)) {
       setBinaryData((prevBinaryData) => {
         let { options } = prevBinaryData;
 
-        // If newLevel is smaller, slice the array
         if (options.length > newLevel) {
           options = options.slice(0, newLevel);
         }
-        // If newLevel is larger, fill the array with empty objects
         else {
           while (options.length < newLevel) {
             options.push(null);
@@ -214,8 +227,6 @@ const ReferralManagment = ({ animate }) => {
       return updatedBinaryData;
     });
   };
-
-  console.log(binaryData)
 
   return (
     <div className={styles.table}>
@@ -519,6 +530,7 @@ const ReferralManagment = ({ animate }) => {
         </svg>
         <span>Under Developent</span>
       </div>
+      <ToastContainer theme="dark" />
     </div>
   );
 };

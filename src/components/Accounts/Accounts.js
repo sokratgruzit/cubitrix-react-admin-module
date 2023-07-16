@@ -327,7 +327,6 @@ const Accounts = (props) => {
 
   useEffect(() => {
     if (activeItem) {
-      console.log(activeItem);
       setAccountData({
         externalAddress: activeItem?.address,
         mainAddress: activeItem?.inner_accounts[0]?.address,
@@ -336,7 +335,6 @@ const Accounts = (props) => {
         dateOfBirth: activeItem?.account_metas?.date_of_birth,
         _id: activeItem?._id
       });
-      console.log(accountData, 'acc')
     }
   }, [activeItem]);
 
