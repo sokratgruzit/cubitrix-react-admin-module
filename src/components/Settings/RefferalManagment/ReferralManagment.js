@@ -34,7 +34,7 @@ const ReferralManagment = ({ animate }) => {
     calculated: "",
     maxUsers: "",
     bv: "",
-    flush_out: 0,
+    flushed_out: 0,
     options: [],
   });
 
@@ -215,6 +215,8 @@ const ReferralManagment = ({ animate }) => {
     });
   };
 
+  console.log(binaryData)
+
   return (
     <div className={styles.table}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
@@ -232,7 +234,7 @@ const ReferralManagment = ({ animate }) => {
           <div className={styles.row}>
             <p>Uni</p>
             <Switches
-              value={uniData?.active === undefined ? false : true}
+              value={uniData.active}
               onChange={(e) =>
                 setUniData((prevUniData) => ({
                   ...prevUniData,
@@ -320,11 +322,11 @@ const ReferralManagment = ({ animate }) => {
           <div className={styles.row}>
             <p>Binary</p>
             <Switches
-              value={binaryData?.active === undefined ? false : true}
-              onChange={(i) =>
-                setBinaryData((prevSendData) => ({
-                  ...prevSendData,
-                  active: i.target.checked,
+              value={binaryData.active}
+              onChange={(e) =>
+                setBinaryData((prevBinaryData) => ({
+                  ...prevBinaryData,
+                  active: e.target.checked,
                 }))
               }
               type={"sm-switches"}
@@ -458,9 +460,8 @@ const ReferralManagment = ({ animate }) => {
         </div>
       </div>
       <div
-        className={`${styles.steps} ${styles.underWorking} ${
-          step === 3 ? styles.actived : ""
-        }`}
+        className={`${styles.steps} ${styles.underWorking} ${step === 3 ? styles.actived : ""
+          }`}
       >
         <svg
           width="104"
