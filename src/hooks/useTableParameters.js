@@ -24,16 +24,28 @@ const tableFilterData = {
         value: "tx_type",
         options: [
           {
+            name: "Payment",
+            value: "payment",
+          },
+          {
             name: "Deposit",
             value: "deposit",
           },
           {
-            name: "Withdraw",
-            value: "withdraw",
-          },
-          {
             name: "Transfer",
             value: "transfer",
+          },
+          {
+            name: "Internal Transfer",
+            value: "internal_transfer",
+          },
+          {
+            name: "Bonus",
+            value: "bonus",
+          },
+          {
+            name: "Withdraw",
+            value: "withdraw",
           },
         ],
       },
@@ -52,14 +64,6 @@ const tableFilterData = {
           {
             name: "Approved",
             value: "approved",
-          },
-          {
-            name: "Bonuses",
-            value: "bonuses",
-          },
-          {
-            name: "Claimed",
-            value: "claimed",
           },
         ],
       },
@@ -197,7 +201,7 @@ const th = {
       id: 4,
     },
     {
-      name: "Domination",
+      name: "Denomination",
       width: 10,
       id: 5,
     },

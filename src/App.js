@@ -8,6 +8,8 @@ import UsersList from "./components/UsersList/UsersList";
 import DevelopersApi from "./components/DevelopersApi/DevelopersApi";
 import AdminManagement from "./components/Settings/AdminManagement/AdminManagement";
 import ReferralManagment from "./components/Settings/RefferalManagment/ReferralManagment";
+import GlobalSettings from "./components/Settings/GlobalSettings/GlobalSettings";
+
 import "@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css";
 import { Button, AdminHeader } from "@cubitrix/cubitrix-react-ui-module";
 import { useConnect } from "@cubitrix/cubitrix-react-connect-module";
@@ -429,6 +431,10 @@ function App() {
           name: "Referral Management",
           route: "/referral-management",
         },
+        {
+          name: "Global Settings",
+          route: "/global-settings"
+        }
       ],
     },
   ];
@@ -489,6 +495,10 @@ function App() {
               <Route
                 path="/settings/referral-management"
                 element={<ReferralManagment animate={animateDom} />}
+              />
+               <Route
+                path="/settings/global-settings"
+                element={<GlobalSettings animate={animateDom} />}
               />
             </Routes>
           </div>
