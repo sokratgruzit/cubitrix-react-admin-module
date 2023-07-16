@@ -77,23 +77,23 @@ const Accounts = (props) => {
     setAccountUpdateLoading(true);
     console.log(accountData, 'data');
 
-    axios
-      .post("/api/data/edit-account", accountData)
-      .then((res) => {
-        setAccountUpdateLoading(false);
-        // setTd((prev) =>
-        //   prev.map((item) =>
-        //     item.address === res.data.address ? { ...item, ...res.data } : item,
-        //   ),
-        // );
-        // setActiveItem(null);
-        // notify(res.statusText);
-        console.log(res);
-      })
-      .catch((err) => {
-        setAccountUpdateLoading(false);
-        notify(err);
-      });
+    // axios
+    //   .post("/api/data/edit-account", accountData)
+    //   .then((res) => {
+    //     setAccountUpdateLoading(false);
+    //     // setTd((prev) =>
+    //     //   prev.map((item) =>
+    //     //     item.address === res.data.address ? { ...item, ...res.data } : item,
+    //     //   ),
+    //     // );
+    //     // setActiveItem(null);
+    //     // notify(res.statusText);
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     setAccountUpdateLoading(false);
+    //     notify(err);
+    //   });
   }
 
   const notify = (msg) => {
@@ -249,13 +249,13 @@ const Accounts = (props) => {
               <div>
                 <i>email: </i> {item?.account_metas?.email}
               </div>
-              <div>
+              {/* <div>
                 <i>mobile: </i> {item?.account_metas?.mobile?.code}{" "}
                 {item?.account_metas?.mobile?.number}
               </div>
               <div>
                 <i>nationality: </i> {item?.account_metas?.nationality}
-              </div>
+              </div> */}
               <div>
                 <i>date of birth: </i>{" "}
                 {moment(item?.account_metas?.date_of_birth).format("LL")}
@@ -289,7 +289,6 @@ const Accounts = (props) => {
           />
           <MoreButton dropdownData={dynamicDropDown(item)} />
         </div>
-
         {/* <div className="icon-place">
           <svg
             width="12"
