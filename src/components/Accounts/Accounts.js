@@ -20,7 +20,14 @@ const Accounts = (props) => {
   const [tableExpand, setTableExpand] = useState(null);
   const [accountType, setAccountType] = useState(null);
   const [activeItem, setActiveItem] = useState(null);
-  const [accountData, setAccountData] = useState({});
+  const [accountData, setAccountData] = useState({
+    externalAddress: "",
+    mainAddress: "",
+    systemAddress: "",
+    email: "",
+    dateOfBirth: "",
+    _id: ""
+  });
   const [accountUpdateLoading, setAccountUpdateLoading] = useState(false);
 
 
@@ -70,57 +77,29 @@ const Accounts = (props) => {
     setAccountUpdateLoading(true);
     console.log(accountData, 'data');
 
-    // axios
-    //   .post("/api/data/edit-account-meta", accountData)
-    //   .then((res) => {
-    //     setAccountUpdateLoading(false);
-    //     setTd((prev) =>
-    //       prev.map((item) =>
-    //         item.address === res.data.address ? { ...item, ...res.data } : item,
-    //       ),
-    //     );
-    //     setActiveItem(null);
-    //     notify(res.statusText);
-    //   })
-    //   .catch((err) => {
-    //     setAccountUpdateLoading(false);
-    //     notify(err);
-    //   });
+    axios
+      .post("/api/data/edit-account", accountData)
+      .then((res) => {
+        setAccountUpdateLoading(false);
+        // setTd((prev) =>
+        //   prev.map((item) =>
+        //     item.address === res.data.address ? { ...item, ...res.data } : item,
+        //   ),
+        // );
+        // setActiveItem(null);
+        // notify(res.statusText);
+        console.log(res);
+      })
+      .catch((err) => {
+        setAccountUpdateLoading(false);
+        notify(err);
+      });
   }
 
   const notify = (msg) => {
     toast(msg);
   };
-  useEffect(() => {
-    if (updatedStatus.id !== "" && updatedStatus._id !== "") {
-      updatedStatusHandler();
-    }
-  }, [updatedStatus]);
 
-  useEffect(() => {
-    async function fetchData() {
-      await axios
-        .post("/api/data/filter", {
-          type: "account",
-          filter: tableFilterOutcomingData,
-          page: pageNow,
-        })
-        .then((res) => {
-          setPageAll(res.data.success.pages);
-          setTd(res.data.success.data);
-        });
-    }
-    fetchData();
-    if (tableFilterOutcomingData.selects) {
-      if (tableFilterOutcomingData.selects.account_type_id !== "all") {
-        setAccountType(tableFilterOutcomingData.selects.account_type_id);
-      } else {
-        setAccountType(null);
-      }
-    } else {
-      setAccountType(null);
-    }
-  }, [tableFilterOutcomingData, pageNow]);
   let dynamicDropDown = (item) => {
     const id = item?._id;
 
@@ -142,17 +121,65 @@ const Accounts = (props) => {
 
   const inputs = [
     {
-      title: "Name",
-      name: "name",
+      title: "External",
+      name: "externalAddress",
       type: "default",
-      placeholder: "name",
-      value: 'accountData?', // ??
+      placeholder: "External",
+      value: accountData?.externalAddress, // ??
       onChange: (e) =>
         setAccountData((prev) => ({
           ...prev,
           [e.target.name]: e.target.value,
         })),
-    },    
+    },
+    {
+      title: "Main",
+      name: "mainAddress",
+      type: "default",
+      placeholder: "Main",
+      value: accountData?.mainAddress,
+      onChange: (e) =>
+        setAccountData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "System",
+      name: "systemAddress",
+      type: "default",
+      placeholder: "System",
+      value: accountData?.systemAddress,
+      onChange: (e) =>
+        setAccountData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Email",
+      name: "email",
+      type: "default",
+      placeholder: "Email",
+      value: accountData?.email,
+      onChange: (e) =>
+        setAccountData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
+    {
+      title: "Date of birth",
+      name: "dateOfBirth",
+      type: "default",
+      placeholder: "Date",
+      value: accountData?.dateOfBirth,
+      onChange: (e) =>
+        setAccountData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
   ];
 
   let tableData;
@@ -293,8 +320,54 @@ const Accounts = (props) => {
     );
   });
 
-  console.log(accountData, 'account data')
-  console.log(activeItem, 'active item')
+  useEffect(() => {
+    if (updatedStatus.id !== "" && updatedStatus._id !== "") {
+      updatedStatusHandler();
+    }
+  }, [updatedStatus]);
+
+  useEffect(() => {
+    if (activeItem) {
+      console.log(activeItem);
+      setAccountData({
+        externalAddress: activeItem?.address,
+        mainAddress: activeItem?.inner_accounts[0]?.address,
+        systemAddress: activeItem?.inner_accounts[1]?.address,
+        email: activeItem?.account_metas?.email,
+        dateOfBirth: activeItem?.account_metas?.date_of_birth,
+        _id: activeItem?._id
+      });
+      console.log(accountData, 'acc')
+    }
+  }, [activeItem]);
+
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .post("/api/data/filter", {
+          type: "account",
+          filter: tableFilterOutcomingData,
+          page: pageNow,
+        })
+        .then((res) => {
+          setPageAll(res.data.success.pages);
+          setTd(res.data.success.data);
+        });
+    }
+
+    fetchData();
+
+    if (tableFilterOutcomingData.selects) {
+      if (tableFilterOutcomingData.selects.account_type_id !== "all") {
+        setAccountType(tableFilterOutcomingData.selects.account_type_id);
+      } else {
+        setAccountType(null);
+      }
+    } else {
+      setAccountType(null);
+    }
+  }, [tableFilterOutcomingData, pageNow]);
+
   return (
     <>
       {activeItem && (
@@ -303,7 +376,14 @@ const Accounts = (props) => {
           inputs={inputs}
           handlePopUpClose={() => {
             setActiveItem(null);
-            setAccountData({});
+            setAccountData({
+              externalAddress: "",
+              mainAddress: "",
+              systemAddress: "",
+              email: "",
+              dateOfBirth: "",
+              _id: ""
+            });
           }}
           popUpData={accountData}
           setPopUpData={setAccountData}

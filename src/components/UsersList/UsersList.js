@@ -49,6 +49,7 @@ const UsersList = (props) => {
           {
             title: "Edit",
             onClick: () => {
+              item.newAddress = item.address;
               setActiveItem(item);
             },
             svg: (
@@ -152,12 +153,11 @@ const UsersList = (props) => {
             onClick={() => {
               tableExpandFunc(item.address);
             }}
-            className={`td expand ${
-              accountType !== null ||
+            className={`td expand ${accountType !== null ||
               (tableExpand === item.address && item.inner_accounts.length !== 0)
-                ? "active"
-                : ""
-            } ${th[1].mobileWidth ? true : false}`}
+              ? "active"
+              : ""
+              } ${th[1].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <div>
               <span>{item.address}</span>
@@ -265,20 +265,11 @@ const UsersList = (props) => {
     );
   });
 
-  const deleteUser = async (_id) => {
-    // try {
-    //   await axios.post("http://localhost:4000", { _id }).then(() => {
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    console.log('are u sure?')
-  };
-
   const [popUpData, setPopUpData] = useState({
     address: "",
     name: "",
     email: "",
+    newAddress: ""
   });
 
   const inputs = [
@@ -286,7 +277,7 @@ const UsersList = (props) => {
       title: "Name",
       name: "name",
       type: "default",
-      placeholder: "name",
+      placeholder: "Name",
       value: popUpData.name,
       onChange: (e) =>
         setPopUpData((prev) => ({
@@ -298,7 +289,7 @@ const UsersList = (props) => {
       title: "Email",
       name: "email",
       type: "default",
-      placeholder: "email",
+      placeholder: "Email",
       value: popUpData.email,
       onChange: (e) =>
         setPopUpData((prev) => ({
@@ -306,27 +297,27 @@ const UsersList = (props) => {
           [e.target.name]: e.target.value,
         })),
     },
-    // {
-    //   title: "Address",
-    //   name: "address",
-    //   type: "default",
-    //   placeholder: "address",
-    //   value: popUpData.address,
-    //   onChange: (e) =>
-    //     setPopUpData((prev) => ({
-    //       ...prev,
-    //       [e.target.name]: e.target.value,
-    //     })),
-    // },
+    {
+      title: "Address",
+      name: "newAddress",
+      type: "default",
+      placeholder: "New Address",
+      value: popUpData.newAddress,
+      onChange: (e) =>
+        setPopUpData((prev) => ({
+          ...prev,
+          [e.target.name]: e.target.value,
+        })),
+    },
   ];
 
   useEffect(() => {
     if (activeItem) {
-      console.log(activeItem);
       setPopUpData({
         address: activeItem.address,
         name: activeItem.name,
         email: activeItem.email,
+        newAddress: activeItem.newAddress,
       });
     }
   }, [activeItem]);
@@ -351,10 +342,9 @@ const UsersList = (props) => {
   const [userUpdateLoading, setUserUpdateLoading] = useState(false);
   function handleUserEdit() {
     setUserUpdateLoading(true);
-    console.log(popUpData, 'data');
 
     axios
-      .post("/api/data/edit-account-meta", popUpData)
+      .post("/api/data/edit-user-meta", popUpData)
       .then((res) => {
         setUserUpdateLoading(false);
         setTd((prev) =>
@@ -372,7 +362,6 @@ const UsersList = (props) => {
   }
 
   const notify = (msg) => {
-    console.log(msg, 'hi')
     toast(msg);
   };
 
@@ -412,11 +401,11 @@ const UsersList = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                              params?.defaultAny ||
-                              params?.options[0]?.value
+                            params?.defaultAny ||
+                            params?.options[0]?.value
                             : popUpData[params?.name] === undefined
-                            ? params?.defaultAny
-                            : popUpData[params?.name]
+                              ? params?.defaultAny
+                              : popUpData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {

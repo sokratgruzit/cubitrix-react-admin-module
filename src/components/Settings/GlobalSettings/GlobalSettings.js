@@ -37,15 +37,15 @@ const GlobalSettings = ({ animate }) => {
 
   let stepper = [
     {
-      title: "Uni",
+      title: "Developers API",
       onClick: () => setStep(1),
     },
     {
-      title: "Binary BV",
+      title: "...",
       onClick: () => setStep(2),
     },
     {
-      title: "Binary Level System",
+      title: "...",
       onClick: () => setStep(3),
     },
   ];
