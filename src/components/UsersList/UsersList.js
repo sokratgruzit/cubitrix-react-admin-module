@@ -100,7 +100,7 @@ const UsersList = (props) => {
                 </g>
               </svg>
             ),
-          }
+          },
         ],
       },
     ];
@@ -152,11 +152,12 @@ const UsersList = (props) => {
             onClick={() => {
               tableExpandFunc(item.address);
             }}
-            className={`td expand ${accountType !== null ||
-                (tableExpand === item.address && item.inner_accounts.length !== 0)
+            className={`td expand ${
+              accountType !== null ||
+              (tableExpand === item.address && item.inner_accounts.length !== 0)
                 ? "active"
                 : ""
-              } ${th[1].mobileWidth ? true : false}`}
+            } ${th[1].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <div>
               <span>{item.address}</span>
@@ -264,6 +265,16 @@ const UsersList = (props) => {
     );
   });
 
+  const deleteUser = async (_id) => {
+    // try {
+    //   await axios.post("http://localhost:4000", { _id }).then(() => {
+    //   });
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    console.log('are u sure?')
+  };
+
   const [popUpData, setPopUpData] = useState({
     address: "",
     name: "",
@@ -295,18 +306,18 @@ const UsersList = (props) => {
           [e.target.name]: e.target.value,
         })),
     },
-    {
-      title: "Address",
-      name: "address",
-      type: "default",
-      placeholder: "address",
-      value: popUpData.address,
-      onChange: (e) =>
-        setPopUpData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
+    // {
+    //   title: "Address",
+    //   name: "address",
+    //   type: "default",
+    //   placeholder: "address",
+    //   value: popUpData.address,
+    //   onChange: (e) =>
+    //     setPopUpData((prev) => ({
+    //       ...prev,
+    //       [e.target.name]: e.target.value,
+    //     })),
+    // },
   ];
 
   useEffect(() => {
@@ -401,11 +412,11 @@ const UsersList = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                            params?.defaultAny ||
-                            params?.options[0]?.value
+                              params?.defaultAny ||
+                              params?.options[0]?.value
                             : popUpData[params?.name] === undefined
-                              ? params?.defaultAny
-                              : popUpData[params?.name]
+                            ? params?.defaultAny
+                            : popUpData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {
