@@ -110,8 +110,6 @@ const Transactions = (props) => {
     }
   };
 
-
-
   let statuses = [
     {
       name: "Approved",
@@ -142,7 +140,7 @@ const Transactions = (props) => {
         ],
       },
     ];
-
+    console.log(item, 'item')
     return (
       <div
         key={index}
@@ -184,13 +182,13 @@ const Transactions = (props) => {
             style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
           >
             <span>{item?.tx_fee}</span>
-            <span className={`table-currency`}>{item.tx_fee_currency}</span>
+            <span className={`table-currency`}>{item.tx_fee_currency ? item.tx_fee_currency : " - "}</span>
           </div>
           <div
             className={`td ${th[5].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
           >
-            <span>{item.domination}</span>
+            <span>{item.domination ? item.domination : " - "}</span>
           </div>
           <div
             className={`td ${th[6].mobileWidth ? true : false}`}
@@ -203,9 +201,8 @@ const Transactions = (props) => {
             className={`td ${th[7].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}
           >
-            {item.type === "payment" ? (
+            {item.tx_type === "payment" ? (
               <span
-                // here edit in table ()
                 className={`alert-status-box 
                             ${item.tx_status === "active" && "alert-status-blue"} 
                             ${item.tx_status === "active1" && "alert-status-yellow"}
@@ -213,16 +210,28 @@ const Transactions = (props) => {
                 {item.tx_status}
               </span>
             ) : (
-              <Input
-                type={"lable-input-select"}
-                icon={false}
-                emptyFieldErr={false}
-                defaultData={statuses}
-                selectHandler={statusSelectHandler}
-                value={item.tx_status}
-                active={true}
-                color={"#FFA726"}
-              />
+              <>
+                {item.tx_status === 'pending' ? (
+                  <Input
+                    type={"lable-input-select"}
+                    icon={false}
+                    emptyFieldErr={false}
+                    defaultData={statuses}
+                    selectHandler={statusSelectHandler}
+                    value={item.tx_status}
+                    active={true}
+                    color={"#FFA726"}
+                  />
+                ) : (
+                  <span
+                    className={`alert-status-box 
+                            ${item.tx_status === "active" && "alert-status-blue"} 
+                            ${item.tx_status === "active1" && "alert-status-yellow"}
+                            ${item.tx_status === "pending" && "alert-status-green"}`}>
+                    {item.tx_status}
+                  </span>
+                )}
+              </>
             )}
           </div>
           <div
@@ -380,37 +389,6 @@ const Transactions = (props) => {
     // code to delete the transaction
   };
 
-  const addTransactionSelects = [
-    {
-      name: "Transaction Type",
-      value: "tx_type",
-      options: [
-        {
-          name: "Approved",
-          value: "approved",
-        },
-        {
-          name: "Pending",
-          value: "pending",
-        },
-        {
-          name: "Cancelled",
-          value: "cancelled",
-        },
-      ],
-    },
-    {
-      name: "Tranx Currency",
-      value: "tx_currency",
-      options: [
-        {
-          name: "ether",
-          value: "ether",
-        },
-      ],
-    },
-  ];
-
   const [popUpData, setPopUpData] = useState({
     tx_type: "",
     from: "",
@@ -540,7 +518,7 @@ const Transactions = (props) => {
   };
 
   useEffect(() => {
-    if(isReady) {
+    if (isReady) {
       editStatus();
     }
   }, [isReady])
@@ -556,11 +534,11 @@ const Transactions = (props) => {
       formData.append('tx_hash', popUpData.tx_hash);
       formData.append('tx_status', popUpData.tx_status);
       formData.append('tx_type', popUpData.tx_type);
-  
+
       const response = await axios.post("/api/data/edit_transaction", formData);
       console.log(response);
       notify(response.statusText);
-      setSelectedTransaction(null); 
+      setSelectedTransaction(null);
     } catch (error) {
       console.log(error);
     }

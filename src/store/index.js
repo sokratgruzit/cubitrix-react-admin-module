@@ -8,6 +8,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import transactionsReducer from "./transactionsReducer";
+import settingsReducer from "./settingsReducer";
 import userReducer from "./userReducer";
 
 const persistConfig = {
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   user: persistReducer(persistConfig, userReducer),
   connect: persistReducer(persistConfig, connectReducer),
   stake: persistReducer(persistConfig, stakeReducer),
+  settings: persistReducer(persistConfig, settingsReducer),
 });
 
 const store = configureStore({
