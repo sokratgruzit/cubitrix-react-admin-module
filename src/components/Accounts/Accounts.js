@@ -145,7 +145,7 @@ const Accounts = (props) => {
       onChange: (e) => setAccountData((prevState) => ({ ...prevState, notifications: e.target.checked }))
     },
   ];
-  
+
 
   const inputs = [
     {
@@ -358,7 +358,6 @@ const Accounts = (props) => {
     console.log(activeItem)
   }, [activeItem]);
 
-  console.log(accountData, 'data?')
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -408,18 +407,20 @@ const Accounts = (props) => {
           popUpElement={
             <div className="transactions_popup_container">
               <div className="transactions-inputs">
-                {switches?.map((item, index) => {
-                  return (
-                    <div key={index} className={styles.row}>
-                      <span>{item.title}</span>
-                      <Switches
-                        type={item.type}
-                        value={item.value}
-                        onChange={item.onChange}
-                      />
-                    </div>
-                  )
-                })}
+                <div className={styles.wrap}>
+                  {switches?.map((item, index) => {
+                    return (
+                      <div key={index} className={styles.row}>
+                        <span>{item.title}</span>
+                        <Switches
+                          type={item.type}
+                          value={item.value}
+                          onChange={item.onChange}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
                 {inputs?.map((params, index) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
