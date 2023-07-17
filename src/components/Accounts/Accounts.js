@@ -6,6 +6,8 @@ import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 
+import styles from "./Accounts.module.css";
+
 const Accounts = (props) => {
   const axios = useAxios();
   const { tableFilterData, th, mobile, mobileExpandFunc, mobileExpand } =
@@ -26,15 +28,10 @@ const Accounts = (props) => {
     systemAddress: "",
     email: "",
     dateOfBirth: "",
-    _id: ""
-  });
-  const [accountUpdateLoading, setAccountUpdateLoading] = useState(false);
-
-
-  const [updatedStatus, setUpdatedStatus] = useState({
     active: "",
     _id: ""
   });
+  const [accountUpdateLoading, setAccountUpdateLoading] = useState(false);
 
   let tableExpandFunc = (id) => {
     if (id !== tableExpand) {
@@ -42,17 +39,6 @@ const Accounts = (props) => {
     } else {
       setTableExpand(null);
     }
-  };
-
-  const updatedStatusHandler = async () => {
-    // await axios
-    // .post('/api/data/edit_user', {
-    //   active: updatedStatus.active,
-    //   _id: updatedStatus._id
-    // })
-    // .then((res) => {
-    //   console.log(res);
-    // })
   };
 
   const handleInputChange = (e, params) => {
@@ -274,16 +260,6 @@ const Accounts = (props) => {
           </div>
         </div>
         <div style={{ display: 'flex' }} className="table-more">
-          <Switches
-            type={"sm-switches"}
-            value={item.active}
-            onChange={(e) => {
-              const newActiveStatus = e.target.checked;
-              const updatedItem = { ...item, active: newActiveStatus };
-              setTd(prev => prev.map(prevItem => (prevItem.address === item.address ? updatedItem : prevItem)));
-              setUpdatedStatus({ status: newActiveStatus, _id: item._id });
-            }}
-          />
           <MoreButton dropdownData={dynamicDropDown(item)} />
         </div>
         {/* <div className="icon-place">
@@ -316,12 +292,7 @@ const Accounts = (props) => {
     );
   });
 
-  useEffect(() => {
-    if (updatedStatus.id !== "" && updatedStatus._id !== "") {
-      updatedStatusHandler();
-    }
-  }, [updatedStatus]);
-
+  // console.log(activeItem.active)
   useEffect(() => {
     if (activeItem) {
       setAccountData({
@@ -330,10 +301,14 @@ const Accounts = (props) => {
         systemAddress: activeItem?.inner_accounts[1]?.address,
         email: activeItem?.account_metas?.email,
         dateOfBirth: activeItem?.account_metas?.date_of_birth,
-        _id: activeItem?._id
+        _id: activeItem?._id,
+        active: activeItem.active
       });
     }
   }, [activeItem]);
+
+  console.log(accountData.active)
+
 
   useEffect(() => {
     async function fetchData() {
@@ -384,6 +359,14 @@ const Accounts = (props) => {
           popUpElement={
             <div className="transactions_popup_container">
               <div className="transactions-inputs">
+                <div className={styles.row}>
+                  <span>Active</span>
+                  <Switches
+                    type={"sm-switches"}
+                    value={accountData.active || false} 
+                    onChange={(e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))}
+                  />
+                </div>
                 {inputs?.map((params, index) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
