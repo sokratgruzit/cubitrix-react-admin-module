@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AdminPanel, MoreButton, Switches, Popup, Input, Button } from "@cubitrix/cubitrix-react-ui-module";
+import { AdminPanel, MoreButton, Switches, Popup, Input, Button, Loan } from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
@@ -29,7 +29,12 @@ const Accounts = (props) => {
     email: "",
     dateOfBirth: "",
     active: "",
-    _id: ""
+    _id: "",
+    loan: false,
+    trade: false,
+    staking: false,
+    referral: false,
+    notifications: false,
   });
   const [accountUpdateLoading, setAccountUpdateLoading] = useState(false);
 
@@ -101,6 +106,46 @@ const Accounts = (props) => {
     ];
     return dropdownData;
   };
+
+  const switches = [
+    {
+      title: 'Active',
+      type: 'sm-switches',
+      value: accountData.active,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))
+    },
+    {
+      title: 'Staking',
+      type: 'sm-switches',
+      value: accountData.staking,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, staking: e.target.checked }))
+    },
+    {
+      title: 'Trade',
+      type: 'sm-switches',
+      value: accountData.trade,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, trade: e.target.checked }))
+    },
+    {
+      title: 'Loan',
+      type: 'sm-switches',
+      value: accountData.loan,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, loan: e.target.checked }))
+    },
+    {
+      title: 'Referral',
+      type: 'sm-switches',
+      value: accountData.referral,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, referral: e.target.checked }))
+    },
+    {
+      title: 'Notifications',
+      type: 'sm-switches',
+      value: accountData.notifications,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, notifications: e.target.checked }))
+    },
+  ];
+  
 
   const inputs = [
     {
@@ -293,7 +338,6 @@ const Accounts = (props) => {
     );
   });
 
-  // console.log(activeItem.active)
   useEffect(() => {
     if (activeItem) {
       setAccountData({
@@ -303,14 +347,18 @@ const Accounts = (props) => {
         email: activeItem?.account_metas?.email,
         dateOfBirth: activeItem?.account_metas?.date_of_birth,
         _id: activeItem?._id,
-        active: activeItem.active
+        active: activeItem?.active,
+        loan: activeItem?.inner_accounts[0]?.extensions?.loan ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loan) : false,
+        trade: activeItem?.inner_accounts[0]?.extensions?.trade ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.trade) : false,
+        staking: activeItem?.inner_accounts[0]?.extensions?.staking ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.staking) : false,
+        referral: activeItem?.inner_accounts[0]?.extensions?.referral ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referral) : false,
+        notifications: activeItem?.inner_accounts[0]?.extensions?.notify ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notify) : false,
       });
     }
+    console.log(activeItem)
   }, [activeItem]);
 
-  console.log(accountData.active)
-
-
+  console.log(accountData, 'data?')
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -360,14 +408,18 @@ const Accounts = (props) => {
           popUpElement={
             <div className="transactions_popup_container">
               <div className="transactions-inputs">
-                <div className={styles.row}>
-                  <span>Active</span>
-                  <Switches
-                    type={"sm-switches"}
-                    value={accountData.active || false}
-                    onChange={(e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))}
-                  />
-                </div>
+                {switches?.map((item, index) => {
+                  return (
+                    <div key={index} className={styles.row}>
+                      <span>{item.title}</span>
+                      <Switches
+                        type={item.type}
+                        value={item.value}
+                        onChange={item.onChange}
+                      />
+                    </div>
+                  )
+                })}
                 {inputs?.map((params, index) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
