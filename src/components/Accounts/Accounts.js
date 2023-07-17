@@ -257,11 +257,12 @@ const Accounts = (props) => {
             style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
           >
             <span>{moment(item.createdAt).format("LL")}</span>
+            <div style={{ display: 'flex', marginLeft: "auto" }} className="table-more">
+              <MoreButton dropdownData={dynamicDropDown(item)} />
+            </div>
           </div>
         </div>
-        <div style={{ display: 'flex' }} className="table-more">
-          <MoreButton dropdownData={dynamicDropDown(item)} />
-        </div>
+
         {/* <div className="icon-place">
           <svg
             width="12"
@@ -363,7 +364,7 @@ const Accounts = (props) => {
                   <span>Active</span>
                   <Switches
                     type={"sm-switches"}
-                    value={accountData.active || false} 
+                    value={accountData.active || false}
                     onChange={(e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))}
                   />
                 </div>
