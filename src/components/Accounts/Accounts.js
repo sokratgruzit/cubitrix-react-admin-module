@@ -53,7 +53,6 @@ const Accounts = (props) => {
     // .then((res) => {
     //   console.log(res);
     // })
-    console.log(updatedStatus, 'updated status in handelr');
   };
 
   const handleInputChange = (e, params) => {
@@ -75,8 +74,6 @@ const Accounts = (props) => {
 
   function accountEditHandler() {
     setAccountUpdateLoading(true);
-    console.log(accountData, 'data');
-
     // axios
     //   .post("/api/data/edit-account", accountData)
     //   .then((res) => {
