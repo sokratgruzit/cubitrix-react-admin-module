@@ -70,15 +70,32 @@ const Accounts = (props) => {
 
   function accountEditHandler() {
     setAccountUpdateLoading(true);
-    console.log(activeItem, 'active item');
+  
+    // Convert boolean values to strings in accountData object
+    const stringifiedAccountData = {
+      ...accountData,
+      loan: accountData.loan.toString(),
+      loanAdmin: accountData.loanAdmin.toString(),
+      notify: accountData.notify.toString(),
+      notifyAdmin: accountData.notifyAdmin.toString(),
+      referral: accountData.referral.toString(),
+      referralAdmin: accountData.referralAdmin.toString(),
+      staking: accountData.staking.toString(),
+      stakingAdmin: accountData.stakingAdmin.toString(),
+      trade: accountData.trade.toString(),
+      tradeAdmin: accountData.tradeAdmin.toString(),
+    };
+  
+    console.log(stringifiedAccountData, 'account');
+  
     axios
-      .post("/api/data/edit-account", { accountData })
+      .post("/api/data/edit-account", { accountData: stringifiedAccountData })
       .then((res) => {
         setAccountUpdateLoading(false);
         setTd((prev) =>
           prev.map((item) =>
-            item.address === res.data.address ? { ...item, ...res.data } : item,
-          ),
+            item.address === res.data.address ? { ...item, ...res.data } : item
+          )
         );
         setActiveItem(null);
         notify(res.statusText);
@@ -89,7 +106,7 @@ const Accounts = (props) => {
         notify(err);
       });
   }
-
+  
   const notify = (msg) => {
     toast(msg);
   };
@@ -186,6 +203,11 @@ const Accounts = (props) => {
       }
     },
   ];
+
+  const switchesWithBooleanToString = switches.map((item) => {
+    const valueAsString = item.value ? "true" : "false";
+    return { ...item, value: valueAsString };
+  });
 
 
   const inputs = [
