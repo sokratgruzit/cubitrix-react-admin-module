@@ -29,7 +29,17 @@ const Accounts = (props) => {
     email: "",
     dateOfBirth: "",
     active: "",
-    _id: ""
+    _id: "",
+    loan: false,
+    loanAdmin: true,
+    trade: false,
+    tradeAdmin: true,
+    staking: false,
+    stakingAdmin: true,
+    referral: false,
+    referralAdmin: true,
+    notify: false,
+    notifyAdmin: true,
   });
   const [accountUpdateLoading, setAccountUpdateLoading] = useState(false);
 
@@ -60,31 +70,48 @@ const Accounts = (props) => {
 
   function accountEditHandler() {
     setAccountUpdateLoading(true);
-    // axios
-    //   .post("/api/data/edit-account", accountData)
-    //   .then((res) => {
-    //     setAccountUpdateLoading(false);
-    //     // setTd((prev) =>
-    //     //   prev.map((item) =>
-    //     //     item.address === res.data.address ? { ...item, ...res.data } : item,
-    //     //   ),
-    //     // );
-    //     // setActiveItem(null);
-    //     // notify(res.statusText);
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     setAccountUpdateLoading(false);
-    //     notify(err);
-    //   });
+  
+    // Convert boolean values to strings in accountData object
+    const stringifiedAccountData = {
+      ...accountData,
+      loan: accountData.loan.toString(),
+      loanAdmin: accountData.loanAdmin.toString(),
+      notify: accountData.notify.toString(),
+      notifyAdmin: accountData.notifyAdmin.toString(),
+      referral: accountData.referral.toString(),
+      referralAdmin: accountData.referralAdmin.toString(),
+      staking: accountData.staking.toString(),
+      stakingAdmin: accountData.stakingAdmin.toString(),
+      trade: accountData.trade.toString(),
+      tradeAdmin: accountData.tradeAdmin.toString(),
+    };
+  
+    console.log(stringifiedAccountData, 'account');
+  
+    axios
+      .post("/api/data/edit-account", { accountData: stringifiedAccountData })
+      .then((res) => {
+        setAccountUpdateLoading(false);
+        setTd((prev) =>
+          prev.map((item) =>
+            item.address === res.data.address ? { ...item, ...res.data } : item
+          )
+        );
+        setActiveItem(null);
+        notify(res.statusText);
+        console.log(res);
+      })
+      .catch((err) => {
+        setAccountUpdateLoading(false);
+        notify(err);
+      });
   }
-
+  
   const notify = (msg) => {
     toast(msg);
   };
 
   let dynamicDropDown = (item) => {
-    const id = item?._id;
 
     let dropdownData = [
       {
@@ -102,43 +129,124 @@ const Accounts = (props) => {
     return dropdownData;
   };
 
+  const switches = [
+    {
+      title: 'Active',
+      type: 'sm-switches',
+      value: accountData.active,
+      onChange: (e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))
+    },
+    {
+      title: 'Staking',
+      type: 'sm-switches',
+      value: accountData.staking,
+      onChange: (e) => {
+        setAccountData((prevState) => ({ ...prevState, staking: e.target.checked }));
+        if (accountData.staking) {
+          setAccountData((prevState) => ({ ...prevState, stakingAdmin: false }))
+        } else {
+          setAccountData((prevState) => ({ ...prevState, stakingAdmin: true }))
+        }
+      }
+    },
+    {
+      title: 'Trade',
+      type: 'sm-switches',
+      value: accountData.trade,
+      onChange: (e) => {
+        setAccountData((prevState) => ({ ...prevState, trade: e.target.checked }));
+        if (accountData.trade) {
+          setAccountData((prevState) => ({ ...prevState, tradeAdmin: false }))
+        } else {
+          setAccountData((prevState) => ({ ...prevState, tradeAdmin: true }))
+
+        }
+      }
+    },
+    {
+      title: 'Loan',
+      type: 'sm-switches',
+      value: accountData.loan,
+      onChange: (e) => {
+        setAccountData((prevState) => ({ ...prevState, loan: e.target.checked }));
+        if (accountData.loan) {
+          setAccountData((prevState) => ({ ...prevState, loanAdmin: false }))
+        } else {
+          setAccountData((prevState) => ({ ...prevState, loanAdmin: true }))
+        }
+      }
+    },
+    {
+      title: 'Referral',
+      type: 'sm-switches',
+      value: accountData.referral,
+      onChange: (e) => {
+        setAccountData((prevState) => ({ ...prevState, referral: e.target.checked }));
+        if (accountData.referral) {
+          setAccountData((prevState) => ({ ...prevState, referralAdmin: false }))
+        } else {
+          setAccountData((prevState) => ({ ...prevState, referralAdmin: true }))
+        }
+      }
+    },
+    {
+      title: 'Notifications',
+      type: 'sm-switches',
+      value: accountData.notify,
+      onChange: (e) => {
+        setAccountData((prevState) => ({ ...prevState, notify: e.target.checked }));
+        if (accountData.notify) {
+          setAccountData((prevState) => ({ ...prevState, notifyAdmin: false }))
+        } else {
+          setAccountData((prevState) => ({ ...prevState, notifyAdmin: true }))
+        }
+      }
+    },
+  ];
+
+  const switchesWithBooleanToString = switches.map((item) => {
+    const valueAsString = item.value ? "true" : "false";
+    return { ...item, value: valueAsString };
+  });
+
+
   const inputs = [
-    {
-      title: "External",
-      name: "externalAddress",
-      type: "default",
-      placeholder: "External",
-      value: accountData?.externalAddress, // ??
-      onChange: (e) =>
-        setAccountData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
-    {
-      title: "Main",
-      name: "mainAddress",
-      type: "default",
-      placeholder: "Main",
-      value: accountData?.mainAddress,
-      onChange: (e) =>
-        setAccountData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
-    {
-      title: "System",
-      name: "systemAddress",
-      type: "default",
-      placeholder: "System",
-      value: accountData?.systemAddress,
-      onChange: (e) =>
-        setAccountData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
+    // {
+    //   title: "External",
+    //   name: "externalAddress",
+    //   type: "default",
+    //   placeholder: "External",
+    //   value: accountData?.externalAddress, // ??
+    //   onChange: (e) =>
+    //     setAccountData((prev) => ({
+    //       ...prev,
+    //       [e.target.name]: e.target.value,
+    //     })),
+    // },
+    // {
+    //   title: "Main",
+    //   name: "mainAddress",
+    //   type: "default",
+    //   placeholder: "Main",
+    //   value: accountData?.mainAddress,
+    //   onChange: (e) =>
+    //     setAccountData((prev) => ({
+    //       ...prev,
+    //       [e.target.name]: e.target.value,
+    //     })),
+    // },
+    // {
+    //   title: "System",
+    //   name: "systemAddress",
+    //   type: "default",
+    //   placeholder: "System",
+    //   value: accountData?.systemAddress,
+    //   onChange: (e) =>
+    //     setAccountData((prev) => ({
+    //       ...prev,
+    //       [e.target.name]: e.target.value,
+    //     })),
+    // },
     {
       title: "Email",
       name: "email",
@@ -151,18 +259,18 @@ const Accounts = (props) => {
           [e.target.name]: e.target.value,
         })),
     },
-    {
-      title: "Date of birth",
-      name: "dateOfBirth",
-      type: "default",
-      placeholder: "Date",
-      value: accountData?.dateOfBirth,
-      onChange: (e) =>
-        setAccountData((prev) => ({
-          ...prev,
-          [e.target.name]: e.target.value,
-        })),
-    },
+    // {
+    //   title: "Date of birth",
+    //   name: "dateOfBirth",
+    //   type: "default",
+    //   placeholder: "Date",
+    //   value: accountData?.dateOfBirth,
+    //   onChange: (e) =>
+    //     setAccountData((prev) => ({
+    //       ...prev,
+    //       [e.target.name]: e.target.value,
+    //     })),
+    // },
   ];
 
   let tableData;
@@ -293,7 +401,6 @@ const Accounts = (props) => {
     );
   });
 
-  // console.log(activeItem.active)
   useEffect(() => {
     if (activeItem) {
       setAccountData({
@@ -303,13 +410,21 @@ const Accounts = (props) => {
         email: activeItem?.account_metas?.email,
         dateOfBirth: activeItem?.account_metas?.date_of_birth,
         _id: activeItem?._id,
-        active: activeItem.active
+        active: activeItem?.active,
+        loan: activeItem?.inner_accounts[0]?.extensions?.loan ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loan) : false,
+        loanAdmin: activeItem?.inner_accounts[0]?.extensions?.loanAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loanAdmin) : false,
+        trade: activeItem?.inner_accounts[0]?.extensions?.trade ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.trade) : false,
+        tradeAdmin: activeItem?.inner_accounts[0]?.extensions?.tradeAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.tradeAdmin) : false,
+        staking: activeItem?.inner_accounts[0]?.extensions?.staking ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.staking) : false,
+        stakingAdmin: activeItem?.inner_accounts[0]?.extensions?.stakingAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.stakingAdmin) : false,
+        referral: activeItem?.inner_accounts[0]?.extensions?.referral ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referral) : false,
+        referralAdmin: activeItem?.inner_accounts[0]?.extensions?.referralAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referralAdmin) : false,
+        notify: activeItem?.inner_accounts[0]?.extensions?.notify ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notify) : false,
+        notifyAdmin: activeItem?.inner_accounts[0]?.extensions?.notifyAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notifyAdmin) : false,
       });
+      console.log(activeItem.active, 'act')
     }
   }, [activeItem]);
-
-  console.log(accountData.active)
-
 
   useEffect(() => {
     async function fetchData() {
@@ -320,6 +435,7 @@ const Accounts = (props) => {
           page: pageNow,
         })
         .then((res) => {
+          console.log(res, 'res')
           setPageAll(res.data.success.pages);
           setTd(res.data.success.data);
         });
@@ -360,13 +476,19 @@ const Accounts = (props) => {
           popUpElement={
             <div className="transactions_popup_container">
               <div className="transactions-inputs">
-                <div className={styles.row}>
-                  <span>Active</span>
-                  <Switches
-                    type={"sm-switches"}
-                    value={accountData.active || false}
-                    onChange={(e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))}
-                  />
+                <div className={styles.wrap}>
+                  {switches?.map((item, index) => {
+                    return (
+                      <div key={index} className={styles.row}>
+                        <span>{item.title}</span>
+                        <Switches
+                          type={item.type}
+                          value={item.value}
+                          onChange={item.onChange}
+                        />
+                      </div>
+                    )
+                  })}
                 </div>
                 {inputs?.map((params, index) => {
                   let selectedOption;
