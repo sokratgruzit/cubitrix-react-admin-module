@@ -266,7 +266,6 @@ function App() {
 
   const devApi = useSelector(state => state.settings.developersApi)
   const user = useSelector((state) => state.user);
-  // const sideBarAct
 
   let userId = user.userId
 
@@ -334,7 +333,7 @@ function App() {
     } else {
       setSideBarActive(false);
     }
-  }
+  };
   console.log(sideBarActive)
   useEffect(() => {
     MetaMaskEagerlyConnect(injected);
@@ -400,28 +399,28 @@ function App() {
               )}
             </div>
             <Routes>
-              <Route path="/" element={<Dashboard animate={animateDom} />} />
+              <Route path="/" element={<Dashboard sideBarActive={sideBarActive} animate={animateDom} />} />
               <Route
                 path="/transactions"
-                element={<Transactions animate={animateDom} />}
+                element={<Transactions sideBarActive={sideBarActive} animate={animateDom} />}
               />
-              <Route path="/users-list" element={<UsersList animate={animateDom} />} />
-              <Route path="/accounts" element={<Accounts animate={animateDom} />} />
+              <Route path="/users-list" element={<UsersList sideBarActive={sideBarActive} animate={animateDom} />} />
+              <Route path="/accounts" element={<Accounts sideBarActive={sideBarActive} animate={animateDom} />} />
               <Route
                 path="/developers-api"
-                element={<DevelopersApi animate={animateDom} />}
+                element={<DevelopersApi sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/admin-management"
-                element={<AdminManagement animate={animateDom} />}
+                element={<AdminManagement sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/referral-management"
-                element={<ReferralManagment animate={animateDom} />}
+                element={<ReferralManagment sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/global-settings"
-                element={<GlobalSettings animate={animateDom} />}
+                element={<GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />}
               />
             </Routes>
           </div>

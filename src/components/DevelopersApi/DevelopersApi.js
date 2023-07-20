@@ -1388,6 +1388,7 @@ const DevelopersApi = (props) => {
     return queryString;
   }
 
+  console.log(props.sideBarActive)
   return (
     <>
       <AdminPanel

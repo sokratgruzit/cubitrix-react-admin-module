@@ -1,7 +1,6 @@
 const INIT_STATE = {
   loading: false,
   userId: null,
-  sideBarActive: false
 };
 
 const userReducer = (state = INIT_STATE, { type, payload }) => {
@@ -15,10 +14,6 @@ const userReducer = (state = INIT_STATE, { type, payload }) => {
 
   if (type === "LOGOUT") {
     return { ...INIT_STATE };
-  }
-
-  if (type === "SIDEBAR") {
-    return {...state, sideBarActive: true}
   }
 
   return state;

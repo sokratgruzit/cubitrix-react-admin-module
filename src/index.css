@@ -28,3 +28,19 @@ code {
   gap: 20px;
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .admin-content {
+    width: calc(100% - 25px)!important;
+  }
+
+  .tabs {
+    flex-direction: column;
+    height: auto!important;
+  }
+
+  .get-btn {
+    transform: translateY(95px);
+  }
+
+}

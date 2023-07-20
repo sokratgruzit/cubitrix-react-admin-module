@@ -240,9 +240,10 @@ const ReferralManagment = ({ animate }) => {
           customStyles={{ width: "100%" }}
         />
       </div>
+      {/* flexDirection: "column", height: "auto" */}
       <div className={`${styles.steps} ${step === 1 ? styles.actived : ""}`}>
         <div className={styles.block}>
-          <div className={styles.row}>
+          <div className={`${styles.row}`}>
             <p>Uni</p>
             <Switches
               value={uniData.active}
@@ -288,7 +289,7 @@ const ReferralManagment = ({ animate }) => {
         <div className={styles.block}>
           <div className={styles.col}>
             {Array.from({ length: uniData?.level ?? 0 }, (_, index) => (
-              <div key={index} className={styles.row}>
+              <div key={index} className={`${styles.resp} ${styles.row}`}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
@@ -318,13 +319,17 @@ const ReferralManagment = ({ animate }) => {
                 />
               </div>
             ))}
-            <Button
-              label={"save"}
-              size={"btn-lg"}
-              type={"btn-primary"}
-              element={"button"}
-              onClick={saveUniDataHandler}
-            />
+            <div className={`${styles.onResp}`}>
+              <Button
+                label={"save"}
+                size={"btn-lg"}
+                type={"btn-primary"}
+                element={"button"}
+                onClick={saveUniDataHandler}
+                customStyles={{width: '100%'}}
+              />
+            </div>
+
           </div>
         </div>
       </div>
