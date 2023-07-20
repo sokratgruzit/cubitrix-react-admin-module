@@ -101,11 +101,11 @@ const Transactions = (props) => {
         tx_status: status
       });
       console.log(response);
-      notify(response.statusText);
+      notify("Transaction Status Changed");
       setIsReady(false);
       fetchData();
     } catch (error) {
-      notify(error)
+      notify('Something Went Wrong')
       console.log(error);
     }
   };
@@ -536,9 +536,10 @@ const Transactions = (props) => {
 
       const response = await axios.post("/api/data/edit_transaction", formData);
       console.log(response);
-      notify(response.statusText);
+      notify('Transaction Edited');
       setSelectedTransaction(null);
     } catch (error) {
+      notify('Something Went Wrong')
       console.log(error);
     }
   };

@@ -1,0 +1,40 @@
+.burgerMenu {
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 45px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.burgerMenu span{
+    width: 25px;
+    height: 3px;
+    background-color: #fff; 
+}
+.burgerMenu div {
+    border: 1px solid ;
+    width: 25px;
+    height: 25px;
+    padding: 7px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width: 768px) {
+    .sideBar {
+        display: none;
+    }
+    .burgerMenu {
+        display: flex;
+    }
+    /* .responsive-sidebar {
+      transform: translateX(-240px)!important;
+    }
+  
+    .referral-management {
+      transform: translateX(-240px)!important;
+    } */
+  }
+  
+  

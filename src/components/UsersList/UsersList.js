@@ -353,11 +353,11 @@ const UsersList = (props) => {
           ),
         );
         setActiveItem(null);
-        notify(res.statusText);
+        notify("User Edited");
       })
       .catch((err) => {
         setUserUpdateLoading(false);
-        notify(err);
+        notify("Something Went Wrong");
       });
   }
 

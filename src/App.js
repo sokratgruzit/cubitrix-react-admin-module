@@ -18,6 +18,8 @@ import { injected } from "./connector";
 
 import Login from "./components/Login/Login";
 
+import styles from "./index.module.css";
+
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -260,9 +262,11 @@ function App() {
       active: true
     },
   ]);
+  const [sideBarActive, setSideBarActive] = useState(false);
 
   const devApi = useSelector(state => state.settings.developersApi)
   const user = useSelector((state) => state.user);
+  // const sideBarAct
 
   let userId = user.userId
 
@@ -324,6 +328,14 @@ function App() {
     ],
   };
 
+  const sideBarHandler = () => {
+    if (!sideBarActive) {
+      setSideBarActive(true);
+    } else {
+      setSideBarActive(false);
+    }
+  }
+  console.log(sideBarActive)
   useEffect(() => {
     MetaMaskEagerlyConnect(injected);
     setTimeout(() => {
@@ -354,9 +366,9 @@ function App() {
           />
           <div className={`admin-container`}>
             <div
-              className={`admin-sidebar animate-translateX ${animateDom ? "animate" : ""
+              className={`${styles.sideBar} admin-sidebar animate-translateX ${animateDom ? "animate" : ""
                 }`}
-              style={{ transitionDelay: ".1s" }}>
+              style={{ transitionDelay: ".1s", display: sideBarActive ? "block" : "" }}>
               {sideBar.map((item, index) => {
                 return (
                   item.active ? (
@@ -375,6 +387,17 @@ function App() {
                   ) : ("")
                 );
               })}
+            </div>
+            <div onClick={sideBarHandler} className={styles.burgerMenu}>
+              {sideBarActive ? (
+                  <div>X</div>
+              ) : (
+                <>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  </>
+              )}
             </div>
             <Routes>
               <Route path="/" element={<Dashboard animate={animateDom} />} />

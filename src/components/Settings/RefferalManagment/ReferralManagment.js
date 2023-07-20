@@ -117,11 +117,11 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-        notify(res.statusText);
+        notify('Uni Referral Settings Updated');
       })
       .catch((error) => {
         console.log(error);
-        notify(res.statusText);
+        notify('Something Went Wrong');
       })
   };
 
@@ -134,11 +134,11 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-        notify(res.statusText);
+        notify('Binary Referral Settings Updated');
       })
       .catch((error) => {
         console.log(error);
-        notify(res.statusText);
+        notify('Something Went Wrong Please Try Again');
       })
   };
 
@@ -229,7 +229,7 @@ const ReferralManagment = ({ animate }) => {
   };
 
   return (
-    <div className={styles.table}>
+    <div className={`${styles.table} "referral-management`}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
         <h1 className={styles.title}>Referral Management</h1>
         <Tabs
