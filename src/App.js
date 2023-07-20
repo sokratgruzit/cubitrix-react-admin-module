@@ -18,6 +18,8 @@ import { injected } from "./connector";
 
 import Login from "./components/Login/Login";
 
+import styles from "./index.module.css";
+
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -260,6 +262,7 @@ function App() {
       active: true
     },
   ]);
+  const [sideBarActive, setSideBarActive] = useState(false);
 
   const devApi = useSelector(state => state.settings.developersApi)
   const user = useSelector((state) => state.user);
@@ -324,6 +327,14 @@ function App() {
     ],
   };
 
+  const sideBarHandler = () => {
+    if (!sideBarActive) {
+      setSideBarActive(true);
+    } else {
+      setSideBarActive(false);
+    }
+  };
+  console.log(sideBarActive)
   useEffect(() => {
     MetaMaskEagerlyConnect(injected);
     setTimeout(() => {
@@ -354,9 +365,9 @@ function App() {
           />
           <div className={`admin-container`}>
             <div
-              className={`admin-sidebar animate-translateX ${animateDom ? "animate" : ""
+              className={`${styles.sideBar} admin-sidebar animate-translateX ${animateDom ? "animate" : ""
                 }`}
-              style={{ transitionDelay: ".1s" }}>
+              style={{ transitionDelay: ".1s", display: sideBarActive ? "block" : "" }}>
               {sideBar.map((item, index) => {
                 return (
                   item.active ? (
@@ -376,29 +387,40 @@ function App() {
                 );
               })}
             </div>
+            <div onClick={sideBarHandler} className={styles.burgerMenu}>
+              {sideBarActive ? (
+                  <div>X</div>
+              ) : (
+                <>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  </>
+              )}
+            </div>
             <Routes>
-              <Route path="/" element={<Dashboard animate={animateDom} />} />
+              <Route path="/" element={<Dashboard sideBarActive={sideBarActive} animate={animateDom} />} />
               <Route
                 path="/transactions"
-                element={<Transactions animate={animateDom} />}
+                element={<Transactions sideBarActive={sideBarActive} animate={animateDom} />}
               />
-              <Route path="/users-list" element={<UsersList animate={animateDom} />} />
-              <Route path="/accounts" element={<Accounts animate={animateDom} />} />
+              <Route path="/users-list" element={<UsersList sideBarActive={sideBarActive} animate={animateDom} />} />
+              <Route path="/accounts" element={<Accounts sideBarActive={sideBarActive} animate={animateDom} />} />
               <Route
                 path="/developers-api"
-                element={<DevelopersApi animate={animateDom} />}
+                element={<DevelopersApi sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/admin-management"
-                element={<AdminManagement animate={animateDom} />}
+                element={<AdminManagement sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/referral-management"
-                element={<ReferralManagment animate={animateDom} />}
+                element={<ReferralManagment sideBarActive={sideBarActive} animate={animateDom} />}
               />
               <Route
                 path="/settings/global-settings"
-                element={<GlobalSettings animate={animateDom} />}
+                element={<GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />}
               />
             </Routes>
           </div>

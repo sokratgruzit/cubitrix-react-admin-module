@@ -98,12 +98,11 @@ const Accounts = (props) => {
           )
         );
         setActiveItem(null);
-        notify(res.statusText);
-        console.log(res);
+        notify("Account Edited");
       })
       .catch((err) => {
         setAccountUpdateLoading(false);
-        notify(err);
+        notify('Something went wrong please try again');
       });
   }
   
