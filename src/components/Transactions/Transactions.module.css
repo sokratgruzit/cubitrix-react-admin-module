@@ -21,3 +21,51 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.payment {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: blue;
+  border-radius: 4px;
+}
+
+.exchange {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: red;
+  border-radius: 4px;
+}
+
+.withdraw {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: #57d29e;
+  border-radius: 4px;
+}
+
+.internal {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: red;
+  border-radius: 4px;
+}
+
+.tranfer {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: blue;
+  border-radius: 4px;
+}
+
+.depostit {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: #57d29e;
+  border-radius: 4px;
+}
+.bonus {
+  background: rgba(87,210,158,.1);
+  border: 1px solid rgba(87,210,158,.2);
+  color: blue;
+  border-radius: 4px;
+}

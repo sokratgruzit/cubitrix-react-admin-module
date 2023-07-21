@@ -50,12 +50,14 @@ const Transactions = (props) => {
       .then((res) => {
         setPageAll(res.data.success.pages);
         setTd(res.data.success.data);
+        console.log(res)
       });
   };
 
   useEffect(() => {
     fetchData();
   }, [tableFilterOutcomingData, pageNow]);
+
   async function newTx() {
     await axios
       .post("/api/transactions/make_transaction", {
@@ -125,6 +127,8 @@ const Transactions = (props) => {
     },
   ];
 
+  console.log(td, 'table data')
+
   let tableData;
   tableData = td.map((item, index) => {
     let dropdownData = [
@@ -140,6 +144,7 @@ const Transactions = (props) => {
         ],
       },
     ];
+    console.log(item, 'item')
     return (
       <div
         key={index}
@@ -173,7 +178,7 @@ const Transactions = (props) => {
           >
             <span>{item.amount}</span>
             <span className={`table-currency`}>
-              {item?.tx_options?.account_category_from ?? "ATR"}
+              {item?.tx_options?.fromAccType ? item?.tx_options.fromAccType : " - "}
             </span>
           </div>
           <div
@@ -203,9 +208,9 @@ const Transactions = (props) => {
             {item.tx_type === "payment" ? (
               <span
                 className={`alert-status-box 
-                            ${item.tx_status === "active" && "alert-status-blue"} 
-                            ${item.tx_status === "active1" && "alert-status-yellow"}
-                            ${item.tx_status === "pending" && "alert-status-green"}`}>
+                            ${item.tx_status === "canceled" && "alert-status-blue"} 
+                            ${item.tx_status === "pending" && "alert-status-yellow"}
+                            ${item.tx_status === "approved" && "alert-status-green"}`}>
                 {item.tx_status}
               </span>
             ) : (
@@ -224,9 +229,9 @@ const Transactions = (props) => {
                 ) : (
                   <span
                     className={`alert-status-box 
-                            ${item.tx_status === "active" && "alert-status-blue"} 
-                            ${item.tx_status === "active1" && "alert-status-yellow"}
-                            ${item.tx_status === "pending" && "alert-status-green"}`}>
+                    ${item.tx_status === "canceled" && "alert-status-blue"} 
+                    ${item.tx_status === "pending" && "alert-status-yellow"}
+                    ${item.tx_status === "approved" && "alert-status-green"}`}>
                     {item.tx_status}
                   </span>
                 )}
@@ -244,14 +249,14 @@ const Transactions = (props) => {
           >
             <span
               className={`alert-status-box 
-                            ${item.tx_type === "deposit" && "alert-status-blue"
-                } 
-                            ${item.tx_type === "withdraw" &&
-                "alert-status-yellow"
-                }
-                            ${item.tx_type === "transfer" &&
-                "alert-status-green"
-                }`}
+                  ${item.tx_type === "deposit" && styles.depostit} 
+                  ${item.tx_type === "transfer" && styles.tranfer}
+                  ${item.tx_type === "withdraw" && styles.withdraw}
+                  ${item.tx_type === "payment" && styles.payment}
+                  ${item.tx_type === "internal_transfer" && styles.internal}
+                  ${item.tx_type === "exchange" && styles.exchange}
+                  ${item.tx_type === "bonus" && styles.bonus}
+                `}
             >
               {item.tx_type}
             </span>
