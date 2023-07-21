@@ -690,8 +690,38 @@ const DevelopersApi = (props) => {
           id: 14,
           description: "Get Referral Options",
           route: "api/referral/get_referral_options",
-          type: "GET",
-          inputs: [],
+          type: "POST",
+          inputs: [
+            {
+              // icon={false}
+              // emptyFieldErr={false}
+              // value={uniData.calculated}
+              // defaultData={defaultData}
+              // selectHandler={selectHandlerUni}
+              label: "Calculated",
+              selectLabel: "select",
+              title: "Uni Calculate",
+              name: "uni_calculate",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              }
+            },
+            {
+              title: "Binary Calculate",
+              name: "binary_calculate",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: "",
+              required: true,
+              validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+              }
+            }
+          ],
         },
       ],
     },
@@ -1365,6 +1395,8 @@ const DevelopersApi = (props) => {
       }
       makeRequest(type, route, devAppObject);
     }
+
+    // hello
     setDeveloperApiLoading(false);
   };
 

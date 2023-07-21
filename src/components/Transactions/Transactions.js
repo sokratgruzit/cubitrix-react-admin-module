@@ -144,7 +144,8 @@ const Transactions = (props) => {
         ],
       },
     ];
-    console.log(item, 'item')
+    // console.log(item, 'item')
+    
     return (
       <div
         key={index}

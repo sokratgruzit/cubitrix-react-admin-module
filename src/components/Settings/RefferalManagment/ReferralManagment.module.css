@@ -59,7 +59,8 @@
 }
 
 .onResp {
-  width: 30%;
+  width: 60%;
+  display: flex;
 }
 
 @media (max-width: 768px) {
