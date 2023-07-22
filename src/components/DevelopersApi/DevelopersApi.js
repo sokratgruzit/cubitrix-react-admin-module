@@ -21,6 +21,12 @@ const DevelopersApi = (props) => {
     useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
+  const [uniCalculate, setUniCalculate] = useState({
+    uni_days: "daily"
+  });
+  const [binaryCalculate, setBinaryCalculate] = useState({
+    binary_days: "daily"
+  });
   const { connect, disconnect } = useConnect();
 
   const account = useSelector((state) => state.connect.account);
@@ -64,6 +70,21 @@ const DevelopersApi = (props) => {
     const { name, value } = e.target;
     setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
+
+  let defaultData = [
+    {
+      name: "Daily",
+      value: "daily",
+    },
+    {
+      name: "Weekly",
+      value: "weekly",
+    },
+    {
+      name: "Monthly",
+      value: "monthly",
+    },
+  ];
 
   let developerApiArray = [
     {
@@ -690,9 +711,63 @@ const DevelopersApi = (props) => {
           id: 14,
           description: "Get Referral Options",
           route: "api/referral/get_referral_options",
-          type: "GET",
+          type: "POST",
           inputs: [],
         },
+        {
+          id: 15,
+          description: "Uni Calculate TEST",
+          route: "api/data/testunicalc",
+          type: "POST",
+          inputs: [
+            {
+              // icon={false}
+              // emptyFieldErr={false}
+              // value={uniData.calculated}
+              // defaultData={defaultData}
+              // selectHandler={selectHandlerUni}
+              // selectLabel: "select",
+              type: "select",
+              label: "Uni Calculated",
+              title: "Uni Calculate",
+              name: "uni_calculate",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: uniCalculate.uni_days,
+              options: defaultData,
+              required: false,
+              // validation: "text",
+              onChange: (e) => {
+                changeDevObject(e);
+                setUniCalculate({ uni_days: e.target.value })
+                console.log(e.target.value, 'e')
+              }
+            }
+          ],
+        },
+        {
+          id: 16,
+          description: "Binary Calculate TEST",
+          route: "api/data/testbinarycalc",
+          type: "POST",
+          inputs: [
+            {
+              type: "select",
+              label: "Binary Calculated",
+              title: "Binary Calculate",
+              name: "binary_calculate",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: binaryCalculate.binary_days,
+              options: defaultData,
+              required: false,
+              onChange: (e) => {
+                changeDevObject(e);
+                setUniCalculate({ uni_days: e.target.value })
+                console.log(e.target.value, 'e')
+              }
+            }
+          ],
+        },
+        // api/data/testbinarycalc
       ],
     },
     {
@@ -1306,6 +1381,9 @@ const DevelopersApi = (props) => {
     },
   ];
 
+  console.log(binaryCalculate, 'binary')
+  console.log(uniCalculate, 'uni')
+
   const developerApiFailResponse = {
     message: "No data was found",
     result: [],
@@ -1365,6 +1443,8 @@ const DevelopersApi = (props) => {
       }
       makeRequest(type, route, devAppObject);
     }
+
+    // hello
     setDeveloperApiLoading(false);
   };
 
@@ -1388,7 +1468,6 @@ const DevelopersApi = (props) => {
     return queryString;
   }
 
-  console.log(props.sideBarActive)
   return (
     <>
       <AdminPanel
