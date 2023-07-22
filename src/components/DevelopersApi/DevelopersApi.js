@@ -7,6 +7,7 @@ import { injected } from "../../connector";
 import { useSelector } from "react-redux";
 
 import useAxios from "../../hooks/useAxios";
+import { ToastContainer, toast } from "react-toastify";
 
 import styles from "./DevelopersApi.module.css";
 
@@ -45,6 +46,9 @@ const DevelopersApi = (props) => {
   const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } =
     useSelector((state) => state.stake);
 
+  const notify = (msg) => {
+    toast(msg)
+  }
   async function makeRequest(method, url, data) {
     try {
       const options = {
@@ -56,12 +60,17 @@ const DevelopersApi = (props) => {
       }
       setDeveloperApiErrorResponse(false);
       const response = await axios(options);
+
       if (response.data.result) {
+        notify("Requset sent successfully");
+        console.log('hi where are u toast? success')
         return setDeveloperApiSuccessResponse(response.data.result);
       }
       console.log(response);
       setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
+      console.log('hi where are u toast? in hell')
+      notify(error)
       setDeveloperApiErrorResponse(error.response);
     }
   }
@@ -70,6 +79,7 @@ const DevelopersApi = (props) => {
     const { name, value } = e.target;
     setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
+
 
   let defaultData = [
     {
@@ -721,12 +731,6 @@ const DevelopersApi = (props) => {
           type: "POST",
           inputs: [
             {
-              // icon={false}
-              // emptyFieldErr={false}
-              // value={uniData.calculated}
-              // defaultData={defaultData}
-              // selectHandler={selectHandlerUni}
-              // selectLabel: "select",
               type: "select",
               label: "Uni Calculated",
               title: "Uni Calculate",
@@ -735,11 +739,9 @@ const DevelopersApi = (props) => {
               value: uniCalculate.uni_days,
               options: defaultData,
               required: false,
-              // validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
                 setUniCalculate({ uni_days: e.target.value })
-                console.log(e.target.value, 'e')
               }
             }
           ],
@@ -762,7 +764,6 @@ const DevelopersApi = (props) => {
               onChange: (e) => {
                 changeDevObject(e);
                 setUniCalculate({ uni_days: e.target.value })
-                console.log(e.target.value, 'e')
               }
             }
           ],
@@ -1381,9 +1382,6 @@ const DevelopersApi = (props) => {
     },
   ];
 
-  console.log(binaryCalculate, 'binary')
-  console.log(uniCalculate, 'uni')
-
   const developerApiFailResponse = {
     message: "No data was found",
     result: [],
@@ -1468,6 +1466,8 @@ const DevelopersApi = (props) => {
     return queryString;
   }
 
+
+
   return (
     <>
       <AdminPanel
@@ -1512,6 +1512,7 @@ const DevelopersApi = (props) => {
         }
         walletConnect={account ? true : false}
       />
+      <ToastContainer theme="dark" />
     </>
   );
 };
