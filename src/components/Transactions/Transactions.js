@@ -23,6 +23,9 @@ const Transactions = (props) => {
 
   const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
 
+  console.log(tableFilterOutcomingData, 'table filter outcoming');
+  console.log(tableFilterData, 'table filter data')
+
   let [td, setTd] = useState([]);
   let [pageNow, setPageNow] = useState(1);
   let [pageAll, setPageAll] = useState(1);
@@ -126,8 +129,6 @@ const Transactions = (props) => {
       value: "cancelled",
     },
   ];
-
-  console.log(td, 'table data')
 
   let tableData;
   tableData = td.map((item, index) => {
