@@ -399,7 +399,7 @@ function App() {
               )}
             </div>
             <Routes>
-              <Route path="/" element={<Dashboard sideBarActive={sideBarActive} animate={animateDom} />} />
+              <Route path="/" element={<Dashboard user={user} sideBarActive={sideBarActive} animate={animateDom} />} />
               <Route
                 path="/transactions"
                 element={<Transactions sideBarActive={sideBarActive} animate={animateDom} />}
