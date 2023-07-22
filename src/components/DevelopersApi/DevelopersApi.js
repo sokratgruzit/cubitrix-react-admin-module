@@ -70,7 +70,7 @@ const DevelopersApi = (props) => {
       setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
       console.log('hi where are u toast? in hell')
-      notify(error)
+      notify(error.response)
       setDeveloperApiErrorResponse(error.response);
     }
   }
