@@ -29,6 +29,10 @@ code {
   width: 100%;
 }
 
+.api-item-params-main .active{
+  overflow: visible!important;
+}
+
 @media (max-width: 768px) {
   .admin-content {
     width: calc(100% - 25px)!important;

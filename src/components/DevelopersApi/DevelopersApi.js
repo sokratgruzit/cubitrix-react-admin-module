@@ -712,6 +712,13 @@ const DevelopersApi = (props) => {
           description: "Get Referral Options",
           route: "api/referral/get_referral_options",
           type: "POST",
+          inputs: [],
+        },
+        {
+          id: 15,
+          description: "Uni Calculate TEST",
+          route: "api/data/testunicalc",
+          type: "POST",
           inputs: [
             {
               // icon={false}
@@ -727,14 +734,22 @@ const DevelopersApi = (props) => {
               description: '("all"/"none"/"uni"/"binary")',
               value: uniCalculate.uni_days,
               options: defaultData,
-              required: true,
-              validation: "text",
+              required: false,
+              // validation: "text",
               onChange: (e) => {
                 changeDevObject(e);
                 setUniCalculate({ uni_days: e.target.value })
                 console.log(e.target.value, 'e')
               }
-            },
+            }
+          ],
+        },
+        {
+          id: 16,
+          description: "Binary Calculate TEST",
+          route: "api/data/testbinarycalc",
+          type: "POST",
+          inputs: [
             {
               type: "select",
               label: "Binary Calculated",
@@ -742,17 +757,17 @@ const DevelopersApi = (props) => {
               name: "binary_calculate",
               description: '("all"/"none"/"uni"/"binary")',
               value: binaryCalculate.binary_days,
-              required: true,
-              validation: "text",
               options: defaultData,
+              required: false,
               onChange: (e) => {
                 changeDevObject(e);
-                setBinaryCalculate({ binary_days: e.target.value })
+                setUniCalculate({ uni_days: e.target.value })
                 console.log(e.target.value, 'e')
               }
             }
           ],
         },
+        // api/data/testbinarycalc
       ],
     },
     {

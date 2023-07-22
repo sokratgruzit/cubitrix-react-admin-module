@@ -63,6 +63,15 @@
   display: flex;
 }
 
+.api-item-params-main .active {
+  overflow-y: visible!important;
+  z-index: 9;
+}
+
+.api-item-params-main {
+  overflow-y: visible!important;
+}
+
 @media (max-width: 768px) {
   .resp {
     flex-direction: column;
