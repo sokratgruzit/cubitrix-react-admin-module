@@ -114,7 +114,6 @@ function App() {
       ),
       subMenu: [],
       active: true,
-
     },
     {
       id: 3,
@@ -256,18 +255,18 @@ function App() {
         },
         {
           name: "Global Settings",
-          route: "/global-settings"
-        }
+          route: "/global-settings",
+        },
       ],
-      active: true
+      active: true,
     },
   ]);
   const [sideBarActive, setSideBarActive] = useState(false);
 
-  const devApi = useSelector(state => state.settings.developersApi)
+  const devApi = useSelector((state) => state.settings.developersApi);
   const user = useSelector((state) => state.user);
 
-  let userId = user.userId
+  let userId = user.userId;
 
   const handleLogout = async () => {
     dispatch({ type: "SET_LOADING", payload: { loading: true } });
@@ -277,16 +276,27 @@ function App() {
         type: "LOGOUT",
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
   const adminHeaderData = {
     username: user.userName ? user.userName : "Michael",
     svg: (
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C28.0115 27.066 27.2694 24.3097 25.8636 21.8804C24.4577 19.4511 22.4375 17.4344 20.0058 16.0328C17.5759 17.4357 15.5582 19.4538 14.1556 21.8839C12.753 24.3141 12.0151 27.0708 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z" fill="#C38C5C" />
-        <path d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C29.3536 23.7849 29.6278 9.68772 20.0175 2.0018C20.0099 1.9994 20.0018 1.9994 19.9942 2.0018C10.3745 9.68772 10.6672 23.7875 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z" fill="white" />
+      <svg
+        width="40"
+        height="40"
+        viewBox="0 0 40 40"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C28.0115 27.066 27.2694 24.3097 25.8636 21.8804C24.4577 19.4511 22.4375 17.4344 20.0058 16.0328C17.5759 17.4357 15.5582 19.4538 14.1556 21.8839C12.753 24.3141 12.0151 27.0708 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z"
+          fill="#C38C5C"
+        />
+        <path
+          d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C29.3536 23.7849 29.6278 9.68772 20.0175 2.0018C20.0099 1.9994 20.0018 1.9994 19.9942 2.0018C10.3745 9.68772 10.6672 23.7875 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z"
+          fill="white"
+        />
       </svg>
     ),
     userImageUrl:
@@ -342,12 +352,11 @@ function App() {
     }, 500);
   }, []);
 
-
   useEffect(() => {
     setSideBar((prevState) =>
       prevState.map((item) =>
-        item.name === "Developers Api" ? { ...item, active: devApi } : item
-      )
+        item.name === "Developers Api" ? { ...item, active: devApi } : item,
+      ),
     );
   }, [devApi]);
 
@@ -365,62 +374,88 @@ function App() {
           />
           <div className={`admin-container`}>
             <div
-              className={`${styles.sideBar} admin-sidebar animate-translateX ${animateDom ? "animate" : ""
-                }`}
+              className={`${styles.sideBar} admin-sidebar animate-translateX ${
+                animateDom ? "animate" : ""
+              }`}
               style={{ transitionDelay: ".1s", display: sideBarActive ? "block" : "" }}>
               {sideBar.map((item, index) => {
-                return (
-                  item.active ? (
-                    <Button
-                      key={item.id}
-                      id={item.id}
-                      label={item.name}
-                      route={item.route}
-                      element={"side-admin-button"}
-                      svg={item.svg}
-                      customStyles={{ width: "100%" }}
-                      subMenu={item.subMenu}
-                      active={location.pathname === item.route}
-                      subMenuActive={location.pathname.includes(item.subMenu?.route)}
-                    />
-                  ) : ("")
+                return item.active ? (
+                  <Button
+                    key={item.id}
+                    id={item.id}
+                    label={item.name}
+                    route={item.route}
+                    element={"side-admin-button"}
+                    svg={item.svg}
+                    customStyles={{ width: "100%" }}
+                    subMenu={item.subMenu}
+                    active={location.pathname === item.route}
+                    subMenuActive={location.pathname.includes(item.subMenu?.route)}
+                  />
+                ) : (
+                  ""
                 );
               })}
             </div>
             <div onClick={sideBarHandler} className={styles.burgerMenu}>
               {sideBarActive ? (
-                  <div>X</div>
+                <div>X</div>
               ) : (
                 <>
                   <span></span>
                   <span></span>
                   <span></span>
-                  </>
+                </>
               )}
             </div>
             <Routes>
-              <Route path="/" element={<Dashboard user={user} sideBarActive={sideBarActive} animate={animateDom} />} />
+              <Route
+                path="/"
+                element={
+                  <Dashboard
+                    user={user}
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
+                }
+              />
               <Route
                 path="/transactions"
-                element={<Transactions sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <Transactions sideBarActive={sideBarActive} animate={animateDom} />
+                }
               />
-              <Route path="/users-list" element={<UsersList sideBarActive={sideBarActive} animate={animateDom} />} />
-              <Route path="/accounts" element={<Accounts sideBarActive={sideBarActive} animate={animateDom} />} />
+              <Route
+                path="/users-list"
+                element={<UsersList sideBarActive={sideBarActive} animate={animateDom} />}
+              />
+              <Route
+                path="/accounts"
+                element={<Accounts sideBarActive={sideBarActive} animate={animateDom} />}
+              />
               <Route
                 path="/developers-api"
-                element={<DevelopersApi sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <DevelopersApi sideBarActive={sideBarActive} animate={animateDom} />
+                }
               />
               <Route
                 path="/settings/admin-management"
-                element={<AdminManagement sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <AdminManagement sideBarActive={sideBarActive} animate={animateDom} />
+                }
               />
               <Route
                 path="/settings/referral-management"
-                element={<ReferralManagment sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <ReferralManagment sideBarActive={sideBarActive} animate={animateDom} />
+                }
               />
               <Route
                 path="/settings/global-settings"
-                element={<GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />
+                }
               />
             </Routes>
           </div>
