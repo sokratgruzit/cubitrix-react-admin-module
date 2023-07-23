@@ -58,7 +58,7 @@ const tableFilterData = {
             value: "pending",
           },
           {
-            name: "Cenceled",
+            name: "Canceled",
             value: "canceled",
           },
           {
