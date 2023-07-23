@@ -78,7 +78,6 @@ const Transactions = (props) => {
       ...prevState,
       id: item._id,
     }));
-    console.log(item);
   };
 
   const statusSelectHandler = (value) => {
@@ -172,31 +171,18 @@ const Transactions = (props) => {
             style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{item.amount}</span>
             <span className={`table-currency`}>
-              {item?.tx_options?.fromAccType ? item?.tx_options.fromAccType : " - "}
+              {tx_currency}
             </span>
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
-            <span>{item?.tx_fee}</span>
-            <span className={`table-currency`}>
-              {item.tx_fee_currency ? item.tx_fee_currency : " - "}
-            </span>
-          </div>
-          <div
-            className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
-            <span>{item.domination ? item.domination : " - "}</span>
-          </div>
-          <div
-            className={`td ${th[6].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}>
             <span>{moment(item.createdAt).format("LL")}</span>
           </div>
           <div
             onClick={() => statusEditHandler(item)}
-            className={`td ${th[7].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
+            className={`td ${th[5].mobileWidth ? true : false}`}
+            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
             {item.tx_type === "payment" ? (
               <span
                 className={`alert-status-box 
@@ -231,9 +217,9 @@ const Transactions = (props) => {
             )}
           </div>
           <div
-            className={`td ${th[8].mobileWidth ? true : false}`}
+            className={`td ${th[6].mobileWidth ? true : false}`}
             style={{
-              width: `${mobile ? th[8].mobileWidth : th[8].width}%`,
+              width: `${mobile ? th[6].mobileWidth : th[6].width}%`,
               paddingRight: "0px",
               display: "flex",
               justifyContent: "space-between",
@@ -273,25 +259,14 @@ const Transactions = (props) => {
           </svg>
         </div>
         <div className="table-mobile">
+          {/* mobile version is shit  */}
           <div className="table-mobile-content">
             <div className="td">
               <div className="mobile-ttl">{th[4].name}</div>
-              <div>
-                <span>{item.tx_fee}</span>
-                <span className={`table-currency`}>{item.tx_fee_currency}</span>
-              </div>
+              <span className={`table-currency`}>{moment(item.createdAt).format("LL")}</span>
             </div>
             <div className="td">
               <div className="mobile-ttl">{th[5].name}</div>
-              <span>{item.domination}</span>
-            </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[6].name}</div>
-              <span>{moment(item.createdAt).format("LL")}</span>
-            </div>
-
-            <div className="td">
-              <div className="mobile-ttl">{th[7].name}</div>
               {item.type === "payment" ? (
                 <span
                   className={`alert-status-box 
@@ -304,37 +279,18 @@ const Transactions = (props) => {
                 <Input
                   type={"lable-input-select"}
                   icon={false}
-                  // selectData={selectData}
                   emptyFieldErr={false}
                   defaultData={statuses}
-                  // label={"edit status"}
                   selectHandler={statusSelectHandler}
                   value={item.tx_status}
                   active={true}
-                  // status={"warning"}
-                  // statusCard={
-                  //   <HelpText
-                  //     status={"error"}
-                  //     title={"your text"}
-                  //     fontSize={"font-12"}
-                  //     icon={true}
-                  //   />
-                  // }
-                  // title={"your text"}
                   color={"#FFA726"}
-                  // customStyles={{ width: "320px" }}
                 />
               )}
             </div>
             <div className="td">
-              <div className="mobile-ttl">{th[8].name}</div>
-              <span
-                className={`alert-status-box 
-                                ${item.tx_type === "deposit" && "alert-status-blue"} 
-                                ${item.tx_type === "withdraw" || item.tx_type === "withdrawal" && "alert-status-yellow"}
-                                ${
-                                  item.tx_type === "transfer" && "alert-status-green"
-                                }`}></span>
+              <div className="mobile-ttl">{th[6].name}</div>
+              <span>{item.tx_type}</span>
             </div>
           </div>
         </div>
@@ -556,11 +512,11 @@ const Transactions = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                              params?.defaultAny ||
-                              params?.options[0]?.value
+                            params?.defaultAny ||
+                            params?.options[0]?.value
                             : popUpData[params?.name] === undefined
-                            ? params?.defaultAny
-                            : popUpData[params?.name]
+                              ? params?.defaultAny
+                              : popUpData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {

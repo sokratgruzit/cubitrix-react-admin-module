@@ -70,7 +70,7 @@ const Accounts = (props) => {
 
   function accountEditHandler() {
     setAccountUpdateLoading(true);
-  
+
     // Convert boolean values to strings in accountData object
     const stringifiedAccountData = {
       ...accountData,
@@ -85,7 +85,7 @@ const Accounts = (props) => {
       trade: accountData.trade.toString(),
       tradeAdmin: accountData.tradeAdmin.toString(),
     };
-  
+
     axios
       .post("/api/data/edit-account", { accountData: stringifiedAccountData })
       .then((res) => {
@@ -103,7 +103,7 @@ const Accounts = (props) => {
         notify('Something went wrong please try again');
       });
   }
-  
+
   const notify = (msg) => {
     toast(msg);
   };
@@ -355,7 +355,7 @@ const Accounts = (props) => {
             className={`td ${th[2].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
           >
-            <span>{item.balance ? item.balance : '-'}</span>
+            <span>{item?.inner_accounts[0]?.balance}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}

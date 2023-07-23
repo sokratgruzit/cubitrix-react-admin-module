@@ -203,61 +203,14 @@ const UsersList = (props) => {
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
-            <span>
-              {item.mobile?.code} {item.mobile?.number}{" "}
-            </span>
-          </div>
-          <div
-            className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
-            <span>{item.nationality}</span>
-          </div>
-          <div
-            className={`td ${th[5].mobileWidth ? true : false}`}
             style={{
-              width: `${mobile ? th[5].mobileWidth : th[5].width}%`,
+              width: `${mobile ? th[3].mobileWidth : th[3].width}%`,
               display: "flex",
               justifyContent: "space-between",
             }}>
             <span>{moment(item.date_of_birth).format("LL")}</span>
             <div style={{ display: "flex" }} className="table-more">
               <MoreButton dropdownData={dynamicDropDown(item)} />
-            </div>
-          </div>
-        </div>
-        <div className="icon-place">
-          <svg
-            width="12"
-            height="7"
-            viewBox="0 0 12 7"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeMiterlimit="10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <div className="table-mobile">
-          <div className="table-mobile-content">
-            <div className="td">
-              <div className="mobile-ttl">{th[3].name}</div>
-              <span>
-                {item.mobile?.code} {item.mobile?.number}{" "}
-              </span>
-            </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[4].name}</div>
-              <span>{item.nationality}</span>
-            </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[5].name}</div>
-              <span>{moment(item.date_of_birth).format("LL")}</span>
             </div>
           </div>
         </div>

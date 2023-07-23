@@ -196,30 +196,20 @@ const th = {
       id: 3,
     },
     {
-      name: "Tx Fee",
+      name: "Created",
       width: 11,
       id: 4,
     },
     {
-      name: "Denomination",
+      name: "Tranx Status",
       width: 10,
       id: 5,
     },
     {
-      name: "Time",
-      width: 10,
-      id: 6,
-    },
-    {
-      name: "Tranx Status",
-      width: 10,
-      id: 7,
-    },
-    {
       name: "Tranx Type",
       width: 10,
-      id: 8,
-    },
+      id: 6,
+    }
   ],
   accounts: [
     {
@@ -266,19 +256,9 @@ const th = {
       id: 2,
     },
     {
-      name: "Mobile",
-      width: 10,
-      id: 3,
-    },
-    {
-      name: "Nationality",
-      width: 10,
-      id: 4,
-    },
-    {
       name: "Date Of Birth",
       width: 15,
-      id: 5,
+      id: 3,
     },
   ],
   adminManagement: [
@@ -289,13 +269,13 @@ const th = {
       id: 1,
     },
     {
-      name: "Last Login",
+      name: "Level",
       width: 33,
       mobileWidth: 33,
       id: 2,
     },
     {
-      name: "Level",
+      name: "Last Login",
       width: 33,
       mobileWidth: 33,
       id: 3,
