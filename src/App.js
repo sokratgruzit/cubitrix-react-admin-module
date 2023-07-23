@@ -277,7 +277,7 @@ function App() {
         type: "LOGOUT",
       });
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   };
 
@@ -334,7 +334,7 @@ function App() {
       setSideBarActive(false);
     }
   };
-  console.log(sideBarActive)
+
   useEffect(() => {
     MetaMaskEagerlyConnect(injected);
     setTimeout(() => {

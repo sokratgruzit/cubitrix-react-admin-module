@@ -11,8 +11,8 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import styles from "./Transactions.module.css";
 
@@ -22,9 +22,6 @@ const Transactions = (props) => {
     useTableParameters("Transactions");
 
   const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
-
-  console.log(tableFilterOutcomingData, 'table filter outcoming');
-  console.log(tableFilterData, 'table filter data')
 
   let [td, setTd] = useState([]);
   let [pageNow, setPageNow] = useState(1);
@@ -53,9 +50,9 @@ const Transactions = (props) => {
       .then((res) => {
         setPageAll(res.data.success.pages);
         setTd(res.data.success.data);
-        console.log(res)
+        console.log(res, 'COMONN');
       });
-  };
+  }
 
   useEffect(() => {
     fetchData();
@@ -79,17 +76,16 @@ const Transactions = (props) => {
   const statusEditHandler = (item) => {
     setTx_status((prevState) => ({
       ...prevState,
-      id: item._id
+      id: item._id,
     }));
-    console.log(item)
   };
 
   const statusSelectHandler = (value) => {
     setTx_status((prevState) => ({
       ...prevState,
-      tx_status: value
+      tx_status: value,
     }));
-    setIsReady(true)
+    setIsReady(true);
   };
 
   const notify = (msg) => {
@@ -103,14 +99,14 @@ const Transactions = (props) => {
     try {
       const response = await axios.post("/api/data/change_transaction_status", {
         _id: id,
-        tx_status: status
+        tx_status: status,
       });
       console.log(response);
       notify("Transaction Status Changed");
       setIsReady(false);
       fetchData();
     } catch (error) {
-      notify('Something Went Wrong')
+      notify("Something Went Wrong");
       console.log(error);
     }
   };
@@ -130,6 +126,7 @@ const Transactions = (props) => {
     },
   ];
 
+
   let tableData;
   tableData = td.map((item, index) => {
     let dropdownData = [
@@ -145,225 +142,206 @@ const Transactions = (props) => {
         ],
       },
     ];
-    // console.log(item, 'item')
-    
+    console.log(td)
     return (
-      <div
-        key={index}
-        className={`table-parent ${mobileExpand === index ? "active" : ""}`}
-        onClick={() => {
-          mobileExpandFunc(index);
-        }}
-      >
-        <div className="table">
+      <div>
+        {item === undefined ? (
+          <p>No items</p>
+        ) : (
           <div
-            className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
-          >
-            <span>{item.tx_hash}</span>
-          </div>
-          <div
-            className={`td ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
-          >
-            <span>{item.from}</span>
-          </div>
-          <div
-            className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
-          >
-            <span>{item.to}</span>
-          </div>
-          <div
-            className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
-          >
-            <span>{item.amount}</span>
-            <span className={`table-currency`}>
-              {item?.tx_options?.fromAccType ? item?.tx_options.fromAccType : " - "}
-            </span>
-          </div>
-          <div
-            className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
-          >
-            <span>{item?.tx_fee}</span>
-            <span className={`table-currency`}>{item.tx_fee_currency ? item.tx_fee_currency : " - "}</span>
-          </div>
-          <div
-            className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
-          >
-            <span>{item.domination ? item.domination : " - "}</span>
-          </div>
-          <div
-            className={`td ${th[6].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}
-          >
-            <span>{moment(item.createdAt).format("LL")}</span>
-          </div>
-          <div
-            onClick={() => statusEditHandler(item)}
-            className={`td ${th[7].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}
-          >
-            {item.tx_type === "payment" ? (
-              <span
-                className={`alert-status-box 
-                            ${item.tx_status === "canceled" && "alert-status-blue"} 
-                            ${item.tx_status === "pending" && "alert-status-yellow"}
-                            ${item.tx_status === "approved" && "alert-status-green"}`}>
-                {item.tx_status}
-              </span>
-            ) : (
-              <>
-                {item.tx_status === 'pending' ? (
-                  <Input
-                    type={"lable-input-select"}
-                    icon={false}
-                    emptyFieldErr={false}
-                    defaultData={statuses}
-                    selectHandler={statusSelectHandler}
-                    value={item.tx_status}
-                    active={true}
-                    color={"#FFA726"}
-                  />
-                ) : (
+            key={index}
+            className={`table-parent ${mobileExpand === index ? "active" : ""}`}
+            onClick={() => {
+              mobileExpandFunc(index);
+            }}>
+            <div className="table">
+              <div
+                className={`td ${th[0].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
+                <span>{item.tx_hash}</span>
+              </div>
+              <div
+                className={`td ${th[1].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
+                <span>{item.from}</span>
+              </div>
+              <div
+                className={`td ${th[2].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
+                <span>{item.to}</span>
+              </div>
+              <div
+                className={`td ${th[3].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
+                <span>{item.amount}</span>
+                <span className={`table-currency`}>
+                  {item?.tx_options?.fromAccType ? item?.tx_options.fromAccType : " - "}
+                </span>
+              </div>
+              <div
+                className={`td ${th[4].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
+                <span>{item?.tx_fee}</span>
+                <span className={`table-currency`}>
+                  {item.tx_fee_currency ? item.tx_fee_currency : " - "}
+                </span>
+              </div>
+              <div
+                className={`td ${th[5].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
+                <span>{item.domination ? item.domination : " - "}</span>
+              </div>
+              <div
+                className={`td ${th[6].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[6].mobileWidth : th[6].width}%` }}>
+                <span>{moment(item.createdAt).format("LL")}</span>
+              </div>
+              <div
+                onClick={() => statusEditHandler(item)}
+                className={`td ${th[7].mobileWidth ? true : false}`}
+                style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
+                {item.tx_type === "payment" ? (
                   <span
                     className={`alert-status-box 
-                    ${item.tx_status === "canceled" && "alert-status-blue"} 
-                    ${item.tx_status === "pending" && "alert-status-yellow"}
-                    ${item.tx_status === "approved" && "alert-status-green"}`}>
+                             ${item.tx_status === "canceled" && "alert-status-blue"} 
+                             ${item.tx_status === "pending" && "alert-status-yellow"}
+                             ${item.tx_status === "approved" && "alert-status-green"}`}>
                     {item.tx_status}
                   </span>
+                ) : (
+                  <>
+                    {item.tx_status === "pending" ? (
+                      <Input
+                        type={"lable-input-select"}
+                        icon={false}
+                        emptyFieldErr={false}
+                        defaultData={statuses}
+                        selectHandler={statusSelectHandler}
+                        value={item.tx_status}
+                        active={true}
+                        color={"#FFA726"}
+                      />
+                    ) : (
+                      <span
+                        className={`alert-status-box 
+                     ${item.tx_status === "canceled" && "alert-status-blue"} 
+                     ${item.tx_status === "pending" && "alert-status-yellow"}
+                     ${item.tx_status === "approved" && "alert-status-green"}`}>
+                        {item.tx_status}
+                      </span>
+                    )}
+                  </>
                 )}
-              </>
-            )}
-          </div>
-          <div
-            className={`td ${th[8].mobileWidth ? true : false}`}
-            style={{
-              width: `${mobile ? th[8].mobileWidth : th[8].width}%`,
-              paddingRight: "0px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <span
-              className={`alert-status-box 
-                  ${item.tx_type === "deposit" && styles.depostit} 
-                  ${item.tx_type === "transfer" && styles.tranfer}
-                  ${item.tx_type === "withdraw" && styles.withdraw}
-                  ${item.tx_type === "payment" && styles.payment}
-                  ${item.tx_type === "internal_transfer" && styles.internal}
-                  ${item.tx_type === "exchange" && styles.exchange}
-                  ${item.tx_type === "bonus" && styles.bonus}
-                `}
-            >
-              {item.tx_type}
-            </span>
-            <div style={{ display: "flex" }} className="table-more">
-              <MoreButton dropdownData={dropdownData} />
-            </div>
-          </div>
-        </div>
-        <div className="icon-place">
-          <svg
-            width="12"
-            height="7"
-            viewBox="0 0 12 7"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeMiterlimit="10"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <div className="table-mobile">
-          <div className="table-mobile-content">
-            <div className="td">
-              <div className="mobile-ttl">{th[4].name}</div>
-              <div>
-                <span>{item.tx_fee}</span>
-                <span className={`table-currency`}>{item.tx_fee_currency}</span>
               </div>
-            </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[5].name}</div>
-              <span>{item.domination}</span>
-            </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[6].name}</div>
-              <span>{moment(item.createdAt).format("LL")}</span>
-            </div>
-
-            <div className="td">
-              <div className="mobile-ttl">{th[7].name}</div>
-              {item.type === "payment" ? (
+              <div
+                className={`td ${th[8].mobileWidth ? true : false}`}
+                style={{
+                  width: `${mobile ? th[8].mobileWidth : th[8].width}%`,
+                  paddingRight: "0px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}>
                 <span
                   className={`alert-status-box 
-                 ${item.tx_status === "active" &&
-                    "alert-status-blue"
-                    } 
-                 ${item.tx_status === "active1" &&
-                    "alert-status-yellow"
-                    }
-                 ${item.tx_status === "pending" &&
-                    "alert-status-green"
-                    }`}
-                >
-                  {item.tx_status}
+                   ${item.tx_type === "deposit" && styles.depostit} 
+                   ${item.tx_type === "transfer" && styles.tranfer}
+                   ${item.tx_type === "withdraw" && styles.withdraw}
+                   ${item.tx_type === "payment" && styles.payment}
+                   ${item.tx_type === "internal_transfer" && styles.internal}
+                   ${item.tx_type === "exchange" && styles.exchange}
+                   ${item.tx_type === "bonus" && styles.bonus}
+                 `}>
+                  {item.tx_type}
                 </span>
-              ) : (
-                <Input
-                  type={"lable-input-select"}
-                  icon={false}
-                  // selectData={selectData}
-                  emptyFieldErr={false}
-                  defaultData={statuses}
-                  // label={"edit status"}
-                  selectHandler={statusSelectHandler}
-                  value={item.tx_status}
-                  active={true}
-                  // status={"warning"}
-                  // statusCard={
-                  //   <HelpText
-                  //     status={"error"}
-                  //     title={"your text"}
-                  //     fontSize={"font-12"}
-                  //     icon={true}
-                  //   />
-                  // }
-                  // title={"your text"}
-                  color={"#FFA726"}
-                // customStyles={{ width: "320px" }}
-                />
-              )}
-
+                <div style={{ display: "flex" }} className="table-more">
+                  <MoreButton dropdownData={dropdownData} />
+                </div>
+              </div>
             </div>
-            <div className="td">
-              <div className="mobile-ttl">{th[8].name}</div>
-              <span
-                className={`alert-status-box 
-                                ${item.tx_type === "deposit" &&
-                  "alert-status-blue"
-                  } 
-                                ${item.tx_type === "withdraw" &&
-                  "alert-status-yellow"
-                  }
-                                ${item.tx_type === "transfer" &&
-                  "alert-status-green"
-                  }`}
-              ></span>
+            <div className="icon-place">
+              <svg
+                width="12"
+                height="7"
+                viewBox="0 0 12 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeMiterlimit="10"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div className="table-mobile">
+              <div className="table-mobile-content">
+                <div className="td">
+                  <div className="mobile-ttl">{th[4].name}</div>
+                  <div>
+                    <span>{item.tx_fee}</span>
+                    <span className={`table-currency`}>{item.tx_fee_currency}</span>
+                  </div>
+                </div>
+                <div className="td">
+                  <div className="mobile-ttl">{th[5].name}</div>
+                  <span>{item.domination}</span>
+                </div>
+                <div className="td">
+                  <div className="mobile-ttl">{th[6].name}</div>
+                  <span>{moment(item.createdAt).format("LL")}</span>
+                </div>
+
+                <div className="td">
+                  <div className="mobile-ttl">{th[7].name}</div>
+                  {item.type === "payment" ? (
+                    <span
+                      className={`alert-status-box 
+                  ${item.tx_status === "active" && "alert-status-blue"} 
+                  ${item.tx_status === "active1" && "alert-status-yellow"}
+                  ${item.tx_status === "pending" && "alert-status-green"}`}>
+                      {item.tx_status}
+                    </span>
+                  ) : (
+                    <Input
+                      type={"lable-input-select"}
+                      icon={false}
+                      // selectData={selectData}
+                      emptyFieldErr={false}
+                      defaultData={statuses}
+                      // label={"edit status"}
+                      selectHandler={statusSelectHandler}
+                      value={item.tx_status}
+                      active={true}
+                      // status={"warning"}
+                      // statusCard={
+                      //   <HelpText
+                      //     status={"error"}
+                      //     title={"your text"}
+                      //     fontSize={"font-12"}
+                      //     icon={true}
+                      //   />
+                      // }
+                      // title={"your text"}
+                      color={"#FFA726"}
+                    // customStyles={{ width: "320px" }}
+                    />
+                  )}
+                </div>
+                <div className="td">
+                  <div className="mobile-ttl">{th[8].name}</div>
+                  <span
+                    className={`alert-status-box 
+                                 ${item.tx_type === "deposit" && "alert-status-blue"} 
+                                 ${item.tx_type === "withdraw" && "alert-status-yellow"}
+                                 ${item.tx_type === "transfer" && "alert-status-green"
+                      }`}></span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     );
   });
@@ -501,7 +479,7 @@ const Transactions = (props) => {
         amount: selectedTransaction.amount,
         tx_currency: selectedTransaction.tx_currency,
         tx_hash: selectedTransaction.tx_hash,
-        _id: selectedTransaction._id
+        _id: selectedTransaction._id,
       });
     }
   }, [selectedTransaction]);
@@ -527,26 +505,26 @@ const Transactions = (props) => {
     if (isReady) {
       editStatus();
     }
-  }, [isReady])
+  }, [isReady]);
 
   const editTransactionHandler = async () => {
     try {
       const formData = new FormData();
-      formData.append('_id', popUpData._id);
-      formData.append('amount', popUpData.amount);
-      formData.append('from', popUpData.from);
-      formData.append('to', popUpData.to);
-      formData.append('tx_currency', popUpData.tx_currency);
-      formData.append('tx_hash', popUpData.tx_hash);
-      formData.append('tx_status', popUpData.tx_status);
-      formData.append('tx_type', popUpData.tx_type);
+      formData.append("_id", popUpData._id);
+      formData.append("amount", popUpData.amount);
+      formData.append("from", popUpData.from);
+      formData.append("to", popUpData.to);
+      formData.append("tx_currency", popUpData.tx_currency);
+      formData.append("tx_hash", popUpData.tx_hash);
+      formData.append("tx_status", popUpData.tx_status);
+      formData.append("tx_type", popUpData.tx_type);
 
       const response = await axios.post("/api/data/edit_transaction", formData);
       console.log(response);
-      notify('Transaction Edited');
+      notify("Transaction Edited");
       setSelectedTransaction(null);
     } catch (error) {
-      notify('Something Went Wrong')
+      notify("Something Went Wrong");
       console.log(error);
     }
   };
@@ -561,13 +539,15 @@ const Transactions = (props) => {
           popUpData={popUpData}
           setPopUpData={setPopUpData}
           popUpElement={
-            <div style={{ flexDirection: 'column' }} className="transactions_popup_container">
+            <div
+              style={{ flexDirection: "column" }}
+              className="transactions_popup_container">
               <div className="transactions-inputs">
                 {inputs?.map((params, index) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
                     selectedOption = params?.options.find(
-                      (option) => option.value === popUpData[params?.name]
+                      (option) => option.value === popUpData[params?.name],
                     );
                   }
                   return (

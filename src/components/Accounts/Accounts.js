@@ -86,8 +86,6 @@ const Accounts = (props) => {
       tradeAdmin: accountData.tradeAdmin.toString(),
     };
   
-    console.log(stringifiedAccountData, 'account');
-  
     axios
       .post("/api/data/edit-account", { accountData: stringifiedAccountData })
       .then((res) => {
@@ -421,7 +419,6 @@ const Accounts = (props) => {
         notify: activeItem?.inner_accounts[0]?.extensions?.notify ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notify) : false,
         notifyAdmin: activeItem?.inner_accounts[0]?.extensions?.notifyAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notifyAdmin) : false,
       });
-      console.log(activeItem.active, 'act')
     }
   }, [activeItem]);
 
@@ -434,7 +431,6 @@ const Accounts = (props) => {
           page: pageNow,
         })
         .then((res) => {
-          console.log(res, 'res')
           setPageAll(res.data.success.pages);
           setTd(res.data.success.data);
         });

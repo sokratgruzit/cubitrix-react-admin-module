@@ -62,14 +62,13 @@ const DevelopersApi = (props) => {
       const response = await axios(options);
 
       if (response.data.result) {
-        notify("Requset sent successfully");
-        console.log('hi where are u toast? success')
         return setDeveloperApiSuccessResponse(response.data.result);
       }
+      notify("Requset sent successfully");
+
       console.log(response);
       setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
-      console.log('hi where are u toast? in hell')
       notify(error.response)
       setDeveloperApiErrorResponse(error.response);
     }

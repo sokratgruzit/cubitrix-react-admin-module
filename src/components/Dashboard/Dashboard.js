@@ -146,7 +146,7 @@ const Dashboard = ({
     },
   ];
 
-  console.log(user);
+  console.log(user, 'userr');
   return (
     <>
       <AdminPanel coinCards={coinCards} adminPage={"dashboard"} animate={animate} />
