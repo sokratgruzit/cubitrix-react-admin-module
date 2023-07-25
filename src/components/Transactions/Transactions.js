@@ -121,8 +121,8 @@ const Transactions = (props) => {
       value: "pending",
     },
     {
-      name: "Cancelled",
-      value: "cancelled",
+      name: "Canceled",
+      value: "canceled",
     },
   ];
 
@@ -142,6 +142,8 @@ const Transactions = (props) => {
         ],
       },
     ];
+
+    console.log(item, 'item')
 
     return (
       <div
@@ -228,13 +230,13 @@ const Transactions = (props) => {
               className={`alert-status-box 
                   ${item.tx_type === "deposit" && styles.depostit} 
                   ${item.tx_type === "transfer" && styles.tranfer}
-                  ${item.tx_type === "withdraw" || item.tx_type === "withdrawal" && styles.withdraw}
+                  ${item.tx_type === "withdraw" && styles.withdraw}
                   ${item.tx_type === "payment" && styles.payment}
                   ${item.tx_type === "internal_transfer" && styles.internal}
                   ${item.tx_type === "exchange" && styles.exchange}
                   ${item.tx_type === "bonus" && styles.bonus}
                 `}>
-              {item.tx_type === "withdrawal" ? "withdraw" : item.tx_type}
+              {item.tx_type}
             </span>
             <div style={{ display: "flex" }} className="table-more">
               <MoreButton dropdownData={dropdownData} />
