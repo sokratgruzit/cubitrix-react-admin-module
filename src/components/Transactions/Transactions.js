@@ -64,12 +64,11 @@ const Transactions = (props) => {
     );
 
     if (isMatchingStructure) {
-      // If it matches, make tableFilterOutcomingData an empty object
       setTableFilterOutcomingData({});
-      return; // Exit early without making the request
+      return;
     }
 
-    fetchData(); // Only call fetchData if the structure doesn't match
+    fetchData();
   }, [tableFilterOutcomingData, pageNow]);
 
   async function newTx() {

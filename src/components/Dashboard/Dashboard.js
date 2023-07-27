@@ -263,6 +263,7 @@ const Dashboard = ({ animate, user }) => {
     }),
   }
 
+  console.log(cardData, 'hi')
   return (
     <>
       <AdminPanel rewardsCard={rewardsCard} balanceCards={balanceCards} coinCards={coinCards} adminPage={"dashboard"} animate={animate} />
