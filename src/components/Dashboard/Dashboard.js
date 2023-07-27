@@ -195,7 +195,7 @@ const Dashboard = ({ animate, user }) => {
     {
       id: 1,
       type: "balance-card",
-      account: "Account",
+      account: "LOAN",
       totalbalance: cardData?.accounts?.loan?.totalBalance?.toLocaleString("en-US", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
@@ -211,8 +211,24 @@ const Dashboard = ({ animate, user }) => {
     {
       id: 2,
       type: "balance-card",
-      account: "Account",
+      account: "TRADE",
       totalbalance: cardData?.accounts?.trade?.totalBalance?.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }),
+      coinIcon: (
+        <svg width="23" height="23" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C28.0115 27.066 27.2694 24.3097 25.8636 21.8804C24.4577 19.4511 22.4375 17.4344 20.0058 16.0328C17.5759 17.4357 15.5582 19.4538 14.1556 21.8839C12.753 24.3141 12.0151 27.0708 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z" fill="#C38C5C" />
+          <path d="M19.9942 2.0018C20.0018 1.9994 20.0099 1.9994 20.0175 2.0018C26.097 5.51543 31.1443 10.5677 34.652 16.6506C38.1597 22.7335 40.0042 29.6326 40 36.6544L28.0152 29.8767V29.8728C29.3536 23.7849 29.6278 9.68772 20.0175 2.0018C20.0099 1.9994 20.0018 1.9994 19.9942 2.0018C10.3745 9.68772 10.6672 23.7875 12.016 29.8767L1.36193e-05 36.6544C-0.00578363 29.6309 1.83928 22.7299 5.34937 16.6464C8.85947 10.563 13.9106 5.51183 19.9942 2.0018Z" fill="white" />
+        </svg>
+      ),
+      info: 'TRADE'
+    },
+    {
+      id: 3,
+      type: "balance-card",
+      account: "MAIN",
+      totalbalance: cardData?.accounts?.main?.totalBalance?.toLocaleString("en-US", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }),
@@ -226,11 +242,30 @@ const Dashboard = ({ animate, user }) => {
     }
   ];
 
-  console.log(cardData, 'hi')
+
+  const rewardsCard = {
+    info: "Rewards",
+    todaySum: cardData?.rewards?.message[0]?.todaySum?.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+    thisMonthSum: cardData?.rewards?.message[0]?.thisMonthSum.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+    thisYearSum: cardData?.rewards?.message[0]?.thisYearSum.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+    totalStaked: cardData?.accounts?.main?.totalStaked.toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }),
+  }
 
   return (
     <>
-      <AdminPanel balanceCards={balanceCards} coinCards={coinCards} adminPage={"dashboard"} animate={animate} />
+      <AdminPanel rewardsCard={rewardsCard} balanceCards={balanceCards} coinCards={coinCards} adminPage={"dashboard"} animate={animate} />
     </>
   );
 };
