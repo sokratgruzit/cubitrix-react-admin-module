@@ -274,7 +274,7 @@ const ReferralManagment = ({ animate }) => {
             emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
-            label={"uni level"}
+            label={"uni volume"}
             value={uniData.level}
             onChange={(i) => {
               setUniData((prevUniData) => ({
@@ -411,7 +411,7 @@ const ReferralManagment = ({ animate }) => {
             emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
-            label={"binary level"}
+            label={"binary volume"}
             value={binaryData.level}
             onChange={(i) => {
               setBinaryData((prevBinaryData) => ({

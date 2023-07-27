@@ -33,6 +33,10 @@ code {
   overflow: visible!important;
 }
 
+.sale-card__rotate {
+  color: blueviolet!important;
+}
+
 @media (max-width: 768px) {
   .admin-content {
     width: calc(100% - 25px)!important;

@@ -7,10 +7,10 @@ import {
   MoreButton,
   Popup,
 } from "@cubitrix/cubitrix-react-ui-module";
-import { useTableParameters } from "../../hooks/useTableParameters";
-import useAxios from "../../hooks/useAxios";
-import moment from "moment";
 
+import moment from "moment";
+import useAxios from "../../hooks/useAxios";
+import { useTableParameters } from "../../hooks/useTableParameters";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -32,6 +32,7 @@ const Transactions = (props) => {
   let [amount, setAmount] = useState("");
   let [tx_currency, setTx_currency] = useState("ether");
   const [isReady, setIsReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [tx_status, setTx_status] = useState({
     tx_status: "",
@@ -41,21 +42,34 @@ const Transactions = (props) => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
   async function fetchData() {
-    await axios
-      .post("/api/data/filter", {
-        type: "transactions",
-        filter: tableFilterOutcomingData,
-        page: pageNow,
-      })
+    setIsLoading(true);
+    await axios.post("/api/data/filter", {
+      type: "transactions",
+      filter: tableFilterOutcomingData,
+      page: pageNow,
+    })
       .then((res) => {
         setPageAll(res.data.success.pages);
         setTd(res.data.success.data);
+        setIsLoading(false);
         console.log(res);
       });
   }
 
   useEffect(() => {
-    fetchData();
+    const isMatchingStructure = (
+      tableFilterOutcomingData?.selects?.tx_status === "all" &&
+      Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
+      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype
+    );
+
+    if (isMatchingStructure) {
+      // If it matches, make tableFilterOutcomingData an empty object
+      setTableFilterOutcomingData({});
+      return; // Exit early without making the request
+    }
+
+    fetchData(); // Only call fetchData if the structure doesn't match
   }, [tableFilterOutcomingData, pageNow]);
 
   async function newTx() {
@@ -101,7 +115,7 @@ const Transactions = (props) => {
         _id: id,
         tx_status: status,
       });
-      console.log(response);
+      // console.log(response);
       notify("Transaction Status Changed");
       setIsReady(false);
       fetchData();
@@ -121,11 +135,10 @@ const Transactions = (props) => {
       value: "pending",
     },
     {
-      name: "Cancelled",
-      value: "cancelled",
+      name: "Canceled",
+      value: "canceled",
     },
   ];
-
 
   let tableData;
   tableData = td.map((item, index) => {
@@ -142,6 +155,7 @@ const Transactions = (props) => {
         ],
       },
     ];
+
 
     return (
       <div
@@ -186,9 +200,9 @@ const Transactions = (props) => {
             {item.tx_type === "payment" ? (
               <span
                 className={`alert-status-box 
-                            ${item.tx_status === "canceled" && "alert-status-blue"} 
-                            ${item.tx_status === "pending" && "alert-status-yellow"}
-                            ${item.tx_status === "approved" && "alert-status-green"}`}>
+                   ${item.tx_status === "canceled" && "alert-status-blue"} 
+                   ${item.tx_status === "pending" && "alert-status-yellow"}
+                   ${item.tx_status === "approved" && "alert-status-green"}`}>
                 {item.tx_status}
               </span>
             ) : (
@@ -207,9 +221,9 @@ const Transactions = (props) => {
                 ) : (
                   <span
                     className={`alert-status-box 
-                    ${item.tx_status === "canceled" && "alert-status-blue"} 
-                    ${item.tx_status === "pending" && "alert-status-yellow"}
-                    ${item.tx_status === "approved" && "alert-status-green"}`}>
+           ${item.tx_status === "canceled" && "alert-status-blue"} 
+           ${item.tx_status === "pending" && "alert-status-yellow"}
+           ${item.tx_status === "approved" && "alert-status-green"}`}>
                     {item.tx_status}
                   </span>
                 )}
@@ -226,15 +240,15 @@ const Transactions = (props) => {
             }}>
             <span
               className={`alert-status-box 
-                  ${item.tx_type === "deposit" && styles.depostit} 
-                  ${item.tx_type === "transfer" && styles.tranfer}
-                  ${item.tx_type === "withdraw" || item.tx_type === "withdrawal" && styles.withdraw}
-                  ${item.tx_type === "payment" && styles.payment}
-                  ${item.tx_type === "internal_transfer" && styles.internal}
-                  ${item.tx_type === "exchange" && styles.exchange}
-                  ${item.tx_type === "bonus" && styles.bonus}
-                `}>
-              {item.tx_type === "withdrawal" ? "withdraw" : item.tx_type}
+         ${item.tx_type === "deposit" && styles.depostit} 
+         ${item.tx_type === "transfer" && styles.tranfer}
+         ${item.tx_type === "withdraw" && styles.withdraw}
+         ${item.tx_type === "payment" && styles.payment}
+         ${item.tx_type === "internal_transfer" && styles.internal}
+         ${item.tx_type === "exchange" && styles.exchange}
+         ${item.tx_type === "bonus" && styles.bonus}
+       `}>
+              {item.tx_type}
             </span>
             <div style={{ display: "flex" }} className="table-more">
               <MoreButton dropdownData={dropdownData} />
@@ -270,9 +284,9 @@ const Transactions = (props) => {
               {item.type === "payment" ? (
                 <span
                   className={`alert-status-box 
-                 ${item.tx_status === "active" && "alert-status-blue"} 
-                 ${item.tx_status === "active1" && "alert-status-yellow"}
-                 ${item.tx_status === "pending" && "alert-status-green"}`}>
+        ${item.tx_status === "active" && "alert-status-blue"} 
+        ${item.tx_status === "active1" && "alert-status-yellow"}
+        ${item.tx_status === "pending" && "alert-status-green"}`}>
                   {item.tx_status}
                 </span>
               ) : (
@@ -558,8 +572,10 @@ const Transactions = (props) => {
       )}
       <AdminPanel
         adminPage={"table"}
-        tableData={tableData}
+        tableData={tableData.length === 0 ? false : tableData}
         pageLabel={"Transactions"}
+        dataLoading={isLoading}
+        tableEmulator={false}
         animate={props.animate}
         tableHead={th}
         mobile={mobile}
