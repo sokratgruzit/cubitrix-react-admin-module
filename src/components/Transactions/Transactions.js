@@ -56,15 +56,27 @@ const Transactions = (props) => {
       });
   }
 
+  console.log(tableFilterOutcomingData, 'data')
+
   useEffect(() => {
-    const isMatchingStructure = (
+    const isMatchingStructureStatus = (
       tableFilterOutcomingData?.selects?.tx_status === "all" &&
       Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
       Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype
     );
 
-    if (isMatchingStructure) {
+    const isMatchingStructureType = (
+      tableFilterOutcomingData?.selects?.tx_type === "all" &&
+      Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
+      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype
+    );
+
+    if (isMatchingStructureStatus) {
       setTableFilterOutcomingData({});
+      return;
+    }
+    if (isMatchingStructureType) {
+      setTableFilterOutcomingData({})
       return;
     }
 
