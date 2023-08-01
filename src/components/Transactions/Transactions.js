@@ -43,11 +43,12 @@ const Transactions = (props) => {
 
   async function fetchData() {
     setIsLoading(true);
-    await axios.post("/api/data/filter", {
-      type: "transactions",
-      filter: tableFilterOutcomingData,
-      page: pageNow,
-    })
+    await axios
+      .post("/api/data/filter", {
+        type: "transactions",
+        filter: tableFilterOutcomingData,
+        page: pageNow,
+      })
       .then((res) => {
         setPageAll(res.data.success.pages);
         setTd(res.data.success.data);
@@ -56,27 +57,25 @@ const Transactions = (props) => {
       });
   }
 
-  console.log(tableFilterOutcomingData, 'data')
+  console.log(tableFilterOutcomingData, "data");
 
   useEffect(() => {
-    const isMatchingStructureStatus = (
+    const isMatchingStructureStatus =
       tableFilterOutcomingData?.selects?.tx_status === "all" &&
       Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
-      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype
-    );
+      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype;
 
-    const isMatchingStructureType = (
+    const isMatchingStructureType =
       tableFilterOutcomingData?.selects?.tx_type === "all" &&
       Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
-      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype
-    );
+      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype;
 
     if (isMatchingStructureStatus) {
       setTableFilterOutcomingData({});
       return;
     }
     if (isMatchingStructureType) {
-      setTableFilterOutcomingData({})
+      setTableFilterOutcomingData({});
       return;
     }
 
@@ -167,7 +166,6 @@ const Transactions = (props) => {
       },
     ];
 
-
     return (
       <div
         key={index}
@@ -196,7 +194,7 @@ const Transactions = (props) => {
             style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{item.amount}</span>
             <span className={`table-currency`}>
-              {tx_currency}
+              {item?.tx_options?.currency?.toUpperCase() ?? "ATR"}
             </span>
           </div>
           <div
@@ -288,7 +286,9 @@ const Transactions = (props) => {
           <div className="table-mobile-content">
             <div className="td">
               <div className="mobile-ttl">{th[4].name}</div>
-              <span className={`table-currency`}>{moment(item.createdAt).format("LL")}</span>
+              <span className={`table-currency`}>
+                {moment(item.createdAt).format("LL")}
+              </span>
             </div>
             <div className="td">
               <div className="mobile-ttl">{th[5].name}</div>
@@ -537,11 +537,11 @@ const Transactions = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                            params?.defaultAny ||
-                            params?.options[0]?.value
+                              params?.defaultAny ||
+                              params?.options[0]?.value
                             : popUpData[params?.name] === undefined
-                              ? params?.defaultAny
-                              : popUpData[params?.name]
+                            ? params?.defaultAny
+                            : popUpData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {

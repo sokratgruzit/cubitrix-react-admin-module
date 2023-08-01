@@ -29,26 +29,29 @@ code {
   width: 100%;
 }
 
-.api-item-params-main .active{
-  overflow: visible!important;
+.api-item-params-main .active {
+  overflow: visible !important;
 }
 
 .sale-card__rotate {
-  color: blueviolet!important;
+  color: blueviolet !important;
 }
 
 @media (max-width: 768px) {
   .admin-content {
-    width: calc(100% - 25px)!important;
+    width: calc(100% - 25px) !important;
   }
 
   .tabs {
     flex-direction: column;
-    height: auto!important;
+    height: auto !important;
   }
 
   .get-btn {
     transform: translateY(95px);
   }
+}
 
+.table-currency {
+  padding-left: 5px;
 }
