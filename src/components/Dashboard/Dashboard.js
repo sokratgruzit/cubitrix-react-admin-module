@@ -43,9 +43,20 @@ const Dashboard = ({ animate, user }) => {
           />
         </svg>
       ),
-      incoming: "0",
+      incoming: cardData?.incoming?.incoming.ATR
+        ? cardData?.incoming?.incoming.ATR?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
       outcoming: cardData?.withdrawals?.ATR
         ? cardData?.withdrawals?.ATR?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
+      pendingWithdrawals: cardData?.pendingWithdrawals?.ATR
+        ? cardData?.pendingWithdrawals?.ATR?.toLocaleString("en-US", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })
@@ -74,7 +85,18 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: "0",
+      incoming: cardData?.incoming?.incoming.BTC
+        ? cardData?.incoming?.incoming.BTC?.toLocaleString("en-US", {
+            minimumFractionDigits: 5,
+            maximumFractionDigits: 5,
+          })
+        : " 0 ",
+      pendingWithdrawals: cardData?.pendingWithdrawals?.btc
+        ? cardData?.pendingWithdrawals?.btc?.toLocaleString("en-US", {
+            minimumFractionDigits: 5,
+            maximumFractionDigits: 5,
+          })
+        : " 0 ",
       outcoming: cardData?.withdrawals?.btc
         ? cardData?.withdrawals?.btc?.toLocaleString("en-US", {
             minimumFractionDigits: 5,
@@ -83,7 +105,6 @@ const Dashboard = ({ animate, user }) => {
         : " 0 ",
       customStyles: {},
     },
-
     {
       id: 3,
       type: "coin",
@@ -107,7 +128,18 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: "0",
+      incoming: cardData?.incoming?.incoming.ETH
+        ? cardData?.incoming?.incoming.ETH?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
+      pendingWithdrawals: cardData?.pendingWithdrawals?.eth
+        ? cardData?.pendingWithdrawals?.eth?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
       outcoming: cardData?.withdrawals?.eth
         ? cardData?.withdrawals?.eth?.toLocaleString("en-US", {
             minimumFractionDigits: 2,
@@ -135,7 +167,18 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: "0",
+      incoming: cardData?.incoming?.incoming.USDC
+        ? cardData?.incoming?.incoming.USDC?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
+      pendingWithdrawals: cardData?.pendingWithdrawals?.usdc
+        ? cardData?.pendingWithdrawals?.usdc?.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })
+        : " 0 ",
       outcoming: cardData?.withdrawals?.usdc
         ? cardData?.withdrawals?.usdc?.toLocaleString("en-US", {
             minimumFractionDigits: 2,

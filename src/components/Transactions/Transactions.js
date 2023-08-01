@@ -57,8 +57,6 @@ const Transactions = (props) => {
       });
   }
 
-  console.log(tableFilterOutcomingData, "data");
-
   useEffect(() => {
     const isMatchingStructureStatus =
       tableFilterOutcomingData?.selects?.tx_status === "all" &&
