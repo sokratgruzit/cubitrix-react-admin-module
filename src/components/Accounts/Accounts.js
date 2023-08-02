@@ -1,6 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { AdminPanel, MoreButton, Switches, Popup, Input, Button } from "@cubitrix/cubitrix-react-ui-module";
+import {
+  AdminPanel,
+  MoreButton,
+  Switches,
+  Popup,
+  Input,
+  Button,
+} from "@cubitrix/cubitrix-react-ui-module";
 import { useTableParameters } from "../../hooks/useTableParameters";
 import useAxios from "../../hooks/useAxios";
 import moment from "moment";
@@ -90,17 +97,19 @@ const Accounts = (props) => {
       .post("/api/data/edit-account", { accountData: stringifiedAccountData })
       .then((res) => {
         setAccountUpdateLoading(false);
-        setTd((prev) =>
-          prev.map((item) =>
-            item.address === res.data.address ? { ...item, ...res.data } : item
-          )
-        );
+        fetchData();
+
+        // setTd((prev) =>
+        //   prev.map((item) =>
+        //     item.address === res.data.address ? { ...item, ...res.data } : item,
+        //   ),
+        // );
         setActiveItem(null);
         notify("Account Edited");
       })
       .catch((err) => {
         setAccountUpdateLoading(false);
-        notify('Something went wrong please try again');
+        notify("Something went wrong please try again");
       });
   }
 
@@ -109,7 +118,6 @@ const Accounts = (props) => {
   };
 
   let dynamicDropDown = (item) => {
-
     let dropdownData = [
       {
         id: 0,
@@ -119,7 +127,7 @@ const Accounts = (props) => {
             onClick: () => {
               setActiveItem(item);
             },
-          }
+          },
         ],
       },
     ];
@@ -128,76 +136,76 @@ const Accounts = (props) => {
 
   const switches = [
     {
-      title: 'Active',
-      type: 'sm-switches',
+      title: "Active",
+      type: "sm-switches",
       value: accountData.active,
-      onChange: (e) => setAccountData((prevState) => ({ ...prevState, active: e.target.checked }))
+      onChange: (e) =>
+        setAccountData((prevState) => ({ ...prevState, active: e.target.checked })),
     },
     {
-      title: 'Staking',
-      type: 'sm-switches',
+      title: "Staking",
+      type: "sm-switches",
       value: accountData.staking,
       onChange: (e) => {
         setAccountData((prevState) => ({ ...prevState, staking: e.target.checked }));
         if (accountData.staking) {
-          setAccountData((prevState) => ({ ...prevState, stakingAdmin: false }))
+          setAccountData((prevState) => ({ ...prevState, stakingAdmin: false }));
         } else {
-          setAccountData((prevState) => ({ ...prevState, stakingAdmin: true }))
+          setAccountData((prevState) => ({ ...prevState, stakingAdmin: true }));
         }
-      }
+      },
     },
     {
-      title: 'Trade',
-      type: 'sm-switches',
+      title: "Trade",
+      type: "sm-switches",
       value: accountData.trade,
       onChange: (e) => {
         setAccountData((prevState) => ({ ...prevState, trade: e.target.checked }));
         if (accountData.trade) {
-          setAccountData((prevState) => ({ ...prevState, tradeAdmin: false }))
+          setAccountData((prevState) => ({ ...prevState, tradeAdmin: false }));
         } else {
-          setAccountData((prevState) => ({ ...prevState, tradeAdmin: true }))
-
+          setAccountData((prevState) => ({ ...prevState, tradeAdmin: true }));
         }
-      }
+      },
     },
     {
-      title: 'Loan',
-      type: 'sm-switches',
+      title: "Loan",
+      type: "sm-switches",
       value: accountData.loan,
       onChange: (e) => {
         setAccountData((prevState) => ({ ...prevState, loan: e.target.checked }));
         if (accountData.loan) {
-          setAccountData((prevState) => ({ ...prevState, loanAdmin: false }))
+          setAccountData((prevState) => ({ ...prevState, loanAdmin: false }));
         } else {
-          setAccountData((prevState) => ({ ...prevState, loanAdmin: true }))
+          setAccountData((prevState) => ({ ...prevState, loanAdmin: true }));
         }
-      }
+      },
     },
     {
-      title: 'Referral',
-      type: 'sm-switches',
+      title: "Referral",
+      type: "sm-switches",
       value: accountData.referral,
       onChange: (e) => {
         setAccountData((prevState) => ({ ...prevState, referral: e.target.checked }));
         if (accountData.referral) {
-          setAccountData((prevState) => ({ ...prevState, referralAdmin: false }))
+          setAccountData((prevState) => ({ ...prevState, referralAdmin: false }));
         } else {
-          setAccountData((prevState) => ({ ...prevState, referralAdmin: true }))
+          setAccountData((prevState) => ({ ...prevState, referralAdmin: true }));
         }
-      }
+      },
     },
     {
-      title: 'Notifications',
-      type: 'sm-switches',
+      title: "Notifications",
+      type: "sm-switches",
       value: accountData.notify,
       onChange: (e) => {
         setAccountData((prevState) => ({ ...prevState, notify: e.target.checked }));
         if (accountData.notify) {
-          setAccountData((prevState) => ({ ...prevState, notifyAdmin: false }))
+          setAccountData((prevState) => ({ ...prevState, notifyAdmin: false }));
         } else {
-          setAccountData((prevState) => ({ ...prevState, notifyAdmin: true }))
+          setAccountData((prevState) => ({ ...prevState, notifyAdmin: true }));
         }
-      }
+      },
     },
   ];
 
@@ -205,7 +213,6 @@ const Accounts = (props) => {
     const valueAsString = item.value ? "true" : "false";
     return { ...item, value: valueAsString };
   });
-
 
   const inputs = [
     // {
@@ -275,30 +282,27 @@ const Accounts = (props) => {
     return (
       <div
         key={item.id + item.address}
-        className={`table-parent ${mobileExpand === item.address ? "active" : ""
-          }`}
+        className={`table-parent ${mobileExpand === item.address ? "active" : ""}`}
         onClick={() => {
           mobileExpandFunc(item.address);
-        }}
-      >
+        }}>
         <div className="table">
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
-          >
+            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
             <span>{item.account_category}</span>
           </div>
           <div
             onClick={() => {
               tableExpandFunc(item.address);
             }}
-            className={`td expand ${accountType !== null ||
+            className={`td expand ${
+              accountType !== null ||
               (tableExpand === item.address && item.inner_accounts.length !== 0)
-              ? "active"
-              : ""
-              } ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
-          >
+                ? "active"
+                : ""
+            } ${th[1].mobileWidth ? true : false}`}
+            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <div>
               <span>{item.address}</span>
               {item.inner_accounts.length > 0 ? (
@@ -307,8 +311,7 @@ const Accounts = (props) => {
                   height="7"
                   viewBox="0 0 12 7"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                  xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M1.70095 5.6665L5.52859 1.83887C5.98063 1.38683 6.72032 1.38683 7.17236 1.83887L11 5.6665"
                     stroke="#9C9DA3"
@@ -348,21 +351,18 @@ const Accounts = (props) => {
                 <i>date of birth: </i>{" "}
                 {moment(item?.account_metas?.date_of_birth).format("LL")}
               </div>
-
             </div>
           </div>
           <div
             className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
-          >
+            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
             <span>{item?.inner_accounts[0]?.balance}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
-          >
+            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{moment(item.createdAt).format("LL")}</span>
-            <div style={{ display: 'flex', marginLeft: "auto" }} className="table-more">
+            <div style={{ display: "flex", marginLeft: "auto" }} className="table-more">
               <MoreButton dropdownData={dynamicDropDown(item)} />
             </div>
           </div>
@@ -407,35 +407,54 @@ const Accounts = (props) => {
         email: activeItem?.account_metas?.email,
         dateOfBirth: activeItem?.account_metas?.date_of_birth,
         _id: activeItem?._id,
-        active: activeItem?.active,
-        loan: activeItem?.inner_accounts[0]?.extensions?.loan ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loan) : false,
-        loanAdmin: activeItem?.inner_accounts[0]?.extensions?.loanAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loanAdmin) : false,
-        trade: activeItem?.inner_accounts[0]?.extensions?.trade ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.trade) : false,
-        tradeAdmin: activeItem?.inner_accounts[0]?.extensions?.tradeAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.tradeAdmin) : false,
-        staking: activeItem?.inner_accounts[0]?.extensions?.staking ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.staking) : false,
-        stakingAdmin: activeItem?.inner_accounts[0]?.extensions?.stakingAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.stakingAdmin) : false,
-        referral: activeItem?.inner_accounts[0]?.extensions?.referral ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referral) : false,
-        referralAdmin: activeItem?.inner_accounts[0]?.extensions?.referralAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referralAdmin) : false,
-        notify: activeItem?.inner_accounts[0]?.extensions?.notify ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notify) : false,
-        notifyAdmin: activeItem?.inner_accounts[0]?.extensions?.notifyAdmin ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notifyAdmin) : false,
+        active: activeItem?.inner_accounts[0]?.active,
+        loan: activeItem?.inner_accounts[0]?.extensions?.loan
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loan)
+          : false,
+        loanAdmin: activeItem?.inner_accounts[0]?.extensions?.loanAdmin
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.loanAdmin)
+          : false,
+        trade: activeItem?.inner_accounts[0]?.extensions?.trade
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.trade)
+          : false,
+        tradeAdmin: activeItem?.inner_accounts[0]?.extensions?.tradeAdmin
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.tradeAdmin)
+          : false,
+        staking: activeItem?.inner_accounts[0]?.extensions?.staking
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.staking)
+          : false,
+        stakingAdmin: activeItem?.inner_accounts[0]?.extensions?.stakingAdmin
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.stakingAdmin)
+          : false,
+        referral: activeItem?.inner_accounts[0]?.extensions?.referral
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referral)
+          : false,
+        referralAdmin: activeItem?.inner_accounts[0]?.extensions?.referralAdmin
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.referralAdmin)
+          : false,
+        notify: activeItem?.inner_accounts[0]?.extensions?.notify
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notify)
+          : false,
+        notifyAdmin: activeItem?.inner_accounts[0]?.extensions?.notifyAdmin
+          ? JSON.parse(activeItem?.inner_accounts[0]?.extensions?.notifyAdmin)
+          : false,
       });
     }
   }, [activeItem]);
+  async function fetchData() {
+    await axios
+      .post("/api/data/filter", {
+        type: "account",
+        filter: tableFilterOutcomingData,
+        page: pageNow,
+      })
+      .then((res) => {
+        setPageAll(res.data.success.pages);
+        setTd(res.data.success.data);
+      });
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      await axios
-        .post("/api/data/filter", {
-          type: "account",
-          filter: tableFilterOutcomingData,
-          page: pageNow,
-        })
-        .then((res) => {
-          setPageAll(res.data.success.pages);
-          setTd(res.data.success.data);
-        });
-    }
-
     fetchData();
 
     if (tableFilterOutcomingData.selects) {
@@ -463,7 +482,7 @@ const Accounts = (props) => {
               systemAddress: "",
               email: "",
               dateOfBirth: "",
-              _id: ""
+              _id: "",
             });
           }}
           popUpData={accountData}
@@ -482,7 +501,7 @@ const Accounts = (props) => {
                           onChange={item.onChange}
                         />
                       </div>
-                    )
+                    );
                   })}
                 </div>
                 {inputs?.map((params, index) => {
@@ -502,11 +521,11 @@ const Accounts = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                            params?.defaultAny ||
-                            params?.options[0]?.value
+                              params?.defaultAny ||
+                              params?.options[0]?.value
                             : accountData[params?.name] === undefined
-                              ? params?.defaultAny
-                              : accountData[params?.name]
+                            ? params?.defaultAny
+                            : accountData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {
@@ -564,7 +583,6 @@ const Accounts = (props) => {
       />
       <ToastContainer theme="dark" />
     </>
-
   );
 };
 

@@ -23,6 +23,8 @@ const Transactions = (props) => {
 
   const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
 
+  console.log(tableFilterOutcomingData?.selects);
+
   let [td, setTd] = useState([]);
   let [pageNow, setPageNow] = useState(1);
   let [pageAll, setPageAll] = useState(1);
@@ -58,25 +60,7 @@ const Transactions = (props) => {
   }
 
   useEffect(() => {
-    const isMatchingStructureStatus =
-      tableFilterOutcomingData?.selects?.tx_status === "all" &&
-      Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
-      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype;
-
-    const isMatchingStructureType =
-      tableFilterOutcomingData?.selects?.tx_type === "all" &&
-      Object.getPrototypeOf(tableFilterOutcomingData) === Object.prototype &&
-      Object.getPrototypeOf(tableFilterOutcomingData.selects) === Object.prototype;
-
-    if (isMatchingStructureStatus) {
-      setTableFilterOutcomingData({});
-      return;
-    }
-    if (isMatchingStructureType) {
-      setTableFilterOutcomingData({});
-      return;
-    }
-
+    setPageNow(1);
     fetchData();
   }, [tableFilterOutcomingData, pageNow]);
 
