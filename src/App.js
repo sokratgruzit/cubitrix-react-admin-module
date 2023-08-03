@@ -19,6 +19,7 @@ import { injected } from "./connector";
 import Login from "./components/Login/Login";
 
 import styles from "./index.module.css";
+import Withdrawals from "./components/Withdrawals/Withdrawals";
 
 function App() {
   const dispatch = useDispatch();
@@ -117,6 +118,54 @@ function App() {
     },
     {
       id: 3,
+      name: "Withdrawals",
+      route: "/withdrawals",
+      svg: (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.0833 10.4915L10.9083 14.6748"
+            stroke="#CDCED1"
+            strokeWidth="1.5"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M0.916687 10.4917L15.0834 10.4917"
+            stroke="#CDCED1"
+            strokeWidth="1.5"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M0.916687 5.5083L5.09169 1.32497"
+            stroke="#CDCED1"
+            strokeWidth="1.5"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M15.0834 5.5083L0.916687 5.5083"
+            stroke="#CDCED1"
+            strokeWidth="1.5"
+            strokeMiterlimit="10"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+      subMenu: [],
+      active: true,
+    },
+    {
+      id: 4,
       name: "User List",
       route: "/users-list",
       svg: (
@@ -160,7 +209,7 @@ function App() {
       active: true,
     },
     {
-      id: 4,
+      id: 5,
       name: "Accounts",
       route: "/accounts",
       svg: (
@@ -188,7 +237,7 @@ function App() {
       active: true,
     },
     {
-      id: 5,
+      id: 6,
       name: "Developers Api",
       route: "/developers-api",
       svg: (
@@ -216,7 +265,7 @@ function App() {
       active: true,
     },
     {
-      id: 6,
+      id: 7,
       name: "Settings",
       route: "/settings",
       svg: (
@@ -423,6 +472,12 @@ function App() {
                 path="/transactions"
                 element={
                   <Transactions sideBarActive={sideBarActive} animate={animateDom} />
+                }
+              />
+              <Route
+                path="/withdrawals"
+                element={
+                  <Withdrawals sideBarActive={sideBarActive} animate={animateDom} />
                 }
               />
               <Route

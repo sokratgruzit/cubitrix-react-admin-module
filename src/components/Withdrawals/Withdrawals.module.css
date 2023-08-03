@@ -1,0 +1,71 @@
+.details {
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.background {
+  background-color: #0f1321;
+  width: 100%;
+  min-height: 200px;
+  padding: 20px;
+  border-radius: 0 10px 10px 0;
+}
+
+.actionsWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: blue;
+  border-radius: 4px;
+}
+
+.exchange {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: red;
+  border-radius: 4px;
+}
+
+.withdraw {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: #57d29e;
+  border-radius: 4px;
+}
+
+.internal {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: red;
+  border-radius: 4px;
+}
+
+.tranfer {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: blue;
+  border-radius: 4px;
+}
+
+.depostit {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: #57d29e;
+  border-radius: 4px;
+}
+.bonus {
+  background: rgba(87, 210, 158, 0.1);
+  border: 1px solid rgba(87, 210, 158, 0.2);
+  color: blue;
+  border-radius: 4px;
+}

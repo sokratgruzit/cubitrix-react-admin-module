@@ -69,6 +69,45 @@ const tableFilterData = {
       },
     ],
   },
+  withdrawals: {
+    search: {
+      options: [
+        {
+          name: "Tranx Hash",
+          value: "tx_hash",
+        },
+        {
+          name: "From",
+          value: "from",
+        },
+        {
+          name: "To",
+          value: "to",
+        },
+      ],
+    },
+    selects: [
+      {},
+      {
+        name: "Transaction Status",
+        value: "tx_status",
+        options: [
+          {
+            name: "Pending",
+            value: "pending",
+          },
+          {
+            name: "Canceled",
+            value: "canceled",
+          },
+          {
+            name: "Approved",
+            value: "approved",
+          },
+        ],
+      },
+    ],
+  },
   accounts: {
     search: {
       options: [
@@ -209,7 +248,7 @@ const th = {
       name: "Tranx Type",
       width: 10,
       id: 6,
-    }
+    },
   ],
   accounts: [
     {
@@ -284,9 +323,7 @@ const th = {
 };
 
 const getWidth = () =>
-  window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth;
+  window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 export const useTableParameters = (name) => {
   let [width, setWidth] = useState(getWidth());
@@ -327,6 +364,15 @@ export const useTableParameters = (name) => {
   if (name.toLowerCase() === "transactions") {
     return {
       tableFilterData: tableFilterData.transactions,
+      th: th.transactions,
+      mobileExpandFunc,
+      mobileExpand,
+      mobile,
+    };
+  }
+  if (name.toLowerCase() === "withdrawals") {
+    return {
+      tableFilterData: tableFilterData.withdrawals,
       th: th.transactions,
       mobileExpandFunc,
       mobileExpand,
