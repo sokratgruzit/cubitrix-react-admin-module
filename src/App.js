@@ -20,6 +20,7 @@ import Login from "./components/Login/Login";
 
 import styles from "./index.module.css";
 import Withdrawals from "./components/Withdrawals/Withdrawals";
+import TradeSettings from "./components/Settings/TradeSettings/TradeSettings";
 
 function App() {
   const dispatch = useDispatch();
@@ -306,6 +307,10 @@ function App() {
           name: "Global Settings",
           route: "/global-settings",
         },
+        {
+          name: "Trade Settings",
+          route: "/trade-settings",
+        },
       ],
       active: true,
     },
@@ -510,6 +515,12 @@ function App() {
                 path="/settings/global-settings"
                 element={
                   <GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />
+                }
+              />
+              <Route
+                path="/settings/trade-settings"
+                element={
+                  <TradeSettings sideBarActive={sideBarActive} animate={animateDom} />
                 }
               />
             </Routes>
