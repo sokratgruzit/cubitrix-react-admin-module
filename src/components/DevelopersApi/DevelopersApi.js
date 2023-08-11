@@ -7,38 +7,40 @@ import { injected } from "../../connector";
 import { useSelector } from "react-redux";
 
 import useAxios from "../../hooks/useAxios";
+import { ToastContainer, toast } from "react-toastify";
 
 import styles from "./DevelopersApi.module.css";
 
 const DevelopersApi = (props) => {
   const axios = useAxios();
   const [devAppObject, setDevAppObject] = useState({});
-  const [developerApiResponseActive, setDeveloperApiResponseActive] =
-    useState(false);
-  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] =
-    useState({});
-  const [developerApiErrorResponse, setDeveloperApiErrorResponse] =
-    useState(false);
+  const [developerApiResponseActive, setDeveloperApiResponseActive] = useState(false);
+  const [developerApiSuccessResponse, setDeveloperApiSuccessResponse] = useState({});
+  const [developerApiErrorResponse, setDeveloperApiErrorResponse] = useState(false);
   const [developerApiActive, setDeveloperApiActive] = useState(false);
   const [developerApiLoading, setDeveloperApiLoading] = useState(false);
+  const [uniCalculate, setUniCalculate] = useState({
+    uni_days: "daily",
+  });
+  const [binaryCalculate, setBinaryCalculate] = useState({
+    binary_days: "daily",
+  });
   const { connect, disconnect } = useConnect();
 
   const account = useSelector((state) => state.connect.account);
 
   var Router = "0xd472C9aFa90046d42c00586265A3F62745c927c0"; // Staking contract Address
   var tokenAddress = "0xE807fbeB6A088a7aF862A2dCbA1d64fE0d9820Cb"; // Staking Token Address
-  const {
-    approve,
-    stake,
-    unstake,
-    harvest,
-    handleDepositAmount,
-    handleTimePeriod,
-  } = useStake({ Router, tokenAddress });
+  const { approve, stake, unstake, harvest, handleDepositAmount, handleTimePeriod } =
+    useStake({ Router, tokenAddress });
 
-  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } =
-    useSelector((state) => state.stake);
+  const { stakersInfo, stackContractInfo, stakersRecord, isAllowance } = useSelector(
+    (state) => state.stake,
+  );
 
+  const notify = (msg) => {
+    toast(msg);
+  };
   async function makeRequest(method, url, data) {
     try {
       const options = {
@@ -50,12 +52,16 @@ const DevelopersApi = (props) => {
       }
       setDeveloperApiErrorResponse(false);
       const response = await axios(options);
+
       if (response.data.result) {
         return setDeveloperApiSuccessResponse(response.data.result);
       }
+      notify("Requset sent successfully");
+
       console.log(response);
       setDeveloperApiSuccessResponse(response.data);
     } catch (error) {
+      notify(error.response);
       setDeveloperApiErrorResponse(error.response);
     }
   }
@@ -64,6 +70,21 @@ const DevelopersApi = (props) => {
     const { name, value } = e.target;
     setDevAppObject((prev) => ({ ...prev, [name]: value }));
   };
+
+  let defaultData = [
+    {
+      name: "Daily",
+      value: "daily",
+    },
+    {
+      name: "Weekly",
+      value: "weekly",
+    },
+    {
+      name: "Monthly",
+      value: "monthly",
+    },
+  ];
 
   let developerApiArray = [
     {
@@ -690,9 +711,54 @@ const DevelopersApi = (props) => {
           id: 14,
           description: "Get Referral Options",
           route: "api/referral/get_referral_options",
-          type: "GET",
+          type: "POST",
           inputs: [],
         },
+        {
+          id: 15,
+          description: "Uni Calculate TEST",
+          route: "api/data/testunicalc",
+          type: "POST",
+          inputs: [
+            {
+              type: "select",
+              label: "Uni Calculated",
+              title: "Uni Calculate",
+              name: "uni_days",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: uniCalculate.uni_days,
+              options: defaultData,
+              required: false,
+              onChange: (e) => {
+                changeDevObject(e);
+                setUniCalculate({ uni_days: e.target.value });
+              },
+            },
+          ],
+        },
+        {
+          id: 16,
+          description: "Binary Calculate TEST",
+          route: "api/data/testbinarycalc",
+          type: "POST",
+          inputs: [
+            {
+              type: "select",
+              label: "Binary Calculated",
+              title: "Binary Calculate",
+              name: "uni_days",
+              description: '("all"/"none"/"uni"/"binary")',
+              value: binaryCalculate.binary_days,
+              options: defaultData,
+              required: false,
+              onChange: (e) => {
+                changeDevObject(e);
+                setUniCalculate({ uni_days: e.target.value });
+              },
+            },
+          ],
+        },
+        // api/data/testbinarycalc
       ],
     },
     {
@@ -863,8 +929,7 @@ const DevelopersApi = (props) => {
               id: 20,
               title: "Tx Type",
               name: "tx_type",
-              description:
-                "Write transaction type here, example ('deposit','transfer')",
+              description: "Write transaction type here, example ('deposit','transfer')",
               value: "",
               required: true,
               validation: "text",
@@ -959,8 +1024,7 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Address",
               name: "address",
-              description:
-                "Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
+              description: "Address (E.g., 0xA3403975861B601aE111b4eeAFbA94060a58d0CA)",
               validation: "address",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -1068,8 +1132,7 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Code",
               name: "code",
-              description:
-                "Code ( this code is in the link that is sent to your email )",
+              description: "Code ( this code is in the link that is sent to your email )",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1077,8 +1140,7 @@ const DevelopersApi = (props) => {
         },
         {
           id: 5,
-          description:
-            "Create/Update Account password ( Only verrified accounts )",
+          description: "Create/Update Account password ( Only verrified accounts )",
           route: "api/accounts/update_profile_auth",
           type: "POST",
           inputs: [
@@ -1140,8 +1202,7 @@ const DevelopersApi = (props) => {
         },
         {
           id: 7,
-          description:
-            "Create differnt accounts ( E.g., loan, staking, trade.)",
+          description: "Create differnt accounts ( E.g., loan, staking, trade.)",
           route: "api/accounts/create_different_accounts",
           type: "POST",
           inputs: [
@@ -1174,8 +1235,7 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Email",
               name: "email",
-              description:
-                "Email ( reset password link will be sent to this email )",
+              description: "Email ( reset password link will be sent to this email )",
               validation: "email",
               required: true,
               onChange: (e) => changeDevObject(e),
@@ -1192,8 +1252,7 @@ const DevelopersApi = (props) => {
               id: 0,
               title: "Code",
               name: "code",
-              description:
-                "Code ( this code is in the link that is sent to your email )",
+              description: "Code ( this code is in the link that is sent to your email )",
               required: true,
               onChange: (e) => changeDevObject(e),
             },
@@ -1365,6 +1424,8 @@ const DevelopersApi = (props) => {
       }
       makeRequest(type, route, devAppObject);
     }
+
+    // hello
     setDeveloperApiLoading(false);
   };
 
@@ -1379,9 +1440,7 @@ const DevelopersApi = (props) => {
         } else {
           queryString += "&";
         }
-        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(
-          params[key]
-        )}`;
+        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`;
       }
     }
 
@@ -1398,9 +1457,7 @@ const DevelopersApi = (props) => {
         setDeveloperApiValues={setDevAppObject}
         developerApiSuccessResponse={developerApiSuccessResponse}
         setDeveloperApiSuccessResponse={setDeveloperApiSuccessResponse}
-        developerApiFailResponse={
-          developerApiErrorResponse || developerApiFailResponse
-        }
+        developerApiFailResponse={developerApiErrorResponse || developerApiFailResponse}
         developerApiActive={developerApiActive}
         setDeveloperApiActive={setDeveloperApiActive}
         developerApiResponseActive={developerApiResponseActive}
@@ -1432,6 +1489,7 @@ const DevelopersApi = (props) => {
         }
         walletConnect={account ? true : false}
       />
+      <ToastContainer theme="dark" />
     </>
   );
 };

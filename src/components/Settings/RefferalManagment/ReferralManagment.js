@@ -8,6 +8,8 @@ import {
   Button,
 } from "@cubitrix/cubitrix-react-ui-module";
 
+import { ToastContainer, toast } from "react-toastify";
+
 import styles from "./ReferralManagment.module.css";
 
 const ReferralManagment = ({ animate }) => {
@@ -34,7 +36,7 @@ const ReferralManagment = ({ animate }) => {
     calculated: "",
     maxUsers: "",
     bv: "",
-    flush_out: 0,
+    flushed_out: 0,
     options: [],
   });
 
@@ -67,6 +69,10 @@ const ReferralManagment = ({ animate }) => {
       value: "monthly",
     },
   ];
+
+  const notify = (msg) => {
+    toast(msg);
+  };
 
   const selectHandlerUni = (value) => {
     setUniData((prevUniData) => ({
@@ -111,7 +117,12 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-      });
+        notify('Uni Referral Settings Updated');
+      })
+      .catch((error) => {
+        console.log(error);
+        notify('Something Went Wrong');
+      })
   };
 
   const saveBinaryDataHandler = async (req, res) => {
@@ -123,7 +134,12 @@ const ReferralManagment = ({ animate }) => {
       })
       .then((res) => {
         console.log(res);
-      });
+        notify('Binary Referral Settings Updated');
+      })
+      .catch((error) => {
+        console.log(error);
+        notify('Something Went Wrong Please Try Again');
+      })
   };
 
   useEffect(() => {
@@ -157,7 +173,6 @@ const ReferralManagment = ({ animate }) => {
         maxCommPercentage = [...maxCommPercentage.slice(0, newLevel)];
         maxCommision = [...maxCommision.slice(0, newLevel)];
 
-        // If newLevel is greater than current array length, fill the extra items with null
         while (maxCommPercentage.length < newLevel)
           maxCommPercentage.push(null);
         while (maxCommision.length < newLevel) maxCommision.push(null);
@@ -174,17 +189,15 @@ const ReferralManagment = ({ animate }) => {
   };
 
   const binaryRowsHandler = (level) => {
-    const newLevel = parseInt(level); // Convert level to an integer
+    const newLevel = parseInt(level);
 
     if (!isNaN(newLevel)) {
       setBinaryData((prevBinaryData) => {
         let { options } = prevBinaryData;
 
-        // If newLevel is smaller, slice the array
         if (options.length > newLevel) {
           options = options.slice(0, newLevel);
         }
-        // If newLevel is larger, fill the array with empty objects
         else {
           while (options.length < newLevel) {
             options.push(null);
@@ -216,7 +229,7 @@ const ReferralManagment = ({ animate }) => {
   };
 
   return (
-    <div className={styles.table}>
+    <div className={`${styles.table} "referral-management`}>
       <div style={{ borderBottom: "none" }} className={styles.block}>
         <h1 className={styles.title}>Referral Management</h1>
         <Tabs
@@ -227,12 +240,13 @@ const ReferralManagment = ({ animate }) => {
           customStyles={{ width: "100%" }}
         />
       </div>
+      {/* flexDirection: "column", height: "auto" */}
       <div className={`${styles.steps} ${step === 1 ? styles.actived : ""}`}>
         <div className={styles.block}>
-          <div className={styles.row}>
+          <div className={`${styles.row}`}>
             <p>Uni</p>
             <Switches
-              value={uniData?.active === undefined ? false : true}
+              value={uniData.active}
               onChange={(e) =>
                 setUniData((prevUniData) => ({
                   ...prevUniData,
@@ -260,7 +274,7 @@ const ReferralManagment = ({ animate }) => {
             emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
-            label={"uni level"}
+            label={"uni volume"}
             value={uniData.level}
             onChange={(i) => {
               setUniData((prevUniData) => ({
@@ -275,7 +289,7 @@ const ReferralManagment = ({ animate }) => {
         <div className={styles.block}>
           <div className={styles.col}>
             {Array.from({ length: uniData?.level ?? 0 }, (_, index) => (
-              <div key={index} className={styles.row}>
+              <div key={index} className={`${styles.resp} ${styles.row}`}>
                 <Input
                   type={"default"}
                   emptyFieldErr={false}
@@ -305,13 +319,17 @@ const ReferralManagment = ({ animate }) => {
                 />
               </div>
             ))}
-            <Button
-              label={"save"}
-              size={"btn-lg"}
-              type={"btn-primary"}
-              element={"button"}
-              onClick={saveUniDataHandler}
-            />
+            <div className={`${styles.onResp}`}>
+              <Button
+                label={"save"}
+                size={"btn-lg"}
+                type={"btn-primary"}
+                element={"button"}
+                onClick={saveUniDataHandler}
+                customStyles={{width: '100%'}}
+              />
+            </div>
+
           </div>
         </div>
       </div>
@@ -320,11 +338,11 @@ const ReferralManagment = ({ animate }) => {
           <div className={styles.row}>
             <p>Binary</p>
             <Switches
-              value={binaryData?.active === undefined ? false : true}
-              onChange={(i) =>
-                setBinaryData((prevSendData) => ({
-                  ...prevSendData,
-                  active: i.target.checked,
+              value={binaryData.active}
+              onChange={(e) =>
+                setBinaryData((prevBinaryData) => ({
+                  ...prevBinaryData,
+                  active: e.target.checked,
                 }))
               }
               type={"sm-switches"}
@@ -393,7 +411,7 @@ const ReferralManagment = ({ animate }) => {
             emptyFieldErr={false}
             inputType={"text"}
             placeholder={"1"}
-            label={"binary level"}
+            label={"binary volume"}
             value={binaryData.level}
             onChange={(i) => {
               setBinaryData((prevBinaryData) => ({
@@ -458,9 +476,8 @@ const ReferralManagment = ({ animate }) => {
         </div>
       </div>
       <div
-        className={`${styles.steps} ${styles.underWorking} ${
-          step === 3 ? styles.actived : ""
-        }`}
+        className={`${styles.steps} ${styles.underWorking} ${step === 3 ? styles.actived : ""
+          }`}
       >
         <svg
           width="104"
@@ -518,6 +535,7 @@ const ReferralManagment = ({ animate }) => {
         </svg>
         <span>Under Developent</span>
       </div>
+      <ToastContainer theme="dark" />
     </div>
   );
 };

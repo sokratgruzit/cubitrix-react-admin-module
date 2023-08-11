@@ -14,14 +14,16 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import styles from "./Transactions.module.css";
+import styles from "./Withdrawals.module.css";
 
-const Transactions = (props) => {
+const Withdrawals = (props) => {
   const axios = useAxios();
   const { tableFilterData, th, mobile, mobileExpand, mobileExpandFunc } =
-    useTableParameters("Transactions");
+    useTableParameters("Withdrawals");
 
-  const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
+  const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({
+    selects: { tx_type: "withdraw" },
+  });
 
   console.log(tableFilterOutcomingData?.selects);
 
@@ -85,7 +87,6 @@ const Transactions = (props) => {
     setTx_status((prevState) => ({
       ...prevState,
       id: item._id,
-      tx_status: item.tx_status,
     }));
   };
 
@@ -106,6 +107,7 @@ const Transactions = (props) => {
         _id: id,
         tx_status: status,
       });
+      // console.log(response);
       notify("Transaction Status Changed");
       fetchData();
     } catch (error) {
@@ -151,31 +153,26 @@ const Transactions = (props) => {
         className={`table-parent ${mobileExpand === index ? "active" : ""}`}
         onClick={() => {
           mobileExpandFunc(index);
-        }}
-      >
+        }}>
         <div className="table">
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}
-          >
+            style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
             <span>{item.tx_hash}</span>
           </div>
           <div
             className={`td ${th[1].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}
-          >
+            style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <span>{item.from}</span>
           </div>
           <div
             className={`td ${th[2].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}
-          >
+            style={{ width: `${mobile ? th[2].mobileWidth : th[2].width}%` }}>
             <span>{item.to}</span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}
-          >
+            style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
             <span>{item.amount}</span>
             <span className={`table-currency`}>
               {item?.tx_options?.currency?.toUpperCase() ?? "ATR"}
@@ -183,22 +180,19 @@ const Transactions = (props) => {
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}
-          >
+            style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
             <span>{moment(item.createdAt).format("LL")}</span>
           </div>
           <div
             onClick={() => statusEditHandler(item)}
             className={`td ${th[5].mobileWidth ? true : false}`}
-            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}
-          >
+            style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
             {item.tx_type === "payment" ? (
               <span
                 className={`alert-status-box 
                    ${item.tx_status === "canceled" && "alert-status-blue"} 
                    ${item.tx_status === "pending" && "alert-status-yellow"}
-                   ${item.tx_status === "approved" && "alert-status-green"}`}
-              >
+                   ${item.tx_status === "approved" && "alert-status-green"}`}>
                 {item.tx_status}
               </span>
             ) : (
@@ -219,8 +213,7 @@ const Transactions = (props) => {
                     className={`alert-status-box 
            ${item.tx_status === "canceled" && "alert-status-blue"} 
            ${item.tx_status === "pending" && "alert-status-yellow"}
-           ${item.tx_status === "approved" && "alert-status-green"}`}
-                  >
+           ${item.tx_status === "approved" && "alert-status-green"}`}>
                     {item.tx_status}
                   </span>
                 )}
@@ -234,8 +227,7 @@ const Transactions = (props) => {
               paddingRight: "0px",
               display: "flex",
               justifyContent: "space-between",
-            }}
-          >
+            }}>
             <span
               className={`alert-status-box 
          ${item.tx_type === "deposit" && styles.depostit} 
@@ -245,8 +237,7 @@ const Transactions = (props) => {
          ${item.tx_type === "internal_transfer" && styles.internal}
          ${item.tx_type === "exchange" && styles.exchange}
          ${item.tx_type === "bonus" && styles.bonus}
-       `}
-            >
+       `}>
               {item.tx_type}
             </span>
             <div style={{ display: "flex" }} className="table-more">
@@ -260,8 +251,7 @@ const Transactions = (props) => {
             height="7"
             viewBox="0 0 12 7"
             fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               d="M10.299 1.33325L6.47141 5.16089C6.01937 5.61293 5.27968 5.61293 4.82764 5.16089L1 1.33325"
               stroke="white"
@@ -288,8 +278,7 @@ const Transactions = (props) => {
                   className={`alert-status-box 
         ${item.tx_status === "active" && "alert-status-blue"} 
         ${item.tx_status === "active1" && "alert-status-yellow"}
-        ${item.tx_status === "pending" && "alert-status-green"}`}
-                >
+        ${item.tx_status === "pending" && "alert-status-green"}`}>
                   {item.tx_status}
                 </span>
               ) : (
@@ -483,7 +472,6 @@ const Transactions = (props) => {
       formData.append("tx_type", popUpData.tx_type);
 
       const response = await axios.post("/api/data/edit_transaction", formData);
-      console.log(response);
       notify("Transaction Edited");
       setSelectedTransaction(null);
     } catch (error) {
@@ -504,14 +492,13 @@ const Transactions = (props) => {
           popUpElement={
             <div
               style={{ flexDirection: "column" }}
-              className="transactions_popup_container"
-            >
+              className="transactions_popup_container">
               <div className="transactions-inputs">
                 {inputs?.map((params, index) => {
                   let selectedOption;
                   if (params.type === "lable-input-select") {
                     selectedOption = params?.options.find(
-                      (option) => option.value === popUpData[params?.name]
+                      (option) => option.value === popUpData[params?.name],
                     );
                   }
                   return (
@@ -590,4 +577,4 @@ const Transactions = (props) => {
   );
 };
 
-export default Transactions;
+export default Withdrawals;

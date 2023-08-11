@@ -58,7 +58,46 @@ const tableFilterData = {
             value: "pending",
           },
           {
-            name: "Cenceled",
+            name: "Canceled",
+            value: "canceled",
+          },
+          {
+            name: "Approved",
+            value: "approved",
+          },
+        ],
+      },
+    ],
+  },
+  withdrawals: {
+    search: {
+      options: [
+        {
+          name: "Tranx Hash",
+          value: "tx_hash",
+        },
+        {
+          name: "From",
+          value: "from",
+        },
+        {
+          name: "To",
+          value: "to",
+        },
+      ],
+    },
+    selects: [
+      {},
+      {
+        name: "Transaction Status",
+        value: "tx_status",
+        options: [
+          {
+            name: "Pending",
+            value: "pending",
+          },
+          {
+            name: "Canceled",
             value: "canceled",
           },
           {
@@ -196,29 +235,19 @@ const th = {
       id: 3,
     },
     {
-      name: "Tx Fee",
+      name: "Created",
       width: 11,
       id: 4,
     },
     {
-      name: "Denomination",
+      name: "Tranx Status",
       width: 10,
       id: 5,
     },
     {
-      name: "Time",
-      width: 10,
-      id: 6,
-    },
-    {
-      name: "Tranx Status",
-      width: 10,
-      id: 7,
-    },
-    {
       name: "Tranx Type",
       width: 10,
-      id: 8,
+      id: 6,
     },
   ],
   accounts: [
@@ -266,19 +295,9 @@ const th = {
       id: 2,
     },
     {
-      name: "Mobile",
-      width: 10,
-      id: 3,
-    },
-    {
-      name: "Nationality",
-      width: 10,
-      id: 4,
-    },
-    {
       name: "Date Of Birth",
       width: 15,
-      id: 5,
+      id: 3,
     },
   ],
   adminManagement: [
@@ -289,13 +308,13 @@ const th = {
       id: 1,
     },
     {
-      name: "Last Login",
+      name: "Level",
       width: 33,
       mobileWidth: 33,
       id: 2,
     },
     {
-      name: "Level",
+      name: "Last Login",
       width: 33,
       mobileWidth: 33,
       id: 3,
@@ -304,9 +323,7 @@ const th = {
 };
 
 const getWidth = () =>
-  window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth;
+  window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 export const useTableParameters = (name) => {
   let [width, setWidth] = useState(getWidth());
@@ -347,6 +364,15 @@ export const useTableParameters = (name) => {
   if (name.toLowerCase() === "transactions") {
     return {
       tableFilterData: tableFilterData.transactions,
+      th: th.transactions,
+      mobileExpandFunc,
+      mobileExpand,
+      mobile,
+    };
+  }
+  if (name.toLowerCase() === "withdrawals") {
+    return {
+      tableFilterData: tableFilterData.withdrawals,
       th: th.transactions,
       mobileExpandFunc,
       mobileExpand,
