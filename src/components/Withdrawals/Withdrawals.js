@@ -14,14 +14,16 @@ import { useTableParameters } from "../../hooks/useTableParameters";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import styles from "./Transactions.module.css";
+import styles from "./Withdrawals.module.css";
 
-const Transactions = (props) => {
+const Withdrawals = (props) => {
   const axios = useAxios();
   const { tableFilterData, th, mobile, mobileExpand, mobileExpandFunc } =
-    useTableParameters("Transactions");
+    useTableParameters("Withdrawals");
 
-  const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({});
+  const [tableFilterOutcomingData, setTableFilterOutcomingData] = useState({
+    selects: { tx_type: "withdraw" },
+  });
 
   console.log(tableFilterOutcomingData?.selects);
 
@@ -85,7 +87,6 @@ const Transactions = (props) => {
     setTx_status((prevState) => ({
       ...prevState,
       id: item._id,
-      tx_status: item.tx_status,
     }));
   };
 
@@ -106,6 +107,7 @@ const Transactions = (props) => {
         _id: id,
         tx_status: status,
       });
+      // console.log(response);
       notify("Transaction Status Changed");
       fetchData();
     } catch (error) {
@@ -470,7 +472,6 @@ const Transactions = (props) => {
       formData.append("tx_type", popUpData.tx_type);
 
       const response = await axios.post("/api/data/edit_transaction", formData);
-      console.log(response);
       notify("Transaction Edited");
       setSelectedTransaction(null);
     } catch (error) {
@@ -576,4 +577,4 @@ const Transactions = (props) => {
   );
 };
 
-export default Transactions;
+export default Withdrawals;
