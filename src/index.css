@@ -38,8 +38,9 @@ code {
 }
 
 /* for table temporrary */
-.td, .th {
-  padding-right: 20px!important;
+.td,
+.th {
+  padding-right: 20px !important;
 }
 
 /* end table */
