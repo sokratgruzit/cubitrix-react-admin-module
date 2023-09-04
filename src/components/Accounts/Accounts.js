@@ -296,11 +296,12 @@ const Accounts = (props) => {
             onClick={() => {
               tableExpandFunc(item.address);
             }}
-            className={`td expand ${accountType !== null ||
+            className={`td expand ${
+              accountType !== null ||
               (tableExpand === item.address && item.inner_accounts.length !== 0)
-              ? "active"
-              : ""
-              } ${th[1].mobileWidth ? true : false}`}
+                ? "active"
+                : ""
+            } ${th[1].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[1].mobileWidth : th[1].width}%` }}>
             <div>
               <span>{item.address}</span>
@@ -369,19 +370,26 @@ const Accounts = (props) => {
                 fill="white"
               />
             </svg>
-            <span>{item?.inner_accounts[0]?.balance?.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</span>
-
+            <span>
+              {item?.inner_accounts[0]?.balance?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
           <div
             className={`td ${th[3].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[3].mobileWidth : th[3].width}%` }}>
-            <svg className={styles.balanceCurrency}
-              viewBox="0.004 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+            <svg
+              className={styles.balanceCurrency}
+              viewBox="0.004 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="#000000">
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"></g>
               <g id="SVGRepo_iconCarrier">
                 <path
                   d="M63.04 39.741c-4.274 17.143-21.638 27.575-38.783 23.301C7.12 58.768-3.313 41.404.962 24.262 5.234 7.117 22.597-3.317 39.737.957c17.144 4.274 27.576 21.64 23.302 38.784z"
@@ -391,16 +399,20 @@ const Accounts = (props) => {
                   fill="#ffffff"></path>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.btc?.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</span>
-
+            <span>
+              {item?.inner_accounts[0]?.assets?.btc?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
           <div
             className={`td ${th[4].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[4].mobileWidth : th[4].width}%` }}>
-            <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+            <svg
+              className={styles.balanceCurrency}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32">
               <g fill="none" fillRule="evenodd">
                 <circle cx="16" cy="16" r="16" fill="#627EEA"></circle>
                 <g fill="#FFF" fillRule="nonzero">
@@ -408,21 +420,27 @@ const Accounts = (props) => {
                   <path d="M16.498 4L9 16.22l7.498-3.35z"></path>
                   <path fillOpacity="0.602" d="M16.498 21.968v6.027L24 17.616z"></path>
                   <path d="M16.498 27.995v-6.028L9 17.616z"></path>
-                  <path fillOpacity="0.2" d="M16.498 20.573l7.497-4.353-7.497-3.348z"></path>
+                  <path
+                    fillOpacity="0.2"
+                    d="M16.498 20.573l7.497-4.353-7.497-3.348z"></path>
                   <path fillOpacity="0.602" d="M9 16.22l7.498 4.353v-7.701z"></path>
                 </g>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.eth?.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</span>
-
+            <span>
+              {item?.inner_accounts[0]?.assets?.eth?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
           <div
             className={`td ${th[5].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[5].mobileWidth : th[5].width}%` }}>
-            <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+            <svg
+              className={styles.balanceCurrency}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32">
               <g fill="none">
                 <circle cx="16" cy="16" r="16" fill="#3E73C4"></circle>
                 <g fill="#FFF">
@@ -445,8 +463,7 @@ const Accounts = (props) => {
               stroke="#000"
               version="1.1"
               viewBox="0 0 512 512"
-              xmlSpace="preserve"
-            >
+              xmlSpace="preserve">
               <g>
                 <g fill="#FED159">
                   <path d="M223.419 256.1L43.122 256.1 9.565 393.549 256.975 393.549z"></path>
@@ -466,51 +483,50 @@ const Accounts = (props) => {
                 <path d="M511.755 391.412L478.2 253.962a8.591 8.591 0 00-8.345-6.553h-83.403l-31.956-130.897a8.591 8.591 0 00-8.345-6.553h-180.3a8.59 8.59 0 00-8.345 6.553l-9.168 37.556a8.59 8.59 0 006.308 10.383 8.587 8.587 0 0010.383-6.308l7.568-31.003h166.807l29.36 120.268H143.235l14.48-59.313a8.59 8.59 0 00-16.691-4.075l-15.474 63.39H42.147a8.59 8.59 0 00-8.345 6.553L.245 391.412a8.59 8.59 0 008.346 10.628h392.88a8.591 8.591 0 000-17.182H266.94l29.362-120.268h166.807l29.36 120.268h-60.071a8.591 8.591 0 000 17.182h71.012a8.592 8.592 0 008.345-10.628zm-492.224-6.553l29.362-120.268H215.7l29.36 120.268H19.531zM256 357.227l-22.615-92.637h45.231L256 357.227z"></path>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.gold?.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</span>
-
+            <span>
+              {item?.inner_accounts[0]?.assets?.gold?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
           <div
             className={`td ${th[7].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[7].mobileWidth : th[7].width}%` }}>
-            <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <svg
+              className={styles.balanceCurrency}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 64">
               <g>
                 <g>
                   <path
                     fill="#e5c9f3"
-                    d="M5.04 25.35c.01.27.12.53.3.73L31.3 52.85c.15.15.35.24.56.26h.3c.21-.03.4-.12.55-.26l25.96-26.77c.19-.2.31-.45.34-.73l-26.74-5.09-27.23 5.09z"
-                  ></path>
+                    d="M5.04 25.35c.01.27.12.53.3.73L31.3 52.85c.15.15.35.24.56.26h.3c.21-.03.4-.12.55-.26l25.96-26.77c.19-.2.31-.45.34-.73l-26.74-5.09-27.23 5.09z"></path>
                   <path
                     fill="#d6b1ed"
-                    d="M41.46 25.35H23.04l8.8 27.76c.1.02.2.02.3 0l9.31-27.76z"
-                  ></path>
+                    d="M41.46 25.35H23.04l8.8 27.76c.1.02.2.02.3 0l9.31-27.76z"></path>
                   <path
                     fill="#d6b1ed"
-                    d="M15.47 11.07c-.28.14-.53.35-.72.6L5.24 24.53c-.16.24-.23.53-.2.81h53.95c.03-.29-.05-.59-.22-.83l-9.08-12.83c-.18-.26-.42-.46-.7-.61H15.47z"
-                  ></path>
+                    d="M15.47 11.07c-.28.14-.53.35-.72.6L5.24 24.53c-.16.24-.23.53-.2.81h53.95c.03-.29-.05-.59-.22-.83l-9.08-12.83c-.18-.26-.42-.46-.7-.61H15.47z"></path>
                   <path
                     fill="#e5c9f3"
-                    d="M32.23 10.86l-9.18 14.48h18.41l-9.23-14.48z"
-                  ></path>
+                    d="M32.23 10.86l-9.18 14.48h18.41l-9.23-14.48z"></path>
                   <path
                     fill="#ca96e5"
-                    d="M32.23 10.86l9.23 14.48 7.53-14.26c-.28-.14-.59-.22-.9-.22H32.23z"
-                  ></path>
+                    d="M32.23 10.86l9.23 14.48 7.53-14.26c-.28-.14-.59-.22-.9-.22H32.23z"></path>
                   <path
                     fill="#ca96e5"
-                    d="M16.37 10.86c-.31 0-.62.07-.9.21l7.58 14.27 9.18-14.48H16.37z"
-                  ></path>
+                    d="M16.37 10.86c-.31 0-.62.07-.9.21l7.58 14.27 9.18-14.48H16.37z"></path>
                   <path d="M50.51 11.11a2.972 2.972 0 00-2.42-1.25H16.37c-.95 0-1.85.46-2.42 1.22L4.43 23.94c-.64.87-.56 2.06.19 2.83l25.95 26.77c.74.76 1.97.85 2.85 0l25.95-26.77c.74-.77.84-1.96.22-2.83l-9.08-12.83zM40.07 26.35l-8.05 24-7.61-24h15.66zm-15.21-2l7.37-11.62 7.4 11.62H24.86zm9.19-12.49h13.39l-6.07 11.5-7.32-11.5zm-10.93 11.5l-6.1-11.5h13.39l-7.29 11.5zm6.64 26.47L6.99 26.35h15.32l7.45 23.48zm12.42-23.48H57l-22.67 23.4 7.85-23.4zm.94-2l6.11-11.58 8.2 11.58H43.12zm-27.9-11.62l6.17 11.62H6.62l8.6-11.62z"></path>
                 </g>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.platinum?.toLocaleString("en-US", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}</span>
-
+            <span>
+              {item?.inner_accounts[0]?.assets?.platinum?.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </span>
           </div>
           <div
             className={`td ${th[8].mobileWidth ? true : false}`}
@@ -563,15 +579,22 @@ const Accounts = (props) => {
             </div>
             <div className={`${"td"} ${styles.customTd}`}>
               <div className="mobile-ttl">
-                <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <svg
+                  className={styles.balanceCurrency}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32">
                   <g fill="none" fillRule="evenodd">
                     <circle cx="16" cy="16" r="16" fill="#627EEA"></circle>
                     <g fill="#FFF" fillRule="nonzero">
                       <path fillOpacity="0.602" d="M16.498 4v8.87l7.497 3.35z"></path>
                       <path d="M16.498 4L9 16.22l7.498-3.35z"></path>
-                      <path fillOpacity="0.602" d="M16.498 21.968v6.027L24 17.616z"></path>
+                      <path
+                        fillOpacity="0.602"
+                        d="M16.498 21.968v6.027L24 17.616z"></path>
                       <path d="M16.498 27.995v-6.028L9 17.616z"></path>
-                      <path fillOpacity="0.2" d="M16.498 20.573l7.497-4.353-7.497-3.348z"></path>
+                      <path
+                        fillOpacity="0.2"
+                        d="M16.498 20.573l7.497-4.353-7.497-3.348z"></path>
                       <path fillOpacity="0.602" d="M9 16.22l7.498 4.353v-7.701z"></path>
                     </g>
                   </g>
@@ -581,7 +604,10 @@ const Accounts = (props) => {
             </div>
             <div className={`${"td"} ${styles.customTd}`}>
               <div className="mobile-ttl">
-                <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <svg
+                  className={styles.balanceCurrency}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 32 32">
                   <g fill="none">
                     <circle cx="16" cy="16" r="16" fill="#3E73C4"></circle>
                     <g fill="#FFF">
@@ -605,8 +631,7 @@ const Accounts = (props) => {
                   stroke="#000"
                   version="1.1"
                   viewBox="0 0 512 512"
-                  xmlSpace="preserve"
-                >
+                  xmlSpace="preserve">
                   <g>
                     <g fill="#FED159">
                       <path d="M223.419 256.1L43.122 256.1 9.565 393.549 256.975 393.549z"></path>
@@ -631,33 +656,30 @@ const Accounts = (props) => {
             </div>
             <div className={`${"td"} ${styles.customTd}`}>
               <div className="mobile-ttl">
-                <svg className={styles.balanceCurrency} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+                <svg
+                  className={styles.balanceCurrency}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64">
                   <g>
                     <g>
                       <path
                         fill="#e5c9f3"
-                        d="M5.04 25.35c.01.27.12.53.3.73L31.3 52.85c.15.15.35.24.56.26h.3c.21-.03.4-.12.55-.26l25.96-26.77c.19-.2.31-.45.34-.73l-26.74-5.09-27.23 5.09z"
-                      ></path>
+                        d="M5.04 25.35c.01.27.12.53.3.73L31.3 52.85c.15.15.35.24.56.26h.3c.21-.03.4-.12.55-.26l25.96-26.77c.19-.2.31-.45.34-.73l-26.74-5.09-27.23 5.09z"></path>
                       <path
                         fill="#d6b1ed"
-                        d="M41.46 25.35H23.04l8.8 27.76c.1.02.2.02.3 0l9.31-27.76z"
-                      ></path>
+                        d="M41.46 25.35H23.04l8.8 27.76c.1.02.2.02.3 0l9.31-27.76z"></path>
                       <path
                         fill="#d6b1ed"
-                        d="M15.47 11.07c-.28.14-.53.35-.72.6L5.24 24.53c-.16.24-.23.53-.2.81h53.95c.03-.29-.05-.59-.22-.83l-9.08-12.83c-.18-.26-.42-.46-.7-.61H15.47z"
-                      ></path>
+                        d="M15.47 11.07c-.28.14-.53.35-.72.6L5.24 24.53c-.16.24-.23.53-.2.81h53.95c.03-.29-.05-.59-.22-.83l-9.08-12.83c-.18-.26-.42-.46-.7-.61H15.47z"></path>
                       <path
                         fill="#e5c9f3"
-                        d="M32.23 10.86l-9.18 14.48h18.41l-9.23-14.48z"
-                      ></path>
+                        d="M32.23 10.86l-9.18 14.48h18.41l-9.23-14.48z"></path>
                       <path
                         fill="#ca96e5"
-                        d="M32.23 10.86l9.23 14.48 7.53-14.26c-.28-.14-.59-.22-.9-.22H32.23z"
-                      ></path>
+                        d="M32.23 10.86l9.23 14.48 7.53-14.26c-.28-.14-.59-.22-.9-.22H32.23z"></path>
                       <path
                         fill="#ca96e5"
-                        d="M16.37 10.86c-.31 0-.62.07-.9.21l7.58 14.27 9.18-14.48H16.37z"
-                      ></path>
+                        d="M16.37 10.86c-.31 0-.62.07-.9.21l7.58 14.27 9.18-14.48H16.37z"></path>
                       <path d="M50.51 11.11a2.972 2.972 0 00-2.42-1.25H16.37c-.95 0-1.85.46-2.42 1.22L4.43 23.94c-.64.87-.56 2.06.19 2.83l25.95 26.77c.74.76 1.97.85 2.85 0l25.95-26.77c.74-.77.84-1.96.22-2.83l-9.08-12.83zM40.07 26.35l-8.05 24-7.61-24h15.66zm-15.21-2l7.37-11.62 7.4 11.62H24.86zm9.19-12.49h13.39l-6.07 11.5-7.32-11.5zm-10.93 11.5l-6.1-11.5h13.39l-7.29 11.5zm6.64 26.47L6.99 26.35h15.32l7.45 23.48zm12.42-23.48H57l-22.67 23.4 7.85-23.4zm.94-2l6.11-11.58 8.2 11.58H43.12zm-27.9-11.62l6.17 11.62H6.62l8.6-11.62z"></path>
                     </g>
                   </g>
@@ -799,11 +821,11 @@ const Accounts = (props) => {
                         value={
                           params?.type === "lable-input-select"
                             ? selectedOption?.name ||
-                            params?.defaultAny ||
-                            params?.options[0]?.value
+                              params?.defaultAny ||
+                              params?.options[0]?.value
                             : accountData[params?.name] === undefined
-                              ? params?.defaultAny
-                              : accountData[params?.name]
+                            ? params?.defaultAny
+                            : accountData[params?.name]
                         }
                         customStyles={{ width: "100%" }}
                         selectHandler={(opt) => {
