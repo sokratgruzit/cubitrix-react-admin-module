@@ -64,9 +64,13 @@ code {
 
 .full-sc-message {
   text-align: center;
-  color: blueviolet;
+  /* color: blueviolet; */
   font-size: 16px;
   text-shadow: -1px 17px 14px rgba(0, 0, 0, 1);
+}
+
+.notification-toggle svg path{
+  fill: #fff;
 }
 
 /* end table */
