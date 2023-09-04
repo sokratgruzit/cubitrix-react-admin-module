@@ -369,7 +369,10 @@ const Accounts = (props) => {
                 fill="white"
               />
             </svg>
-            <span>{item?.inner_accounts[0]?.balance}</span>
+            <span>{item?.inner_accounts[0]?.balance?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</span>
 
           </div>
           <div
@@ -388,7 +391,10 @@ const Accounts = (props) => {
                   fill="#ffffff"></path>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.btc}</span>
+            <span>{item?.inner_accounts[0]?.assets?.btc?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</span>
 
           </div>
           <div
@@ -407,7 +413,10 @@ const Accounts = (props) => {
                 </g>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.eth}</span>
+            <span>{item?.inner_accounts[0]?.assets?.eth?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</span>
 
           </div>
           <div
@@ -457,7 +466,10 @@ const Accounts = (props) => {
                 <path d="M511.755 391.412L478.2 253.962a8.591 8.591 0 00-8.345-6.553h-83.403l-31.956-130.897a8.591 8.591 0 00-8.345-6.553h-180.3a8.59 8.59 0 00-8.345 6.553l-9.168 37.556a8.59 8.59 0 006.308 10.383 8.587 8.587 0 0010.383-6.308l7.568-31.003h166.807l29.36 120.268H143.235l14.48-59.313a8.59 8.59 0 00-16.691-4.075l-15.474 63.39H42.147a8.59 8.59 0 00-8.345 6.553L.245 391.412a8.59 8.59 0 008.346 10.628h392.88a8.591 8.591 0 000-17.182H266.94l29.362-120.268h166.807l29.36 120.268h-60.071a8.591 8.591 0 000 17.182h71.012a8.592 8.592 0 008.345-10.628zm-492.224-6.553l29.362-120.268H215.7l29.36 120.268H19.531zM256 357.227l-22.615-92.637h45.231L256 357.227z"></path>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.gold}</span>
+            <span>{item?.inner_accounts[0]?.assets?.gold?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</span>
 
           </div>
           <div
@@ -494,7 +506,10 @@ const Accounts = (props) => {
                 </g>
               </g>
             </svg>
-            <span>{item?.inner_accounts[0]?.assets?.platinum}</span>
+            <span>{item?.inner_accounts[0]?.assets?.platinum?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}</span>
 
           </div>
           <div
