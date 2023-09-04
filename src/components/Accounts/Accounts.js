@@ -284,9 +284,13 @@ const Accounts = (props) => {
         key={item.id + item.address}
         className={`table-parent ${mobileExpand === item.address ? "active" : ""} ${item?.inner_accounts[0]?.active ? "" : "tb-disabled-user"}`}
         onClick={() => {
-          mobileExpandFunc(item.address);
+          if (item?.inner_accounts[0]?.active) {
+            mobileExpandFunc(item.address);
+          }
         }}>
-        <div className={`${"table"}`}>
+        <div
+          style={{ pointerEvents: item?.inner_accounts[0]?.active ? 'auto' : 'none' }}
+          className={`${"table"}`}>
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
@@ -672,7 +676,10 @@ const Accounts = (props) => {
           </div>
         </div>
         {!item?.inner_accounts[0]?.active && (
-          <div className="full-sc-message">This Account is Disabled</div>
+          <div className='full-sc-message-wrap'>
+            <div className="full-sc-message">This Account is Disabled</div>
+            <MoreButton dropdownData={dynamicDropDown(item)} />
+          </div>
         )}
       </div>
     );

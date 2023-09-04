@@ -43,19 +43,26 @@ code {
   padding-right: 20px !important;
 }
 
-.tb-disabled-user .table {
+.tb-disabled-user .table, .tb-disabled-user .table-mobile {
   background-color: #272c57;
   opacity: .1;
-  pointer-events: none;
+  pointer-events: none!important;
   position: relative;
   width: 100%;
 }
 
-.full-sc-message {
+.full-sc-message-wrap {
+  display: flex;
+  gap: 22px;
+  align-items: center;
   position: absolute;
+  justify-content: center;
   margin-top: 25px;
   width: 250px;
   left: calc(50% - 125px);
+}
+
+.full-sc-message {
   text-align: center;
   color: blueviolet;
   font-size: 16px;
