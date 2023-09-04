@@ -264,7 +264,7 @@ const th = {
       id: 1,
     },
     {
-      name: "Balance",
+      name: "Balances",
       width: 11,
       // mobileWidth: 33,
       id: 2,
