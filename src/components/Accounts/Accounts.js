@@ -279,7 +279,6 @@ const Accounts = (props) => {
 
   let tableData;
   tableData = td.map((item) => {
-    console.log(item, 'item ')
     return (
       <div
         key={item.id + item.address}
