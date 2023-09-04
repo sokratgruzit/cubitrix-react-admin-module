@@ -10,3 +10,15 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.balanceCurrency {
+    width: 23px;
+    height: 23px;
+    margin-right: 6px;
+}
+
+.customTd {
+    align-items: center;
+    flex-direction: row!important;
+    gap: 6px;
+}
