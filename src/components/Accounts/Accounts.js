@@ -282,11 +282,11 @@ const Accounts = (props) => {
     return (
       <div
         key={item.id + item.address}
-        className={`table-parent ${mobileExpand === item.address ? "active" : ""}`}
+        className={`table-parent ${mobileExpand === item.address ? "active" : ""} ${item?.inner_accounts[0]?.active ? "" : "tb-disabled-user"}`}
         onClick={() => {
           mobileExpandFunc(item.address);
         }}>
-        <div className="table">
+        <div className={`${"table"}`}>
           <div
             className={`td ${th[0].mobileWidth ? true : false}`}
             style={{ width: `${mobile ? th[0].mobileWidth : th[0].width}%` }}>
@@ -671,6 +671,9 @@ const Accounts = (props) => {
             </div>
           </div>
         </div>
+        {!item?.inner_accounts[0]?.active && (
+          <div className="full-sc-message">This Account is Disabled</div>
+        )}
       </div>
     );
   });
@@ -720,17 +723,20 @@ const Accounts = (props) => {
   }, [activeItem]);
 
   async function fetchData() {
-    await axios
-      .post("/api/data/filter", {
+    try {
+      const res = await axios.post("/api/data/filter", {
         type: "account",
         filter: tableFilterOutcomingData,
         page: pageNow,
-      })
-      .then((res) => {
-        setPageAll(res.data.success.pages);
-        setTd(res.data.success.data);
       });
+
+      setPageAll(res.data.success.pages);
+      setTd(res.data.success.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
 
   useEffect(() => {
     fetchData();
@@ -745,7 +751,6 @@ const Accounts = (props) => {
       setAccountType(null);
     }
   }, [tableFilterOutcomingData, pageNow]);
-
   return (
     <>
       {activeItem && (
