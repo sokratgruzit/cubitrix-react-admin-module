@@ -253,26 +253,56 @@ const th = {
   accounts: [
     {
       name: "Type ID",
-      width: 10,
+      width: 7,
       mobileWidth: 33,
       id: 0,
     },
     {
       name: "Address",
-      width: 35,
+      width: 10,
       mobileWidth: 33,
       id: 1,
     },
     {
-      name: "Balance",
-      width: 15,
-      mobileWidth: 33,
+      name: "Balances",
+      width: 11,
+      // mobileWidth: 33,
+      id: 2,
+    },
+    {
+      name: "",
+      width: 11,
+      // mobileWidth: 33,
       id: 3,
     },
     {
-      name: "Date",
-      width: 15,
+      name: "",
+      width: 11,
+      // mobileWidth: 33,
       id: 4,
+    },
+    {
+      name: "",
+      width: 11,
+      // mobileWidth: 33,
+      id: 5,
+    },
+    {
+      name: "",
+      width: 11,
+      // mobileWidth: 33,
+      id: 6,
+    },
+    {
+      name: "",
+      width: 11,
+      // mobileWidth: 33,
+      id: 7,
+    },
+    {
+      name: "Date",
+      width: 9,
+      id: 8,
     },
   ],
   users: [
