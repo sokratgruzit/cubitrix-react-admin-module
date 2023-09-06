@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// Urls to connect with the server
 const BASE_URL = "https://cubitrix-node-server.onrender.com";
 // const BASE_URL = "http://localhost:4000";
 
