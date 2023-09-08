@@ -278,7 +278,7 @@ const Accounts = (props) => {
   ];
 
   let tableData;
-  tableData = td.map((item) => {
+  tableData = td.map((item, i) => {
     return (
       <div
         key={item.id + item.address}
@@ -750,7 +750,30 @@ const Accounts = (props) => {
       })
       .then((res) => {
         setPageAll(res.data.success.pages);
-        setTd(res.data.success.data);
+        const sortedData = res.data.success?.data.map((obj) => {
+          let mainAccounts = obj.inner_accounts
+            ? obj.inner_accounts.filter((account) => account.account_category === "main")
+            : [];
+          let systemAccounts = obj.inner_accounts
+            ? obj.inner_accounts.filter(
+                (account) => account.account_category === "system",
+              )
+            : [];
+          let otherAccounts = obj.inner_accounts
+            ? obj.inner_accounts.filter(
+                (account) =>
+                  account.account_category !== "main" &&
+                  account.account_category !== "system",
+              )
+            : [];
+
+          return {
+            ...obj,
+            inner_accounts: mainAccounts.concat(systemAccounts).concat(otherAccounts),
+          };
+        });
+
+        setTd(sortedData);
       });
   }
 
