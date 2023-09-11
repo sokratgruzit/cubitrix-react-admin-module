@@ -49,6 +49,8 @@ const GlobalSettings = () => {
     setFixedPrice(null);
   }, [developersApi]);
 
+  // cheterebo tashi tashi igrokeba shegcat trakshi :D :D :D
+
   return (
     <div className={styles.container}>
       <h1>Global Settings</h1>
