@@ -37,6 +37,13 @@ code {
   color: blueviolet !important;
 }
 
+/* for table temporrary */
+.td,
+.th {
+  padding-right: 20px !important;
+}
+
+/* end table */
 @media (max-width: 768px) {
   .admin-content {
     width: calc(100% - 25px) !important;

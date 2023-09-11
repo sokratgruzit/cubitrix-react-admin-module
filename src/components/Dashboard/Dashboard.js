@@ -22,10 +22,11 @@ const Dashboard = ({ animate, user }) => {
       id: 1,
       type: "coin",
       currency: "Atar",
-      balance: cardData?.accounts?.main?.totalBalance?.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      balance:
+        cardData?.accounts?.main?.totalBalance?.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }) + " ATR",
       icon: (
         <svg
           width="23"
@@ -43,34 +44,38 @@ const Dashboard = ({ animate, user }) => {
           />
         </svg>
       ),
-      incoming: cardData?.incoming?.incoming.ATR
-        ? cardData?.incoming?.incoming.ATR?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      outcoming: cardData?.withdrawals?.ATR
-        ? cardData?.withdrawals?.ATR?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      pendingWithdrawals: cardData?.pendingWithdrawals?.ATR
-        ? cardData?.pendingWithdrawals?.ATR?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
+      incoming:
+        (cardData?.incoming?.incoming.ATR
+          ? cardData?.incoming?.incoming.ATR?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ATR",
+      outcoming:
+        (cardData?.withdrawals?.ATR
+          ? cardData?.withdrawals?.ATR?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ATR",
+      pendingWithdrawals:
+        (cardData?.pendingWithdrawals?.ATR
+          ? cardData?.pendingWithdrawals?.ATR?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ATR",
       customStyles: {},
     },
     {
       id: 4,
       type: "coin",
       currency: "BTC",
-      balance: cardData?.accounts?.main?.totalBtc?.toLocaleString("en-US", {
-        minimumFractionDigits: 5,
-        maximumFractionDigits: 5,
-      }),
+      balance:
+        cardData?.accounts?.main?.totalBtc?.toLocaleString("en-US", {
+          minimumFractionDigits: 5,
+          maximumFractionDigits: 5,
+        }) + " BTC",
       icon: (
         <svg viewBox="0.004 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000">
           <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
@@ -85,34 +90,38 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: cardData?.incoming?.incoming.BTC
-        ? cardData?.incoming?.incoming.BTC?.toLocaleString("en-US", {
-            minimumFractionDigits: 5,
-            maximumFractionDigits: 5,
-          })
-        : " 0 ",
-      pendingWithdrawals: cardData?.pendingWithdrawals?.btc
-        ? cardData?.pendingWithdrawals?.btc?.toLocaleString("en-US", {
-            minimumFractionDigits: 5,
-            maximumFractionDigits: 5,
-          })
-        : " 0 ",
-      outcoming: cardData?.withdrawals?.btc
-        ? cardData?.withdrawals?.btc?.toLocaleString("en-US", {
-            minimumFractionDigits: 5,
-            maximumFractionDigits: 5,
-          })
-        : " 0 ",
+      incoming:
+        (cardData?.incoming?.incoming.BTC
+          ? cardData?.incoming?.incoming.BTC?.toLocaleString("en-US", {
+              minimumFractionDigits: 5,
+              maximumFractionDigits: 5,
+            })
+          : "0 ") + " BTC",
+      outcoming:
+        (cardData?.withdrawals?.btc
+          ? cardData?.withdrawals?.btc?.toLocaleString("en-US", {
+              minimumFractionDigits: 5,
+              maximumFractionDigits: 5,
+            })
+          : "0 ") + " BTC",
+      pendingWithdrawals:
+        (cardData?.pendingWithdrawals?.btc
+          ? cardData?.pendingWithdrawals?.btc?.toLocaleString("en-US", {
+              minimumFractionDigits: 5,
+              maximumFractionDigits: 5,
+            })
+          : "0 ") + " BTC",
       customStyles: {},
     },
     {
       id: 3,
       type: "coin",
       currency: "Eth",
-      balance: cardData?.accounts?.main?.totalEth?.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      balance:
+        cardData?.accounts?.main?.totalEth?.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }) + " ETH",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
           <g fill="none" fillRule="evenodd">
@@ -128,34 +137,38 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: cardData?.incoming?.incoming.ETH
-        ? cardData?.incoming?.incoming.ETH?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      pendingWithdrawals: cardData?.pendingWithdrawals?.eth
-        ? cardData?.pendingWithdrawals?.eth?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      outcoming: cardData?.withdrawals?.eth
-        ? cardData?.withdrawals?.eth?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
+      incoming:
+        (cardData?.incoming?.incoming.ETH
+          ? cardData?.incoming?.incoming.ETH?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ETH",
+      outcoming:
+        (cardData?.withdrawals?.eth
+          ? cardData?.withdrawals?.eth?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ETH",
+      pendingWithdrawals:
+        (cardData?.pendingWithdrawals?.eth
+          ? cardData?.pendingWithdrawals?.eth?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : "0 ") + " ETH",
       customStyles: {},
     },
     {
       id: 2,
       type: "coin",
       currency: "USDC",
-      balance: cardData?.accounts?.main?.totalUsdc?.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }),
+      balance:
+        cardData?.accounts?.main?.totalUsdc?.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        }) + " USDC",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
           <g fill="none">
@@ -167,24 +180,27 @@ const Dashboard = ({ animate, user }) => {
           </g>
         </svg>
       ),
-      incoming: cardData?.incoming?.incoming.USDC
-        ? cardData?.incoming?.incoming.USDC?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      pendingWithdrawals: cardData?.pendingWithdrawals?.usdc
-        ? cardData?.pendingWithdrawals?.usdc?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
-      outcoming: cardData?.withdrawals?.usdc
-        ? cardData?.withdrawals?.usdc?.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })
-        : " 0 ",
+      incoming:
+        (cardData?.incoming?.incoming.USDC
+          ? cardData?.incoming?.incoming.USDC?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : " 0 ") + " USDC",
+      pendingWithdrawals:
+        (cardData?.pendingWithdrawals?.usdc
+          ? cardData?.pendingWithdrawals?.usdc?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : " 0 ") + " USDC",
+      outcoming:
+        (cardData?.withdrawals?.usdc
+          ? cardData?.withdrawals?.usdc?.toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })
+          : " 0 ") + " USDC",
       customStyles: {},
     },
   ];
