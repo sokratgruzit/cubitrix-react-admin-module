@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import {
-  Switches,
-  Input,
-  Button
-} from "@cubitrix/cubitrix-react-ui-module";
+import useAxios from "../../../hooks/useAxios";
+
+import { Switches, Input, Button } from "@cubitrix/cubitrix-react-ui-module";
 
 import { ToastContainer, toast } from "react-toastify";
 
-import { setDevelopersApi } from '../../../store/settingsReducer';
+import { setDevelopersApi } from "../../../store/settingsReducer";
 
 import styles from "./GlobalSettings.module.css";
 
 const GlobalSettings = () => {
+  const axios = useAxios();
   const dispatch = useDispatch();
-  const developersApi = useSelector(state => state.settings.developersApi);
+  const developersApi = useSelector((state) => state.settings.developersApi);
 
   const [devApi, setDevApi] = useState(developersApi);
   const [fixedPrice, setFixedPrice] = useState(null);
+  const [fixedPriceLoading, setFixedPriceLoading] = useState(false);
+
+  const [rates, setRates] = useState(null);
+
+  useEffect(() => {
+    if (rates?.atr) {
+      setFixedPrice(rates.atr.usd);
+    }
+  }, [rates]);
 
   const notify = (msg) => {
     toast(msg);
@@ -35,19 +42,40 @@ const GlobalSettings = () => {
     }
   };
 
-  const handleFixedPrice = () => {
-    if(fixedPrice) {
-      console.log(fixedPrice);
-      notify("Fixed Price Set");
-    } else {
-      notify("Fixed Price Not Set");
-    }
-  };
+  async function handleFixedPrice() {
+    setFixedPriceLoading(true);
+    await axios
+      .post("/api/data/edit-atar-price", {
+        price: Number(fixedPrice),
+      })
+      .then((res) => {
+        setFixedPriceLoading(false);
+        notify("Atar fixed price Updated");
+      })
+      .catch((error) => {
+        setFixedPriceLoading(false);
+        notify(error?.response?.data?.message ?? "Something went wrong");
+      });
+  }
 
   useEffect(() => {
     setDevApi(developersApi);
-    setFixedPrice(null);
   }, [developersApi]);
+
+  useEffect(() => {
+    const fecthRates = async () => {
+      axios
+        .get("/api/accounts/get_rates")
+        .then((res) => {
+          setRates(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+
+    fecthRates();
+  }, []);
 
   // cheterebo tashi tashi igrokeba shegcat trakshi :D :D :D
 
@@ -57,11 +85,7 @@ const GlobalSettings = () => {
       <div className={styles.inner}>
         <div className={styles.item}>
           <p>Developers API Controller</p>
-          <Switches
-            type={"bg-switches"}
-            value={devApi}
-            onChange={handleSwitchChange}
-          />
+          <Switches type={"bg-switches"} value={devApi} onChange={handleSwitchChange} />
         </div>
         <div className={`${styles.item} ${styles.column}`}>
           <p>Atar Fixed Price Controller</p>
@@ -71,16 +95,18 @@ const GlobalSettings = () => {
             placeholder={"set fixed price"}
             editable={true}
             value={fixedPrice}
-            onChange={(i) => {setFixedPrice(i.target.value)}}
+            onChange={(i) => {
+              setFixedPrice(i.target.value);
+            }}
             statusCard={""}
           />
           <Button
-            label={"Submit"}
+            label={fixedPriceLoading ? "Loading..." : "Submit"}
             size={"btn-lg"}
             type={"btn-primary"}
             element={"button"}
             onClick={handleFixedPrice}
-            // customStyles={{ width: '100%' }}
+            disabled={fixedPriceLoading}
           />
         </div>
       </div>
