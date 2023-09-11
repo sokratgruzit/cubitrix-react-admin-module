@@ -6,6 +6,12 @@
   gap: 60px;
 }
 
+.column {
+  flex-direction: column;
+  align-items: flex-start!important;
+  /* width: 40%; */
+}
+
 .container h1 {
   font-size: 20px;
   padding-bottom: 20px;
@@ -14,7 +20,8 @@
 .inner {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 60px;
+  width: 45%;
 }
 
 .item {
