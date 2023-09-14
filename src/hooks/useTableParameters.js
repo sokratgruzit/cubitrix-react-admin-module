@@ -47,6 +47,8 @@ const tableFilterData = {
             name: "Withdraw",
             value: "withdraw",
           },
+          { name: "Exchange", value: "exchange" },
+          { name: "Stake", value: "stake" },
         ],
       },
       {
@@ -65,6 +67,26 @@ const tableFilterData = {
             name: "Approved",
             value: "approved",
           },
+        ],
+      },
+      {
+        name: "Currencies",
+        value: "currency",
+        options: [
+          {
+            name: "ETH",
+            value: "ETH",
+          },
+          {
+            name: "BTC",
+            value: "BTC",
+          },
+          {
+            name: "USDC",
+            value: "USDC",
+          },
+          { name: "GOLD", value: "GOLD" },
+          { name: "PLATINUM", value: "PLATINUM" },
         ],
       },
     ],

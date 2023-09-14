@@ -234,6 +234,7 @@ const Transactions = (props) => {
          ${item.tx_type === "payment" && styles.payment}
          ${item.tx_type === "internal_transfer" && styles.internal}
          ${item.tx_type === "exchange" && styles.exchange}
+         ${item.tx_type === "stake" && styles.stake}
          ${item.tx_type === "bonus" && styles.bonus}
        `}>
               {item.tx_type}
