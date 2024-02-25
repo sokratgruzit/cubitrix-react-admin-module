@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {Routes, Route, useLocation} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Transactions from "./components/Transactions/Transactions";
 import Accounts from "./components/Accounts/Accounts";
@@ -11,10 +11,10 @@ import ReferralManagment from "./components/Settings/RefferalManagment/ReferralM
 import GlobalSettings from "./components/Settings/GlobalSettings/GlobalSettings";
 
 import "@cubitrix/cubitrix-react-ui-module/src/assets/css/main-theme.css";
-import { Button, AdminHeader } from "@cubitrix/cubitrix-react-ui-module";
-import { useConnect } from "@cubitrix/cubitrix-react-connect-module";
+import {Button, AdminHeader} from "@cubitrix/cubitrix-react-ui-module";
+import {useConnect} from "@cubitrix/cubitrix-react-connect-module";
 
-import { injected } from "./connector";
+import {injected} from "./connector";
 
 import Login from "./components/Login/Login";
 
@@ -24,7 +24,7 @@ import Withdrawals from "./components/Withdrawals/Withdrawals";
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { MetaMaskEagerlyConnect } = useConnect();
+  const {MetaMaskEagerlyConnect} = useConnect();
 
   const [animateDom, setAnimateDom] = useState(false);
   const [sideBar, setSideBar] = useState([
@@ -318,7 +318,7 @@ function App() {
   let userId = user.userId;
 
   const handleLogout = async () => {
-    dispatch({ type: "SET_LOADING", payload: { loading: true } });
+    dispatch({type: "SET_LOADING", payload: {loading: true}});
 
     try {
       dispatch({
@@ -404,8 +404,8 @@ function App() {
   useEffect(() => {
     setSideBar((prevState) =>
       prevState.map((item) =>
-        item.name === "Developers Api" ? { ...item, active: devApi } : item,
-      ),
+        item.name === "Developers Api" ? {...item, active: devApi} : item
+      )
     );
   }, [devApi]);
 
@@ -419,14 +419,17 @@ function App() {
             userImageUrl={adminHeaderData.userImageUrl}
             authsDropdown={adminHeaderData.authsDropdown}
             animate={animateDom}
-            title={"Atar"}
+            title={"AONE"}
           />
           <div className={`admin-container`}>
             <div
               className={`${styles.sideBar} admin-sidebar animate-translateX ${
                 animateDom ? "animate" : ""
               }`}
-              style={{ transitionDelay: ".1s", display: sideBarActive ? "block" : "" }}>
+              style={{
+                transitionDelay: ".1s",
+                display: sideBarActive ? "block" : "",
+              }}>
               {sideBar.map((item, index) => {
                 return item.active ? (
                   <Button
@@ -436,10 +439,12 @@ function App() {
                     route={item.route}
                     element={"side-admin-button"}
                     svg={item.svg}
-                    customStyles={{ width: "100%" }}
+                    customStyles={{width: "100%"}}
                     subMenu={item.subMenu}
                     active={location.pathname === item.route}
-                    subMenuActive={location.pathname.includes(item.subMenu?.route)}
+                    subMenuActive={location.pathname.includes(
+                      item.subMenu?.route
+                    )}
                   />
                 ) : (
                   ""
@@ -471,45 +476,73 @@ function App() {
               <Route
                 path="/transactions"
                 element={
-                  <Transactions sideBarActive={sideBarActive} animate={animateDom} />
+                  <Transactions
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
               <Route
                 path="/withdrawals"
                 element={
-                  <Withdrawals sideBarActive={sideBarActive} animate={animateDom} />
+                  <Withdrawals
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
               <Route
                 path="/users-list"
-                element={<UsersList sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <UsersList
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
+                }
               />
               <Route
                 path="/accounts"
-                element={<Accounts sideBarActive={sideBarActive} animate={animateDom} />}
+                element={
+                  <Accounts
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
+                }
               />
               <Route
                 path="/developers-api"
                 element={
-                  <DevelopersApi sideBarActive={sideBarActive} animate={animateDom} />
+                  <DevelopersApi
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
               <Route
                 path="/settings/admin-management"
                 element={
-                  <AdminManagement sideBarActive={sideBarActive} animate={animateDom} />
+                  <AdminManagement
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
               <Route
                 path="/settings/referral-management"
                 element={
-                  <ReferralManagment sideBarActive={sideBarActive} animate={animateDom} />
+                  <ReferralManagment
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
               <Route
                 path="/settings/global-settings"
                 element={
-                  <GlobalSettings sideBarActive={sideBarActive} animate={animateDom} />
+                  <GlobalSettings
+                    sideBarActive={sideBarActive}
+                    animate={animateDom}
+                  />
                 }
               />
             </Routes>
